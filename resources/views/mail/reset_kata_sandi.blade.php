@@ -1,0 +1,1 @@
+kata sandi diubah menjadi {{ $password }} (Huruf Besar Semua)

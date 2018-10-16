@@ -1,0 +1,28 @@
+.custom-control {
+    display: flex;
+    align-items: center;
+}
+
+.custom-control-lg {
+    .custom-control-label {
+        &::before,
+        &::after {
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+        }
+    }
+}
+
+.custom-control-label {
+    margin-left: 10px;
+
+    &:not(.disabled) {
+        &:hover {
+            &::after {
+                background-color: rgb(66, 165, 245);
+            }
+        }
+    }
+}
