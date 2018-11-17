@@ -22,7 +22,7 @@
             <tr>
                 <td colspan="2">TUK</td>
                 <td>:</td>
-                <td>{{ $uji->getSkema(false)->getTempatUji(false)->nama }}</td>
+                <td>Sewaktu/Tempat Kerja/Mandiri*</td>
             </tr>
             <tr>
                 <td colspan="2">Nama Asesor</td>
@@ -32,7 +32,7 @@
                         @foreach ($uji->getAsesorUji(false) as $asesor)
                             <li>{{ $asesor->nama }}</li>
                         @endforeach
-                    </o>
+                    </ol>
                 </td>
             </tr>
             <tr>
@@ -138,16 +138,20 @@
 
     <table class="table-full table-pd-5 table-border" border="1" style="page-break-inside: avoid">
             <tr>
-                <td rowspan="{{ (($uji->getAsesorUji()->count() * 2) + 5) }}">
+                <td width="40%" rowspan="{{ (($uji->getAsesorUji()->count() * 3) + 5) }}">
                     <b>Rekomendasi Asesor :</b><br>
-                    {{ $uji->rekomendasi_asesor }}
+                    Peserta direkomendasikan <b>Kompeten/Belum Kompeten *)</b> pada <b>skema sertifikasi/Klaster Asesmen *)</b> yang diujikan ({{ $uji->getSkema(false)->nama }})
                 </td>
-                <td colspan="2">Asesor :</td>
+                <td colspan="2" class="text-center"><b>Asesor</b></td>
             </tr>
             @foreach($uji->getAsesorUji(false) as $asesor)
                 <tr>
                     <td>Nama</td>
-                    <td>{{ $asesor->nama }}</td>
+                    <td><b>{{ $asesor->nama }}</b></td>
+                </tr>
+                <tr>
+                    <td>No. Reg</td>
+                    <td><b>{{ $asesor->nip }}</b></td>
                 </tr>
                 <tr>
                     <td>Tanda Tangan & Tanggal</td>
@@ -163,11 +167,11 @@
             </tr>
             <tr>
                 <td>Nama</td>
-                <td>{{ $uji->getMahasiswa(false)->nama }}</td>
+                <td><b>{{ $uji->getMahasiswa(false)->nama }}</b></td>
             </tr>
             <tr>
                 <td>No. Reg.</td>
-                <td>{{ $uji->nim }}</td>
+                <td><b>{{ $uji->nim }}</b></td>
             </tr>
             <tr>
                 <td>Tanda Tangan & Tanggal</td>

@@ -22,17 +22,23 @@
                 <tr>
                     <td colspan="2">TUK</td>
                     <td>:</td>
-                    <td></td>
+                    <td>Sewaktu/Tempat Kerja/Mandiri*</td>
                 </tr>
                 <tr>
                     <td colspan="2">Nama Asesor</td>
                     <td>:</td>
-                    <td></td>
+                    <td>
+                        <ol style="margin: 0;padding-left: 20px;">
+                            @foreach ($uji->getAsesorUji(false) as $asesor)
+                                <li>{{ $asesor->nama }}</li>
+                            @endforeach
+                        </ol>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">Nama Peserta</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ $uji->getMahasiswa(false)->nama }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">Tanggal</td>
@@ -79,7 +85,7 @@
 
                     @foreach ($unit->getElemenKompetensi(false) as $elemen)
                         <tr style="border-width: 1px">
-                            <td>{{ $loop->iteration }}</td>
+                            <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
                             <td>{{ $elemen->getKriteria()->first()->unjuk_kerja }}</td>
                             <td>
@@ -100,11 +106,15 @@
                                 <td class="bt-hide bb-hide"></td>
                                 <td>{{ $kriteria->unjuk_kerja }}</td>
                                 <td>
-                                    @if ($penilaian->pivot->nilai == 'K')
+                                    @if ($penilaian->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                                     <b class="unicode">&#10003;</b>
                                     @endif
                                 </td>
-                                <td></td>
+                                <td>
+                                    @if ($penilaian->pivot->nilai == App\Support\Penilaian::BELUM_KOMPETEN)
+                                    <b class="unicode">&#10003;</b>
+                                    @endif
+                                </td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -116,11 +126,11 @@
 
         <table class="table-full table-pd-5 table-border" border="1">
             <tr>
-                <td rowspan="{{ (($uji->getAsesorUji()->count() * 2) + 5) }}">
-                    <b>Rekomendasi Asesor :</b>
+                <td width="50%" rowspan="{{ (($uji->getAsesorUji()->count() * 2) + 5) }}">
+                    <b>Rekomendasi Asesor :</b><br>
                     {{ $uji->rekomendasi_asesor }}
                 </td>
-                <td colspan="2" width="50%">Asesor :</td>
+                <td colspan="2">Asesor :</td>
             </tr>
             @foreach($uji->getAsesorUji(false) as $asesor)
                 <tr>
@@ -130,9 +140,9 @@
                 <tr>
                     <td>Tanda Tangan & Tanggal</td>
                     <td class="text-center">
-                        <img width="50" src="{{ $asesor->pivot->ttd }}" class="img-responsive">
+                        <img width="200" src="{{ $asesor->pivot->ttd }}" class="img-responsive">
                         <br>
-                        {{ formatDate($uji->updated_at) }}
+                        {{-- {{ formatDate($uji->updated_at) }} --}}
                     </td>
                 </tr>
             @endforeach
@@ -150,9 +160,9 @@
             <tr>
                 <td>Tanda Tangan & Tanggal</td>
                 <td class="text-center">
-                    <img src="{{ $uji->ttd_peserta }}" class="img-responsive">
+                    <img width="200" src="{{ $uji->ttd_peserta }}" class="img-responsive">
                     <br>
-                    {{ formatDate($uji->updated_at) }}
+                    {{-- {{ formatDate($uji->updated_at) }} --}}
                 </td>
             </tr>
         </table>
