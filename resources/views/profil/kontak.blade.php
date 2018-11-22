@@ -20,7 +20,7 @@
         <p>{{ kustomisasi('email') }}</p>
     </div>
     <div class="col-lg-8">
-            <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script><div style='overflow:hidden;width:100%'><div id='gmap_canvas' style='height:440px;width:700px;'></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div><script type='text/javascript'>function init_map(){var myOptions = {zoom:21,center:new google.maps.LatLng(-7.3172086,112.72578309999994),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-7.3172086,112.72578309999994)});infowindow = new google.maps.InfoWindow({content:'<strong>LSP UNESA</strong><br>LSP UNESA<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+        <a href="https://www.google.com/maps/place/LSP+UNESA/@-7.3155747,112.7260221,18z/data=!4m5!3m4!1s0x2dd7fb7dda22e8eb:0xad67bceb68fc1c43!8m2!3d-7.315729!4d112.7270038"><img width="100%" src="{{ asset('img/lokasi.png') }}"></a>
     </div>
 </div>
 @endsection
