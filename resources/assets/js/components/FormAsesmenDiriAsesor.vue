@@ -223,6 +223,9 @@
                         }
                     }
                 }).then(confirm => {
+                    if (!confirm)
+                        return
+                        
                     axios.post(that.$parent.url.asesmendiri, {
                         nilai: that.nilai,
                         catatan: that.uji.catatan_asesmen_diri,

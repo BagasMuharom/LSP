@@ -574,7 +574,7 @@ class Uji extends Model
             ];
         }
 
-        $json = json_decode($this->helper, true);
+        $json = $this->helper;
         $json['nilai_unit'] = $nilaiUnit;
 
         $this->update([

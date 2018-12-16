@@ -52305,6 +52305,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }).then(function (confirm) {
+                if (!confirm) return;
+
                 axios.post(that.$parent.url.asesmendiri, {
                     nilai: that.nilai,
                     catatan: that.uji.catatan_asesmen_diri,
