@@ -27,7 +27,7 @@ class UserController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'nip' => 'nullable|numeric|unique:users',
+            'met' => 'required|unique:users,nip',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6'
         ]);
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'nip' => $request->nip,
+            'nip' => $request->met,
             'password' => bcrypt($request->password)
         ]);
 

@@ -27,7 +27,7 @@
         </div>
         
         <div class="form-group row">
-            <label class="col-lg-3">NIP/NIDN</label>
+            <label class="col-lg-3">MET</label>
             <div class="col-lg-9">
                 <span v-if="!editMode">@{{ user.nip != null ? user.nip : '-' }}</span>
                 <input type="text" v-model="user.nip" class="form-control" v-if="editMode">

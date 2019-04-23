@@ -20,7 +20,7 @@
             <thead>
                 <tr>
                     <th>Nama</th>
-                    <th>NIP</th>
+                    <th>MET</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Aksi</th>

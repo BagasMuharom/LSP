@@ -17,12 +17,12 @@
             </div>
             
             <div class="form-group row">
-                <label class="col-lg-4">NIP</label>
+                <label class="col-lg-4">MET</label>
                 <div class="col-lg-8">
-                    <input type="text" v-model="input.nip" class="form-control">
+                    <input type="text" v-model="input.met" class="form-control">
 
-                    <p class="alert alert-danger mt-3" v-if="errors.nip != undefined">
-                        {{ errors.nip[0] }}
+                    <p class="alert alert-danger mt-3" v-if="errors.met != undefined">
+                        {{ errors.met[0] }}
                     </p>
                 </div>
             </div>
@@ -113,7 +113,7 @@ export default {
         return {
             input: {
                 nama: '',
-                nip: '',
+                met: '',
                 email: '',
                 password: '',
                 password_confirmation: '',
