@@ -57,7 +57,7 @@
                             </tr>
                             </thead>
                             <tbody id="listkriteria-{{ $elemen->id }}">
-                            @foreach($elemen->getKriteria(false) as $kriteria)
+                            @foreach($elemen->getKriteria()->orderBy('id')->get() as $kriteria)
                                 <tr>
                                     <th>
                                         <textarea name="unjuk_kerja[]" class="form-control" rows="4"

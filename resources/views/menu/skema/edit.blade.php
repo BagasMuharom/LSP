@@ -174,7 +174,7 @@
             </tr>
             </thead>
             <tbody id="list-unit">
-            @foreach($skema->getSkemaUnit()->orderBy('kode')->get() as $unit)
+            @foreach($skema->getSkemaUnit(false) as $unit)
             <tr>
                 <th><input class="form-control" type="text" name="kodeunit[]" value="{{ $unit->kode }}" required></th>
                 <th><input class="form-control" type="text" name="namaunit[]" value="{{ $unit->nama }}" required></th>

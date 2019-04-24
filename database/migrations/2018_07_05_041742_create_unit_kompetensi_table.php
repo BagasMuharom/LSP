@@ -17,9 +17,7 @@ class CreateUnitKompetensiTable extends Migration
             $table->increments('id');
             $table->string('kode')
                 ->unique();
-            $table->string('nama')
-                ->unique()
-                ->index();
+            $table->string('nama');
             $table->softDeletes();
         });
     }
