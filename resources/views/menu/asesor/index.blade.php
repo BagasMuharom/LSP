@@ -33,7 +33,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>NIP</th>
+                <th>MET</th>
                 <th>Nama</th>
                 <th>Jumlah Skema</th>
                 <th>Aksi</th>

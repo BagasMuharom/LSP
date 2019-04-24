@@ -12,7 +12,7 @@
             @slot('title', 'Data Pengguna ' . $asesor->nama)
                 <b>Nama</b>
                 <p>{{ $asesor->nama }}</p>
-                <b>NIP</b>
+                <b>MET</b>
                 <p>{{ $asesor->nip }}</p>
                 <b>E-mail</b>
                 <p>{{ $asesor->email }}</p>

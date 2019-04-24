@@ -124,7 +124,7 @@
 
             @if(GlobalAuth::getAttemptedGuard() == 'user')
                 @formgroup            
-                    <label>NIP/NIDN</label>
+                    <label>MET</label>
                     <input type="text" class="form-control" value="{{ GlobalAuth::user()->nip }}" disabled>
                 @endformgroup
             @endif
