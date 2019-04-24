@@ -84,8 +84,8 @@ class CreateUjiTable extends Migration
             $table->boolean('tidak_melanjutkan_asesmen')
                 ->default(false);
             $table->timestamps();
-            $table->json('helper');
-            $table->boolean('lulus');
+            $table->json('helper')->nullable();
+            $table->boolean('lulus')->nullable();
         });
     }
 
