@@ -73,9 +73,11 @@ class UjiController extends Controller
             ]);
         }
 
-        foreach ($request->bukti_kompetensi_nama as $index => $namaBukti) {
-            $filename = ucwords($namaBukti) . '.' . $request->file('bukti_kompetensi_file')[$index]->getClientOriginalExtension();
-            $request->file('bukti_kompetensi_file')[$index]->storeAs('public/bukti_kompetensi/' . $uji->id, $filename);
+        if ($request->has('bukti_kompetensi_nama')) {
+            foreach ($request->bukti_kompetensi_nama as $index => $namaBukti) {
+                $filename = ucwords($namaBukti) . '.' . $request->file('bukti_kompetensi_file')[$index]->getClientOriginalExtension();
+                $request->file('bukti_kompetensi_file')[$index]->storeAs('public/bukti_kompetensi/' . $uji->id, $filename);
+            }
         }
 
         return response()->json([
