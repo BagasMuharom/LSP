@@ -76,7 +76,7 @@ class MahasiswaPageController extends Controller
         $daftarJurusan = $fakultas->getJurusan(false);
         $daftarProdi = $jurusan->getProdi(false);
         $daftarMandiriEvent = $mahasiswa->getMahasiswaMandiriEvent(false);
-        $daftarEventMandiri = Dana::where('nama', 'Mandiri')->first()->getEvent(false)->whereNotIn('id', $daftarMandiriEvent->pluck('id')->toArray());
+        $daftarEventMandiri = is_null(Dana::where('nama', 'Mandiri')->first()) ? collect([]) : Dana::where('nama', 'Mandiri')->first()->getEvent(false)->whereNotIn('id', $daftarMandiriEvent->pluck('id')->toArray());
 
         return view('menu.mahasiswa.detail', [
             'mahasiswa' => $mahasiswa,
