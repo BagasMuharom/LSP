@@ -9,3 +9,9 @@
     {!! session('error') !!}
     @endalert
 @endif
+
+@if(session()->has('warning'))
+    @alert(['type' => 'warning'])
+    {!! session('warning') !!}
+    @endalert
+@endif

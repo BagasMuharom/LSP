@@ -56,4 +56,13 @@ class UnitKompetensi extends Model
     {
         return (UnitKompetensi::where('kode', $kode)->count() > 0);
     }
+
+    /**
+     * @param $kode
+     * @return bool
+     */
+    public static function isAvailableInTrash($kode)
+    {
+        return (UnitKompetensi::withTrashed()->where('kode', $kode)->count() > 0);
+    }
 }

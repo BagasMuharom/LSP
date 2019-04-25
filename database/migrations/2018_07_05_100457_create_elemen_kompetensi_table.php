@@ -23,9 +23,7 @@ class CreateElemenKompetensiTable extends Migration
                 ->on('unit_kompetensi')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('nama')
-                ->unique()
-                ->index();
+            $table->string('nama');
             $table->softDeletes();
         });
     }
