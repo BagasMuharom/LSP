@@ -239,8 +239,8 @@ class UjiController extends Controller
                     'rekomendasi_asesor_asesmen_diri' => 'Proses uji kompetensi dapat dilanjutkan'
                 ]);
                 
-                $uji->resetPenilaian();
-                $uji->initPenilaian();
+                if ($this->getPenilaian()->count() == 0)
+                    $uji->initPenilaian();
             }
 
         }
