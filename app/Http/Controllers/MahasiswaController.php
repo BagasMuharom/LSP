@@ -326,7 +326,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa->terverifikasi = true;
 
-        return back()->with([
+        return response()->json([
             'success' => true,
             'message' => 'Berhasil memverifikasi akun mahasiswa terkait !'
         ]);
