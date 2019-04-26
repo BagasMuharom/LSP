@@ -625,7 +625,7 @@ class Uji extends Model
                 })->whereDoesntHave('getPenilaianDiri', function ($query) {
                     $query->where('nilai', Penilaian::BELUM_KOMPETEN);
                 })
-                ->whereDoesntHave('getPenilaian')
+                // ->whereDoesntHave('getPenilaian')
                 ->where('konfirmasi_asesmen_diri', false);
                 break;
             case static::BELUM_MEMILIKI_ASESOR:

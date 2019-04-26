@@ -224,7 +224,7 @@ class UjiController extends Controller
             'catatan_asesmen_diri' => $request->catatan
         ]);
 
-        if ($request->konfirmasi) {
+        if ($request->konfirmasi == true) {
             $uji->update([
                 'konfirmasi_asesmen_diri' => true
             ]);
@@ -238,9 +238,11 @@ class UjiController extends Controller
                 $uji->update([
                     'rekomendasi_asesor_asesmen_diri' => 'Proses uji kompetensi dapat dilanjutkan'
                 ]);
+                
+                $uji->resetPenilaian();
+                $uji->initPenilaian();
             }
 
-            $uji->initPenilaian();
         }
 
         return response()->json([
