@@ -155,7 +155,11 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return $uji->getStatus()['code'] == Uji::MENGISI_ASESMEN_DIRI && ($user->hasRole(Role::SUPER_ADMIN) || $user->hasRole(Role::ADMIN));
+        return in_array($uji->getStatus()['code'], [
+            Uji::MENGISI_ASESMEN_DIRI,
+            Uji::LULUS_ASESMEN_DIRI,
+            Uji::PROSES_PENILAIAN
+        ]) && ($user->hasRole(Role::SUPER_ADMIN) || $user->hasRole(Role::ADMIN));
     }
 
     /**
