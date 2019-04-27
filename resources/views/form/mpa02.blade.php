@@ -87,7 +87,7 @@
                         <tr style="border-width: 1px">
                             <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
-                            <td>{{ $elemen->getKriteria()->first()->unjuk_kerja }}</td>
+                            <td>{{ $elemen->getKriteria()->first() }}</td>
                             <td>
                                 @if ($uji->getPenilaian()->where('id', $elemen->getKriteria()->first()->id)->first()->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                                     <b class="unicode">&#10003;</b>
