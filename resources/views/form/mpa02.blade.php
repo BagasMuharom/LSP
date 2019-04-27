@@ -84,8 +84,10 @@
                     </tr>
 
                     @foreach ($unit->getElemenKompetensi(false) as $elemen)
-                    <p>{{ $elemen->id}} {{ $elemen->nama}} {{ $elemen->deleted_at }} {{$elemen->getKriteria()->first() }}</p>
-                        {{-- <tr style="border-width: 1px">
+                        @if($elemen->getKriteria()->count() == 0)
+                            @continue
+                        @endif
+                        <tr style="border-width: 1px">
                             <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
                             <td>{{ $elemen->getKriteria()->first()->unjuk_kerja }}</td>
@@ -119,7 +121,7 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
