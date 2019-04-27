@@ -93,6 +93,7 @@
 <table class="table" id="table-uji">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Skema</th>
             <th>Nama</th>
             <th>NIM</th>
@@ -106,6 +107,9 @@
     <tbody>
         @forelse ($daftaruji as $uji)
         <tr data-id="{{ $uji->id }}">
+            <td>
+                <b>{{ $uji->id }}</b>
+            </td>
             <td>
                 {{ $uji->getSkema(false)->nama }} ({{ $uji->getEvent(false)->getDana(false)->nama }})
                 <br>

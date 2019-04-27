@@ -73,9 +73,11 @@ class UjiController extends Controller
             ]);
         }
 
-        foreach ($request->bukti_kompetensi_nama as $index => $namaBukti) {
-            $filename = ucwords($namaBukti) . '.' . $request->file('bukti_kompetensi_file')[$index]->getClientOriginalExtension();
-            $request->file('bukti_kompetensi_file')[$index]->storeAs('public/bukti_kompetensi/' . $uji->id, $filename);
+        if ($request->has('bukti_kompetensi_nama')) {
+            foreach ($request->bukti_kompetensi_nama as $index => $namaBukti) {
+                $filename = ucwords($namaBukti) . '.' . $request->file('bukti_kompetensi_file')[$index]->getClientOriginalExtension();
+                $request->file('bukti_kompetensi_file')[$index]->storeAs('public/bukti_kompetensi/' . $uji->id, $filename);
+            }
         }
 
         return response()->json([
@@ -222,7 +224,7 @@ class UjiController extends Controller
             'catatan_asesmen_diri' => $request->catatan
         ]);
 
-        if ($request->konfirmasi) {
+        if ($request->konfirmasi == true) {
             $uji->update([
                 'konfirmasi_asesmen_diri' => true
             ]);
@@ -236,9 +238,11 @@ class UjiController extends Controller
                 $uji->update([
                     'rekomendasi_asesor_asesmen_diri' => 'Proses uji kompetensi dapat dilanjutkan'
                 ]);
+                
+                if ($uji->getPenilaian()->count() == 0)
+                    $uji->initPenilaian();
             }
 
-            $uji->initPenilaian();
         }
 
         return response()->json([
