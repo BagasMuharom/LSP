@@ -84,7 +84,7 @@
                     </tr>
 
                     @foreach ($unit->getElemenKompetensi(false) as $elemen)
-                        <p>{{ $elemen->id }} {{ $elemen->nama }} {{ $elemen->getKriteria()->first()->unjuk_kerja }}</p>
+                        <p>{{ $elemen->id }} {{ $elemen->nama }} {{ $elemen->getKriteria()->first() }}</p>
                         {{-- <tr style="border-width: 1px">
                             <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
