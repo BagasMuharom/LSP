@@ -51,13 +51,27 @@ class Uji extends Model
 
     const TERVERIFIKASI_BAG_SERTIFIKASI = 4;
 
+    const BELUM_DIVERIFIKASI_ADMIN = 15;
+
+    const BELUM_DIVERIFIKASI_BAG_SERTIFIKASI = 16;
+
     const DITOLAK_BAG_SERTIFIKASI = 5;
 
     const BELUM_MEMILIKI_TUK = 6;
 
+    const BELUM_MEMILIKI_TANGGAL_UJI = 14;
+
+    const MENGISI_ASESMEN_DIRI = 12;
+
     const BELUM_MEMILIKI_ASESOR = 7;
+    
+    const LULUS_ASESMEN_DIRI = 18;
+
+    const TIDAK_LULUS_ASESMEN_DIRI = 19;
 
     const BELUM_DINILAI = 8;
+
+    const PROSES_PENILAIAN = 13;
 
     const LULUS = 9;
 
@@ -65,21 +79,7 @@ class Uji extends Model
 
     const MEMILIKI_SERTIFIKAT = 11;
 
-    const MENGISI_ASESMEN_DIRI = 12;
-
-    const PROSES_PENILAIAN = 13;
-
-    const BELUM_MEMILIKI_TANGGAL_UJI = 14;
-
-    const BELUM_DIVERIFIKASI_ADMIN = 15;
-
-    const BELUM_DIVERIFIKASI_BAG_SERTIFIKASI = 16;
-
     const TIDAK_LANJUT_ASESMEN = 17;
-
-    const LULUS_ASESMEN_DIRI = 18;
-
-    const TIDAK_LULUS_ASESMEN_DIRI = 19;
 
     /**
      * Mendapatkan admin/user yang memverifikasi uji terkait
@@ -739,7 +739,7 @@ class Uji extends Model
     public function resetPenilaianDiri()
     {
         $this->getPenilaianDiri()->newPivotStatement()
-            ->update([
+        ->where('uji_id', $this->id)->update([
                 'nilai' => null,
                 'bukti' => null,
                 'v' => null,
@@ -747,6 +747,9 @@ class Uji extends Model
                 't' => null,
                 'm' => null,
             ]);
+
+        $this->konfirmasi_asesmen_diri = false;
+        $this->save();
     }
 
     /**

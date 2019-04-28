@@ -96,6 +96,8 @@ class PenilaianPageController extends Controller
      */
     public function nilai(Uji $uji)
     {
+        GlobalAuth::authorize('penilaian', $uji);
+
         return view('menu.penilaian.nilai', [
             'uji' => $uji
         ]);

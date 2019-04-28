@@ -24,7 +24,7 @@ class UjiController extends Controller
     {
         $this->middleware([
             'auth:mhs', 'verifikasi', 'terblokir', 'syaratlengkap'
-        ])->only(['store', 'updateNilaiAsesmenDiri']);
+        ])->only(['store']);
         $this->middleware('can:create,' . Uji::class)->only('store');
         // $this->middleware('menu:uji')->except(['store', 'lihatSyarat', 'updateNilaiAsesmenDiri']);
     }
@@ -195,7 +195,7 @@ class UjiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Berhasil melakukan asesmen diri !',
-            'redirect' => route('sertifikasi.daftar')
+            'redirect' => GlobalAuth::getAttemptedGuard() == 'mhs' ? route('sertifikasi.daftar') : url()->previous()
         ]);
     }
 
@@ -440,6 +440,88 @@ class UjiController extends Controller
         return response()->file(
             storage_path('app/public/bukti_kompetensi/' . $uji->id . '/' . $bukti)
         );
+    }
+
+    /**
+     * Melakukan inisialisasi penilaian diri pada tabel 
+     * penilaian_diri untuk uji tertentu
+     *
+     * @param \App\Support\EksporUji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function inisialisasiPenilaianDiri(Uji $uji)
+    {
+        // mendapatkan daftar kriteria
+        $daftarKriteria = $uji->getPenilaianDiri(false)->pluck('id')->toArray();
+        
+        // Menghapus data
+        $uji->getPenilaianDiri()->detach($daftarKriteria);
+
+        // Inisialisasi
+        $uji->initPenilaianDiri();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menginisialisasi ulang data penilaian diri !'
+        ]);
+    }
+
+    /**
+     * Menghapus data penilaian
+     *
+     * @param \App\Support\EksporUji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusPenilaian(Uji $uji)
+    {
+        $daftarKriteria = $uji->getPenilaian(false)->pluck('id')->toArray();
+
+        $uji->getPenilaian()->detach($daftarKriteria);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menghapus data !'
+        ]);
+    }
+
+    /**
+     * Melakukan inisialisasi data penilaian pada tabel penilaian
+     * untuk uji tertentu
+     *
+     * @param \App\Support\EksporUji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function inisialisasiPenilaian(Uji $uji)
+    {
+        if ($uji->getPenilaian()->count() == 0)
+            $uji->initPenilaian();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menginisialisasi data penilaian !'
+        ]);
+    }
+
+    /**
+     * mengubah status kelulusan dari uji tertentu
+     *
+     * @param \App\Support\EksporUji $uji
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ubahStatusKelulusan(Uji $uji, Request $request)
+    {
+        $status = [
+            true, false, null
+        ];
+
+        $uji->update([
+            'lulus' => $status[$request->status]
+        ]);
+
+        return back()->with([
+            'success' => 'Berhasil mengubah status kelulusan !'
+        ]);
     }
 
 }

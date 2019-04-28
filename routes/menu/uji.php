@@ -66,9 +66,34 @@ Route::prefix('uji')->group(function () {
         'as' => 'uji.reset.penilaian'
     ]);
     
+    Route::post('inisialisasi/penilaiandiri/{uji}', [
+        'uses' => 'UjiController@inisialisasiPenilaianDiri',
+        'as' => 'uji.inisialisasi.ulang.penilaiandiri'
+    ]);
+
     Route::post('reset/penilaiandiri/{uji}', [
         'uses' => 'UjiController@resetPenilaianDiri',
         'as' => 'uji.reset.penilaiandiri'
+    ]);
+
+    Route::post('hapus/penilaian/{uji}', [
+        'uses' => 'UjiController@hapusPenilaian',
+        'as' => 'uji.hapus.penilaian'
+    ]);
+    
+    Route::post('inisialisasi/penilaian/{uji}', [
+        'uses' => 'UjiController@inisialisasiPenilaian',
+        'as' => 'uji.inisialisasi.ulang.penilaian'
+    ]);
+
+    Route::post('ubahstatuskelulusan/{uji}', [
+        'uses' => 'UjiController@ubahStatusKelulusan',
+        'as' => 'uji.ubah.status.kelulusan'
+    ]);
+
+    Route::get('troubleshoot/{uji}', [
+        'uses' => 'Pages\UjiPageController@troubleshoot',
+        'as' => 'uji.troubleshoot'
     ]);
 
     Route::prefix('cetak')->group(function () {

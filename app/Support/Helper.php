@@ -155,3 +155,10 @@ if (!function_exists('rtbrtnk')){
         ];
     }
 }
+
+if (!function_exists('booleanPrint')) {
+
+    function booleanPrint($bool) {
+        return $bool ? 'Ya' : 'Tidak';
+    }
+}

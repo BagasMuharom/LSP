@@ -16,11 +16,11 @@ class UjiPageController extends Controller
     use UjiFilter;
 
     protected $mahasiswaPage = [
-        'create', 'riwayatSertifikasi', 'asesmenDiri',
+        'create', 'riwayatSertifikasi'
     ];
 
     protected $userPage = [
-        'index',
+        'index', 'troubleshoot'
     ];
 
     protected $bothPage = [
@@ -123,6 +123,13 @@ class UjiPageController extends Controller
         ]);
     }
 
+    /**
+     * Menampilkan halaman asesmen diri untuk uji tertentu
+     * yang akan diisi oleh asesor
+     *
+     * @param \App\Models\TempatUji $uji
+     * @return \Illuminate\Http\Response
+     */
     public function asesmenDiriAsesor(Uji $uji)
     {
         GlobalAuth::authorize('asesmenDiriAsesor', $uji);
@@ -132,6 +139,19 @@ class UjiPageController extends Controller
             'skema' => $uji->getSkema(false),
             'daftarUnit' => $uji->getSkema(false)->getSkemaUnit()->with(['getElemenKompetensi', 'getElemenKompetensi.getKriteria'])->get(),
             'daftarNilai' => $uji->getPenilaianDiri(false)->pluck('pivot')->keyBy('kriteria_id')
+        ]);
+    }
+
+    /**
+     * Menampilkan halaman untuk troubleshooting
+     *
+     * @param \App\Models\TempatUji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function troubleshoot(Uji $uji)
+    {
+        return view('menu.uji.troubleshoot', [
+            'uji' => $uji
         ]);
     }
 

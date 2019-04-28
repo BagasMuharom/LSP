@@ -187,7 +187,7 @@ class UjiPolicy
     public function asesmenDiri(Authenticatable $user, Uji $uji)
     {
         if ($user instanceof User)
-            return false;
+            return $user->hasRole(Role::SUPER_ADMIN);
 
         return $uji->getMahasiswa(false)->is($user) && $uji->getStatus()['code'] == Uji::TERVERIFIKASI_BAG_SERTIFIKASI;
     }
@@ -204,7 +204,8 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return $uji->getAsesorUji()->where('id', $user->id)->count() == 1;
+        return $uji->getAsesorUji()->where('id', $user->id)->count() == 1 ||
+                $user->hasRole(Role::SUPER_ADMIN);
     }
 
     /**
@@ -351,7 +352,7 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return ($uji->getStatus()['code'] === Uji::PROSES_PENILAIAN) && $user->hasRole(Role::SUPER_ADMIN);
+        return $user->hasRole(Role::SUPER_ADMIN);
     }
     
     /**
@@ -369,7 +370,7 @@ class UjiPolicy
         return (in_array($uji->getStatus()['code'], [
             Uji::MENGISI_ASESMEN_DIRI,
             Uji::TIDAK_LULUS_ASESMEN_DIRI
-        ])) && $user->hasRole(Role::SUPER_ADMIN);
+        ])) || $user->hasRole(Role::SUPER_ADMIN);
     }
 
     /**
@@ -383,6 +384,9 @@ class UjiPolicy
     {
         if ($user instanceof Mahasiswa)
             return false;
+
+        if ($user->hasRole(Role::SUPER_ADMIN))
+            return true;
 
         return (($uji->getStatus()['code'] == Uji::LULUS_ASESMEN_DIRI || $uji->getStatus()['code'] == Uji::PROSES_PENILAIAN) && $uji->konfirmasi_penilaian_asesor == false);
     }
@@ -398,6 +402,9 @@ class UjiPolicy
     {
         if ($user instanceof Mahasiswa)
             return false;
+
+        if ($user->hasRole(Role::SUPER_ADMIN))
+            return true;
 
         return (!$uji->konfirmasi_asesmen_diri);
     }

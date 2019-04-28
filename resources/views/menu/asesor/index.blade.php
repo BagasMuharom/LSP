@@ -14,7 +14,7 @@
             <div class="col-lg-3">
                 <div class="form-group">
                     <label>Pencarian</label>
-                    <input type="text" name="keyword" class="form-control" placeholder="Ketik nama atau nip" value="{{ request()->has('keyword') ? request('keyword') : '' }}">
+                    <input type="text" name="keyword" class="form-control" placeholder="Ketik nama atau met" value="{{ request()->has('keyword') ? request('keyword') : '' }}">
                 </div>
             </div>
             <div class="col-lg-3">

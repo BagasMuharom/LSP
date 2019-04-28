@@ -165,14 +165,6 @@
                             <button class="btn btn-success mb-1" @click="simpan">Simpan</button>
                         @endif
 
-                        @can('resetPenilaian', $uji)
-                            <button class="btn btn-danger" @click="resetPenilaian">Reset Penilaian</button>
-                        @endcan
-                        
-                        @can('resetPenilaianDiri', $uji)
-                            <button class="btn btn-danger" @click="resetPenilaianDiri">Reset Penilaian Diri</button>
-                        @endcan
-
                         @can('buatSertifikat', $uji)
                             <a href="{{ route('sertifikat.tambah', ['uji' => encrypt($uji->id)]) }}" class="btn btn-success mb-1">Terbitkan Sertifikat</a>
                         @endcan
@@ -180,6 +172,8 @@
                         @can('delete', $uji)
                             <button class="btn btn-danger mb-1" @click="hapus">Hapus</button>
                         @endcan
+
+                        <a href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
                 @endslot
             @endcard
         @endcol
@@ -449,99 +443,9 @@
                         }
                     })
                 })
-            },
-
-            resetPenilaian: function (e) {
-                e.preventDefault()
-
-                swal({
-                    title: 'Apa anda yakin ?',
-                    text: 'Aksi ini tidak bisa dibatalkan',
-                    buttons: {
-                        confirm: {
-                            text: 'Yakin',
-                            closeModal: false
-                        },
-                        cancel: {
-                            text: 'Batal',
-                            visible: true
-                        }
-                    },
-                    dangerMode: true
-                }).then(function (confirm) {
-                    if (!confirm)
-                        return
-
-                    axios.post('{{ route('uji.reset.penilaian', ['uji' => encrypt($uji->id)]) }}')
-                        .then(function (response) {
-                            if (response.data.success) {
-                                swal({
-                                    title: 'Berhasil !',
-                                    text: 'Berhasil mereset penilaian'
-                                }).then(function () {
-                                    window.location.reload()
-                                })
-                            }
-                        }).catch(function (error) {
-                            swal({
-                                title: 'Ups !',
-                                text: 'Terdapat Gangguan'
-                            })
-                        })
-                })
-            },
-
-            resetPenilaianDiri: function (e) {
-                e.preventDefault()
-
-                swal({
-                    title: 'Apa anda yakin ?',
-                    text: 'Aksi ini tidak bisa dibatalkan',
-                    buttons: {
-                        confirm: {
-                            text: 'Yakin',
-                            closeModal: false
-                        },
-                        cancel: {
-                            text: 'Batal',
-                            visible: true
-                        }
-                    },
-                    dangerMode: true
-                }).then(function (confirm) {
-                    if (!confirm)
-                        return
-
-                    axios.post('{{ route('uji.reset.penilaiandiri', ['uji' => encrypt($uji->id)]) }}')
-                        .then(function (response) {
-                            if (response.data.success) {
-                                swal({
-                                    title: 'Berhasil !',
-                                    text: 'Berhasil mereset penilaian diri'
-                                }).then(function () {
-                                    window.location.reload()
-                                })
-                            }
-                        }).catch(function (error) {
-                            if (error.response) {
-                                if (error.response.status == 500) {
-                                    swal({
-                                        title: 'Ups !',
-                                        text: 'Terdapat gangguan pada server !',
-                                        icon: 'danger'
-                                    })
-                                }
-                                else if (error.response.status == 404) {
-                                    swal({
-                                        title: 'Ups !',
-                                        text: 'Pastikan anda terkoneksi internet !'
-                                    })
-                                }
-                            }
-                        })
-            
-                })
             }
+            // end function
+
         }
     })
 </script>
