@@ -173,7 +173,7 @@
                             <button class="btn btn-danger mb-1" @click="hapus">Hapus</button>
                         @endcan
 
-                        <a href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
+                        <a target="__blank" href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
                 @endslot
             @endcard
         @endcol
