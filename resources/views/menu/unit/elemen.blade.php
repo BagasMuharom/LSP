@@ -20,9 +20,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th width="7%">No</th>
+            <th width="4%">No</th>
             <th width="70%">Nama</th>
-            <th width="23%">Aksi</th>
+            <th width="18%">Jumlah Kriteria</th>
+            <th width="18%">Aksi</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,9 @@
                     <input type="text" class="form-control" value="{{ $elemen->nama }}" id="nama-elemen-{{ $elemen->id }}" required>
                 </td>
                 <td>
+                    {{ $elemen->getKriteria()->count() }}
+                </td>
+                <td>
                     <div class="btn-group">
                         <button onclick="event.preventDefault(); update('{{ $ei = encrypt($elemen->id) }}', $('#nama-elemen-{{ $elemen->id }}').val())" class="btn btn-success btn-sm">Simpan</button>
                         <a href="" href="#" id="show_{{ $elemen->id }}" class="btn btn-info btn-sm">Lihat Kriteria</a>
@@ -43,7 +47,7 @@
                 </td>
             </tr>
             <tr id="extra_{{ $elemen->id }}" style="display: none">
-                <td colspan="3">
+                <td colspan="4">
                     <form action="{{ route('unit.elemen.kriteria.update') }}" method="post">
                         @csrf
                         <input type="hidden" name="elemen_id" value="{{ encrypt($elemen->id) }}">
