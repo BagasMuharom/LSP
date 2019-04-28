@@ -1,6 +1,7 @@
 <?php
 
-Route::group(['prefix' => 'penilaian'], function (){
+Route::group(['prefix' => 'penilaian'], function () {
+
     Route::get('', [
         'uses' => 'Pages\PenilaianPageController@index',
         'as' => 'penilaian'
@@ -20,4 +21,10 @@ Route::group(['prefix' => 'penilaian'], function (){
         'uses' => 'PenilaianController@konfirmasi',
         'as' => 'penilaian.konfirmasi'
     ]);
+    
+    Route::post('batalkan-konfirmasi/{uji}', [
+        'uses' => 'PenilaianController@batalkanKonfirmasi',
+        'as' => 'penilaian.batalkan.konfirmasi'
+    ]);
+
 });

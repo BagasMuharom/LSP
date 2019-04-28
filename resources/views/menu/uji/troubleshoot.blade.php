@@ -242,6 +242,20 @@
                     <p>
                         {{ booleanPrint($uji->konfirmasi_penilaian_asesor) }}
                     </p>
+
+                    @can('konfirmasiPenilaian', $uji)
+                    <form action="{{ route('penilaian.konfirmasi', ['uji' => encrypt($uji->id)]) }}" method="POST">
+                        @csrf
+                        <button class="btn btn-success">Konfirmasi Penilaian</button>
+                    </form>
+                    @endif
+
+                    @if($uji->konfirmasi_penilaian_asesor)
+                    <form action="{{ route('penilaian.batalkan.konfirmasi', ['uji' => encrypt($uji->id)]) }}" method="POST">
+                        @csrf
+                        <button class="btn btn-success">Batalkan Konfirmasi</button>
+                    </form>
+                    @endif
                 </div>
                 @endformgroup
 
@@ -293,7 +307,7 @@
     @endrow
 @endsection
 
-@push('js')
+@push('js') 
 <script>
 new Vue({
     el: '#penilaian_diri',
@@ -524,7 +538,7 @@ new Vue({
                         })
                     })
             })
-        }
+        },
         // end function
     }
 })

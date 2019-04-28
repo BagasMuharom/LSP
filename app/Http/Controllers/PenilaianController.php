@@ -54,6 +54,12 @@ class PenilaianController extends Controller
         ]);
     }
 
+    /**
+     * Melakukan konfirmasi penilaian terhadap uji tertentu
+     *
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
     public function konfirmasi(Uji $uji)
     {
         if ($uji->isFinished()) {
@@ -97,4 +103,20 @@ class PenilaianController extends Controller
 
         return back()->with('error', 'Penilaian belum selesai');
     }
+
+    /**
+     * Membatalkan konfirmasi penilaian pada uji tertentu
+     *
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function batalkanKonfirmasi(Uji $uji)
+    {
+        $uji->update([
+            'konfirmasi_penilaian_asesor' => false
+        ]);
+
+        return back()->with('success', 'Berhasil membatalkan konfirmasi !');
+    }
+
 }
