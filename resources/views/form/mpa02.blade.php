@@ -84,7 +84,9 @@
                     </tr>
 
                     @foreach ($unit->getElemenKompetensi(false) as $elemen)
-                        @if($elemen->getKriteria()->count() > 0)
+                        @if($elemen->getKriteria()->count() == 0 || is_null($uji->getPenilaian()->where('id', $elemen->getKriteria()->first()->id)->first()))
+                            @continue
+                        @endif
                         <tr style="border-width: 1px">
                             <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
@@ -120,7 +122,6 @@
                                 <td></td>
                             </tr>
                         @endforeach
-                        @endif
                     @endforeach
                 </tbody>
             </table>
