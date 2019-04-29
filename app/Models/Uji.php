@@ -725,7 +725,7 @@ class Uji extends Model
     public function resetPenilaian()
     {
         $this->getPenilaian()->newPivotStatement()
-            ->update([
+        ->where('uji_id', $this->id)->update([
                 'nilai' => null,
                 'bukti' => null,
             ]);

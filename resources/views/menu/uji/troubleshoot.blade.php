@@ -126,7 +126,7 @@
                     <p>
                         {{ $uji->getPenilaianDiri()->whereNull('nilai')->count() > 0 ? 'Ya' : 'Tidak' }}
                     </p>
-                    <a target="__blank" class="btn btn-warning" href="{{ route('sertifikasi.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Isi Asesmen Diri (Mahasiswa)</a>
+                    <a target="_blank" class="btn btn-warning" href="{{ route('sertifikasi.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Isi Asesmen Diri (Mahasiswa)</a>
                 </div>
             @endformgroup
 
@@ -142,7 +142,7 @@
                         ->orWhereNotNull('t')
                         ->orWhereNotNull('bukti')->count() > 0) }}
                     </p>
-                    <a target="__blank" class="btn btn-warning" href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}">Isi Asesmen Diri (Asesor)</a>
+                    <a target="_blank" class="btn btn-warning" href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}">Isi Asesmen Diri (Asesor)</a>
                 </div>
             @endformgroup
 
@@ -230,7 +230,7 @@
                     <p>
                         {{ booleanPrint($uji->getPenilaian()->whereNull('nilai')->count() > 0) }}
                     </p>
-                    <a target="__blank" href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Isi Penilaian</a>
+                    <a target="_blank" href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Isi Penilaian</a>
                 </div>
                 @endformgroup
                 
