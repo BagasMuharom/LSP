@@ -55,7 +55,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Unjuk kerja</th>
+                                <th>Kriteria Unjuk kerja</th>
                                 <th>Pertanyaan</th>
                                 <th>Aksi</th>
                             </tr>
