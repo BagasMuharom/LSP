@@ -171,6 +171,7 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|min:6|max:255',
+            'nim' => 'required|max:11',
             'email' => 'required|string|email|unique:mahasiswa,email,' . $mahasiswa->nim . ',nim',
             'prodi' => 'required|numeric|exists:prodi,id',
             'nik' => 'required|numeric|digits:16|unique:mahasiswa,nik,' . $mahasiswa->nim . ',nim',
@@ -181,6 +182,7 @@ class MahasiswaController extends Controller
         ]);
 
         $mahasiswa->update([
+            'nim' => $request->nim,
             'nama' => $request->nama,
             'email' => $request->email,
             'prodi_id' => $request->prodi,

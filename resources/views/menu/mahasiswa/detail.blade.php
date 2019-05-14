@@ -39,7 +39,7 @@
                         <label class="col-lg-3">NIM</label>
                         <div class="col-lg-9">
                             <p v-show="!editMode">@{{ mahasiswa.nim }}</p>
-                            <input v-show="editMode" type="text" name="nim" class="form-control" v-model="mahasiswa.nim" disabled>
+                            <input v-show="editMode" type="text" name="nim" class="form-control" v-model="mahasiswa.nim">
                         </div>
                     @endformgroup
                     
@@ -363,6 +363,7 @@
 
                 axios.post(this.url.edit, {
                     nama: that.mahasiswa.nama,
+                    nim: that.mahasiswa.nim,
                     email: that.mahasiswa.email,
                     prodi: that.input.prodi.id,
                     nik: that.mahasiswa.nik,
