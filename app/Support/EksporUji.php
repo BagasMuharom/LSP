@@ -93,7 +93,7 @@ final class EksporUji {
                 ->setCellValue('B' . $index, $mahasiswa->nama)
                 ->setCellValue('C' . $index, $mahasiswa->nik)
                 ->setCellValue('D' . $index, $mahasiswa->tempat_lahir)
-                ->setCellValue('E' . $index, $mahasiswa->tanggal_lahir)
+                ->setCellValue('E' . $index, $mahasiswa->tgl_lahir)
                 ->setCellValue('F' . $index, $mahasiswa->jenis_kelamin)
                 ->setCellValue('G' . $index, $mahasiswa->alamat)
                 ->setCellValue('H' . $index, $mahasiswa->kabupaten)
