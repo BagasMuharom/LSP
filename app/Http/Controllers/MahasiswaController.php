@@ -327,6 +327,7 @@ class MahasiswaController extends Controller
     public function verifikasiAkun(Mahasiswa $mahasiswa)
     {
         $mahasiswa->terverifikasi = true;
+        $mahasiswa->save();
 
         return response()->json([
             'success' => true,
