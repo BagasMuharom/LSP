@@ -34,21 +34,21 @@ class EventController extends Controller
             'tgl_uji' => 'required'
         ]);
 
-        if ($event->isFinished())
-            return back()->with('error', 'Anda tidak bisa merubah data event yang telah selesai');
+//        if ($event->isFinished())
+//            return back()->with('error', 'Anda tidak bisa merubah data event yang telah selesai');
 
         $kolom = [];
 
-        if ($event->isAkanDatang()){
+//        if ($event->isAkanDatang()){
             $event->skema_id = $request->skema_id;
             $event->dana_id = $request->dana_id;
             array_push($kolom, 'skema', 'dana');
-        }
+//        }
 
-        if (!$event->isOnGoing() && !$event->isFinished()){
+//        if (!$event->isOnGoing() && !$event->isFinished()){
             $event->tgl_mulai_pendaftaran = $request->tgl_mulai_pendaftaran;
             array_push($kolom, 'tanggal mulai pendaftaran');
-        }
+//        }
 
         $event->tgl_akhir_pendaftaran = $request->tgl_akhir_pendaftaran;
         $event->tgl_uji = $request->tgl_uji;
