@@ -36,7 +36,7 @@ class UnitPageController extends Controller
     {
         try{
             $unit = UnitKompetensi::findOrFail(decrypt($request->id));
-            $data = $unit->getElemenKompetensi()->orderBy('id')->paginate(10);
+            $data = $unit->getElemenKompetensi()->orderBy('id')->get();
             return view('menu.unit.elemen', [
                 'data' => $data,
                 'unit' => $unit,

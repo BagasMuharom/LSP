@@ -13,7 +13,7 @@
     @endslot
 
     @alert(['type' => 'info'])
-    Terdapat {{ $data->total() }} elemen
+    Terdapat {{ $data->count() }} elemen
     @endalert
 
     @slot('table')
