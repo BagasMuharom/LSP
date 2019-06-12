@@ -320,10 +320,10 @@ class UjiController extends Controller
         ]);
         $pdf->setPaper('A4');
 
-        // return view('form.mpa02', [
-        //     'uji' => $uji,
-        //     'skema' => $uji->getSkema(false)
-        // ]);
+        return view('form.mpa02', [
+            'uji' => $uji,
+            'skema' => $uji->getSkema(false)
+        ]);
 
         return $pdf->stream();
     }
