@@ -30,7 +30,7 @@
         @foreach($data as $elemen)
             <tr>
                 <td>
-                    {{ ($data->currentpage() * $data->perpage()) + (++$no) - $data->perpage()  }}
+                    {{ ++$no }}
                 </td>
                 <td>
                     <input type="text" class="form-control" value="{{ $elemen->nama }}" id="nama-elemen-{{ $elemen->id }}" required>
