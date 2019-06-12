@@ -42,10 +42,10 @@
                                 <td>:</td>
                                 <td>{{ (($mhs->jenis_kelamin == 'P') ? 'Perempuan' : 'Laki-laki') ?? '-' }}</td>
 
-                                <td>Tempat/Tgl. Lahir</td>
+                                <td>Tempat/Tgl. Lahir/Umur</td>
                                 <td>:</td>
                                 <td>{{ $mhs->tempat_lahir ?? '-' }}
-                                    / {{ formatDate(\Carbon\Carbon::parse($mhs->tgl_lahir), true, false) ?? '-' }}</td>
+                                    / {{ formatDate(\Carbon\Carbon::parse($mhs->tgl_lahir), true, false) ?? '-' }} / {{ \Carbon\Carbon::parse($mhs->tgl_lahir)->age.' tahun' ?? '-' }}</td>
 
                                 <td>PJP</td>
                                 <td>:</td>
