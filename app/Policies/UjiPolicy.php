@@ -417,6 +417,9 @@ class UjiPolicy
      */
     public function troubleshoot(Authenticatable $user)
     {
+        if ($user instanceof Mahasiswa)
+            return false;
+            
         if ($user->hasRole(Role::SUPER_ADMIN))
             return true;
 
