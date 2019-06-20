@@ -42,17 +42,17 @@ class UjiPolicy
         if ($user instanceof User)
             return false;
 
-        foreach ($user->getUji(false) as $uji) {
-            if(!in_array($uji->getStatus()['code'], [
-                Uji::DITOLAK_ADMIN,
-                Uji::DITOLAK_BAG_SERTIFIKASI,
-                Uji::LULUS,
-                Uji::TIDAK_LULUS,
-                Uji::MEMILIKI_SERTIFIKAT
-            ])) {
-                return false;
-            }
-        }
+        // foreach ($user->getUji(false) as $uji) {
+        //     if(!in_array($uji->getStatus()['code'], [
+        //         Uji::DITOLAK_ADMIN,
+        //         Uji::DITOLAK_BAG_SERTIFIKASI,
+        //         Uji::LULUS,
+        //         Uji::TIDAK_LULUS,
+        //         Uji::MEMILIKI_SERTIFIKAT
+        //     ])) {
+        //         return false;
+        //     }
+        // }
 
         return true;
     }
