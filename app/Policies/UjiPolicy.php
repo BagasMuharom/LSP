@@ -409,4 +409,18 @@ class UjiPolicy
         return (!$uji->konfirmasi_asesmen_diri);
     }
 
+    /**
+     * Mengecek apakah user bisa melakukan troubleshoot
+     *
+     * @param \Illuminate\Foundation\Auth\User $user
+     * @return boolean
+     */
+    public function troubleshoot(Authenticatable $user)
+    {
+        if ($user->hasRole(Role::SUPER_ADMIN))
+            return true;
+
+        return false;
+    }
+
 }

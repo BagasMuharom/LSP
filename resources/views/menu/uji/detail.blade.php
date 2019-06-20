@@ -173,7 +173,9 @@
                             <button class="btn btn-danger mb-1" @click="hapus">Hapus</button>
                         @endcan
 
+                        @can('troubleshoot', \App\Models\Uji::class)
                         <a target="__blank" href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
+                        @endcan
                 @endslot
             @endcard
         @endcol
@@ -239,13 +241,13 @@
                     <a class="btn btn-primary mb-1" target="_blank" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Cetak Form Asesmen Diri</a>
                 @endcan
 
-                {{-- @can('cetakMak02', $uji) --}}
+                @can('cetakMak02', $uji)
                     <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 02</a>
-                {{-- @endif --}}
+                @endif
                 
-                {{-- @can('cetakMpa02', $uji) --}}
+                @can('cetakMpa02', $uji)
                     <a href="{{ route('uji.cetak.mpa02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MPA 02</a>
-                {{-- @endif --}}
+                @endif
 
                 @can('cetakKuesioner', $uji)
                     <a href="{{ route('sertifikat.kuesioner.cetak', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-primary mb-1" target="_blank">Cetak Kuesioner</a>
