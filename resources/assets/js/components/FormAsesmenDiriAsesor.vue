@@ -267,7 +267,7 @@
                 for (let unit of this.daftarUnit) {
                     for (let elemen of unit.get_elemen_kompetensi) {
                         for (let kriteria of elemen.get_kriteria) {
-                            if (this.nilai[kriteria.id].bukti == '')
+                            if (this.nilai[kriteria.id].bukti == '' || this.nilai[kriteria.id].bukti === null)
                                 this.nilai[kriteria.id].bukti = 'Transkrip Nilai'
                         }
                     }
