@@ -262,7 +262,10 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return $uji->konfirmasi_penilaian_asesor;
+        return (in_array($uji->getStatus()['code'], [
+            Uji::LULUS,
+            Uji::TIDAK_LULUS
+        ]));
     }
     
     /**
@@ -277,7 +280,10 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return $uji->konfirmasi_penilaian_asesor;
+        return (in_array($uji->getStatus()['code'], [
+            Uji::LULUS,
+            Uji::TIDAK_LULUS
+        ]));
     }
 
     /**
