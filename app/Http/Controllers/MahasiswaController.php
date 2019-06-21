@@ -170,7 +170,7 @@ class MahasiswaController extends Controller
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
         $request->validate([
-            'nama' => 'required|string|min:6|max:255',
+            'nama' => 'required|string|min:3',
             'nim' => 'required|max:11',
             'email' => 'required|string|email|unique:mahasiswa,email,' . $mahasiswa->nim . ',nim',
             'prodi' => 'required|numeric|exists:prodi,id',
@@ -178,7 +178,8 @@ class MahasiswaController extends Controller
             'pekerjaan' => 'required|string',
             'pendidikan' => 'required|string',
             'kabupaten' => 'required|string',
-            'provinsi' => 'required|string'
+            'provinsi' => 'required|string',
+            'jenis_kelamin' => 'required|string'
         ]);
 
         $mahasiswa->update([
@@ -190,7 +191,8 @@ class MahasiswaController extends Controller
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
             'kabupaten' => $request->kabupaten,
-            'provinsi' => $request->provinsi
+            'provinsi' => $request->provinsi,
+            'jenis_kelamin' => $request->jenis_kelamin
         ]);
 
         return response()->json([

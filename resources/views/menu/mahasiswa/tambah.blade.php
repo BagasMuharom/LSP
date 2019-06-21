@@ -47,6 +47,21 @@
                         <input type="text" name="email" id="email" class="form-control" required>
                     </div>
                 @endformgroup
+                
+                @formgroup(['name' => 'jenis_kelamn', 'row' => true])
+                    <label class="col-lg-4 text-right">Jenis Kelamin</label>
+                    <div class="col-lg-8">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="laki_laki" value="L" name="jenis_kelamin" class="custom-control-input">
+                            <label class="custom-control-label" for="laki_laki">Laki-laki</label>
+                        </div>
+                        
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="perempuan" value="P" name="jenis_kelamin" class="custom-control-input">
+                            <label class="custom-control-label" for="perempuan">Perempuan</label>
+                        </div>
+                    </div>
+                @endformgroup
 
                 @formgroup(['name' => 'prodi_id', 'row' => true])
                     <label class="col-lg-4 text-right">Prodi</label>
