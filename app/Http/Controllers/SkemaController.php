@@ -66,16 +66,19 @@ class SkemaController extends Controller
                 'qualification' => $request->qualification
             ]);
 
-            if (TempatUji::check($request->tempat_uji_kode)) {
-                $skema->tempat_uji_id = TempatUji::findByKode($request->tempat_uji_kode)->id;
-            } else {
+            try{
+                $tu = TempatUji::query()->findOrFail($request->tempat_uji_id);
+                $tu->kode = $request->tempat_uji_kode;
+                $tu->nama = $request->tempat_uji_nama;
+                $tu->save();
+            } catch (ModelNotFoundException $exception){
                 $tu = TempatUji::create([
                     'kode' => strtoupper($request->tempat_uji_kode),
                     'nama' => $request->tempat_uji_nama,
                     'jurusan_id' => $request->tempat_uji_jurusan_id
                 ]);
-                $skema->tempat_uji_id = $tu->id;
             }
+            $skema->tempat_uji_id = $tu->id;
             $skema->save();
 
             $skema->getSkemaUnit()->detach();
@@ -101,7 +104,7 @@ class SkemaController extends Controller
             }
 
             return back()->with($tipe, $pesan);
-        } catch (MethodNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
             return back()->with('error', 'Data tidak ditemukan!');
         }
     }

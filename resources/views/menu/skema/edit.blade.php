@@ -133,6 +133,7 @@
         @formgroup
         <label>Kode</label>
         <input class="form-control" name="tempat_uji_kode" value="{{ $skema->hasTempatUji() ? $skema->getTempatUji(false)->kode : '' }}" required>
+        <input type="hidden" name="tempat_uji_id" value="{{ $skema->hasTempatUji() ? $skema->getTempatUji(false)->id : '' }}">
         @endformgroup
         @endcol
 
