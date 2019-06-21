@@ -29,6 +29,10 @@
         @alert(['type' => 'info'])
             Persyaratan berikut digunakan ketika anda melakukan pendaftaran sertifikasi, sehingga tidak perlu mengunggah file yang sama setiap kali mendaftar, sehingga pastikan persyaratan berikut sesuai dan diubah setiap terdapat perubahan.
         @endalert
+        
+        @alert(['type' => 'warning'])
+            Pastikan ukuran file tidak lebih dari 1MB.
+        @endalert
         <form action="{{ route('mahasiswa.unggah.syarat') }}" method="post" enctype="multipart/form-data">
             @csrf
 
