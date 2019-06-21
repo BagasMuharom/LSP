@@ -1,6 +1,6 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
-        <ul class="nav">
+        <ul class="nav" style="padding-bottom: 50px">
             <li class="nav-title">
                 ANDA LOGIN SEBAGAI
                 <br>
