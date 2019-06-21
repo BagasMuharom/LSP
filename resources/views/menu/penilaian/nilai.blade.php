@@ -26,6 +26,8 @@
         .signature-pad {
             border: 1px solid #888888;
             display: block;
+            width: 300px;
+            height: 150px;
         }
     </style>
 @endpush

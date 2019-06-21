@@ -86,7 +86,7 @@
     Jumlah data : <b>{{ $total }}</b> 
 </p>
 
-<table class="table" id="table-uji">
+<table class="table table-responsive" id="table-uji">
     <thead>
         <tr>
             <th>Skema</th>
