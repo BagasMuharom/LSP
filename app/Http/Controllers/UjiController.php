@@ -401,6 +401,13 @@ class UjiController extends Controller
 
         $uji->resetPenilaian();
 
+        $uji->update([
+            'rekomendasi_asesor' => null,
+            'saran_tindak_lanjut' => null,
+            'umpan_balik' => null,
+            'identifikasi_kesenjangan' => null
+        ]);
+
         return response()->json([
             'success' => true
         ]);
@@ -478,6 +485,13 @@ class UjiController extends Controller
 
         $uji->getPenilaian()->detach($daftarKriteria);
 
+        $uji->update([
+            'rekomendasi_asesor' => null,
+            'saran_tindak_lanjut' => null,
+            'umpan_balik' => null,
+            'identifikasi_kesenjangan' => null
+        ]);
+
         return response()->json([
             'success' => true,
             'message' => 'Berhasil menghapus data !'
@@ -495,6 +509,13 @@ class UjiController extends Controller
     {
         if ($uji->getPenilaian()->count() == 0)
             $uji->initPenilaian();
+
+        $uji->update([
+            'rekomendasi_asesor' => null,
+            'saran_tindak_lanjut' => null,
+            'umpan_balik' => null,
+            'identifikasi_kesenjangan' => null
+        ]);
 
         return response()->json([
             'success' => true,

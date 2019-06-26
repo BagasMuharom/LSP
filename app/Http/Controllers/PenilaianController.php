@@ -28,7 +28,7 @@ class PenilaianController extends Controller
 
         DB::transaction(function () use ($request, $uji, $nilai) {
             $uji->ttd_peserta = $request->ttd_asesi;
-            $uji->rekomendasi_asesor = $request->rekomendasi_asesor;
+            $uji->rekomendasi_asesor = str_replace(array("\r\n", "\r", "\n"), "<br />", $request->rekomendasi_asesor);
             $helper = $uji->helper;
             $helper['nilai_unit'] = json_decode($request->nilai_unit, true);
             $uji->helper = $helper;
@@ -86,10 +86,10 @@ class PenilaianController extends Controller
                     }
                 }
 
-                $uji->saran_tindak_lanjut = "Perlu dilakukan asesmen ulang pada :\nKode dan Judul Unit Kompetensi :\n";
+                $uji->saran_tindak_lanjut = "Perlu dilakukan asesmen ulang pada :<br/>Kode dan Judul Unit Kompetensi :<br/>";
                 $counter = 1;
                 foreach ($uji->getUnitYangBelumKompeten(false) as $unit) {
-                    $uji->saran_tindak_lanjut = $uji->saran_tindak_lanjut . "{$counter}. {$unit->kode} ({$unit->nama})\n";
+                    $uji->saran_tindak_lanjut = $uji->saran_tindak_lanjut . "{$counter}. {$unit->kode} ({$unit->nama})<br/";
                     $counter++;
                 }
 

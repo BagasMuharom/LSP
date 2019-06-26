@@ -328,17 +328,33 @@
             },
 
             mounted: function () {
-                for (var asesor of this.daftar_asesor){
-                    this.signature.asesor[asesor.id] = new SignaturePad(document.getElementById('ttd-asesor' + asesor.id), {
+                let ratio = Math.max(window.devicePixelRatio || 1, 1)
+
+                for (var asesor of this.daftar_asesor) {
+                    let canvas = document.getElementById('ttd-asesor' + asesor.id)
+                    
+                    this.signature.asesor[asesor.id] = new SignaturePad(canvas, {
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         penColor: 'rgb(0, 0, 0)'
                     });
+
+                    canvas.width = canvas.offsetWidth * ratio
+                    canvas.height = canvas.offsetHeight * ratio
+                    canvas.getContext("2d").scale(ratio, ratio)
+
                     this.signature.asesor[asesor.id].fromDataURL(asesor.pivot.ttd)
                 }
-                this.signature.asesi = new SignaturePad(document.getElementById('ttd-asesi'), {
+
+                let canvas_asesi = document.getElementById('ttd-asesi')
+
+                this.signature.asesi = new SignaturePad(canvas_asesi, {
                     backgroundColor: 'rgba(255, 255, 255, 0)',
                     penColor: 'rgb(0, 0, 0)'
                 });
+
+                canvas_asesi.width = canvas_asesi.offsetWidth * ratio
+                canvas_asesi.height = canvas_asesi.offsetHeight * ratio
+                canvas_asesi.getContext("2d").scale(ratio, ratio)
                 this.signature.asesi.fromDataURL("{{ $uji->ttd_peserta }}")
 
                 this.initUnitYangSelesai()
