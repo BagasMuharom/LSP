@@ -317,7 +317,7 @@
                 centangSemuaUnitNilai: null,
                 nilai: @json($uji->getPenilaian(false)->pluck('pivot')->keyBy('kriteria_id')),
                 nilaiUnit: @json($uji->helper['nilai_unit']),
-                rekomendasi_asesor: '{{ $uji->rekomendasi_asesor }}',
+                rekomendasi_asesor: '{!! str_replace('<br />', '\n', $uji->rekomendasi_asesor) !!}',
                 ttd_asesor: '',
                 ttd_peserta: '',
                 daftar_asesor: @json($uji->getAsesorUji(false)),
