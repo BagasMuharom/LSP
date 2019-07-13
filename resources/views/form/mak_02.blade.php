@@ -140,7 +140,7 @@
             <tr>
                 <td width="40%" rowspan="{{ (($uji->getAsesorUji()->count() * 3) + 5) }}">
                     <b>Rekomendasi Asesor :</b><br>
-                    Peserta direkomendasikan <b>Kompeten/Belum Kompeten *)</b> pada <b>skema sertifikasi/Klaster Asesmen *)</b> yang diujikan ({{ $uji->getSkema(false)->nama }})
+                    Peserta direkomendasikan <b>{!! $uji->isLulus() ? 'Kompeten' : '<del>Kompeten</del>' !!}/{!! !$uji->isLulus() ? 'Belum Kompeten' : '<del>Belum Kompeten</del>' !!} *)</b> pada <b>Skema sertifikasi/Klaster Asesmen *)</b> yang diujikan ({{ $uji->getSkema(false)->nama }})
                 </td>
                 <td colspan="2" class="text-center"><b>Asesor</b></td>
             </tr>
@@ -156,7 +156,9 @@
                 <tr>
                     <td>Tanda Tangan & Tanggal</td>
                     <td>
-                        <img width="200" src="{{ $asesor->pivot->ttd }}">
+                        @if($asesor->getTTD(false)->count() > 0)
+                        <img width="200" src="{{ $asesor->getTTD(false)->random()->ttd }}">
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -174,8 +176,9 @@
             <tr>
                 <td>Tanda Tangan & Tanggal</td>
                 <td class="text-center">
-                    <img width="200" src="{{ $uji->ttd_peserta }}" class="img-responsive">
-                    <br>
+                    @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
+                    <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}" class="img-responsive">
+                    @endif
                     {{-- {{ formatDate($uji->updated_at) }} --}}
                 </td>
             </tr>

@@ -9,6 +9,10 @@
     .custom-file-label::after {
         display: none;
     }
+    .signature-pad {
+        border: 1px solid #888888;
+        display: block;
+    }
 </style>
 @endpush
 
@@ -203,4 +207,77 @@
         @endcard
     @endcol
 @endrow
+
+<h4>Tanda Tangan</h4>
+
+@row
+<div class="col-md-4" id="ttd-container">
+    @card
+        @slot('title', 'Tambahkan Tanda Tangan Baru')
+
+        <canvas id="tambah-ttd" class="signature-pad"></canvas>
+
+        <button id="btn-tambah-ttd" class="btn btn-primary">Tambah</button>
+        <button id="btn-reset-ttd" class="btn btn-primary">Reset</button>
+    @endcard
+</div>
+
+@foreach (GlobalAuth::user()->getTTD(false) as $ttd)
+    <div class="col-md-4" id="ttd-container">
+    @card
+        @slot('title', 'Tanda Tangan')
+        <form action="{{ route('ttd.hapus', ['id' => $ttd->id]) }}" method="post">
+            @csrf
+            <img src="{{ $ttd->ttd }}">
+            <button type="submit" class="btn btn-outline-danger">Hapus</button>
+        </form>
+    @endcard
+    </div>
+@endforeach
+
+@endrow
+
 @endsection
+
+@push('js')
+<script src="{{ asset('js/signature_pad.min.js') }}"></script>
+<script>
+
+function setRatio(canvas) {
+    let ratio = Math.max(window.devicePixelRatio || 1, 1)
+
+    canvas.width = canvas.offsetWidth * ratio
+    canvas.height = canvas.offsetHeight * ratio
+    canvas.getContext("2d").scale(ratio, ratio)
+}
+
+let tambah_tdd = document.getElementById('tambah-ttd')
+tambah_ttd_sp = new SignaturePad(tambah_tdd, {
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    penColor: 'rgb(0, 0, 0)'
+})
+
+setRatio(tambah_tdd)
+
+$('#btn-reset-ttd').click(function () {
+    tambah_ttd_sp.clear()
+})
+
+$('#btn-tambah-ttd').click(function () {
+    axios.post('{{ route('ttd.tambah') }}', {
+        'ttd' : tambah_ttd_sp.toDataURL()
+    }).then(function (response) {
+        if (response.data.success) {
+            swal({
+                icon: 'success',
+                title: 'Berhasil',
+                text: response.data.message
+            }).then(confirm => {
+                window.location.reload()
+            })
+        }
+    })
+})
+
+</script>
+@endpush

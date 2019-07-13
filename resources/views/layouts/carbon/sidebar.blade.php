@@ -50,6 +50,12 @@
             </li>
             @endif
 
+            <li class="nav-item">
+                <a href="{{ route('pengaturan.akun') }}" class="nav-link {{ Route::currentRouteName() === 'pengaturan.akun' ? 'active' : '' }}">
+                    <i class="icon icon-settings"></i> Pengaturan Akun
+                </a>
+            </li>
+
         </ul>
     </nav>
 </div>

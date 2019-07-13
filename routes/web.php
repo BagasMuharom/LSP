@@ -68,6 +68,16 @@ Route::post('ubahkatasandi', [
     'as' => 'ubah.kata.sandi'
 ]);
 
+Route::post('tambah-ttd', [
+    'uses' => 'TTDController@store',
+    'as' => 'ttd.tambah'
+]);
+
+Route::post('hapus-ttd/{id}', [
+    'uses' => 'TTDController@destroy',
+    'as' => 'ttd.hapus'
+]);
+
 // Mendapatkan daftar syarat dari skema tertentu
 Route::post('skema/daftar-syarat', [
     'uses' => 'SkemaController@getDaftarSyarat',

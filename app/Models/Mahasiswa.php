@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\{Skema, Sertifikat, Event, Dana};
+use App\Models\{Sertifikat, Event, Dana, TTDMahasiswa};
 use GlobalAuth;
 
 class Mahasiswa extends Authenticatable
@@ -128,6 +128,19 @@ class Mahasiswa extends Authenticatable
         $query = Sertifikat::getFromMahasiswa($this, $queryReturn);
 
         return $query;
+    }
+
+    /**
+     * Mendapatkan TTD untuk mahasiswa tertentu
+     *
+     * @param boolean $queryreturn
+     * @return mixed
+     */
+    public function getTTD($queryreturn = true)
+    {
+        $relasi = $this->hasMany(TTDMahasiswa::class, 'mahasiswa_nim');
+
+        return $queryreturn ? $relasi : $relasi->get();
     }
 
 }

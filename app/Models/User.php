@@ -135,4 +135,17 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Mendapatkan relasi terhadap tabel TTD user
+     *
+     * @param boolean $queryreturn
+     * @return mixed
+     */
+    public function getTTD($queryreturn = true)
+    {
+        $relasi = $this->hasMany(TTDUser::class, 'user_id');
+
+        return $queryreturn ? $relasi : $relasi->get();
+    }
+
 }
