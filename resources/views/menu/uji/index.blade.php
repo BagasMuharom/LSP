@@ -162,7 +162,7 @@
             filter: {
                 status: {{ request()->has('status') ? request('status') : 7 }},
                 keyword: '{{ request()->has('keyword') ? request('keyword') : '' }}',
-                skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find(request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
+                skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find((int) request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
             },
             input: {
                 keyword_skema: ''

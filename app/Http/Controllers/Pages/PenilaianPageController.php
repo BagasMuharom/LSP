@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\Facades\GlobalAuth;
+use Illuminate\Database\QueryException;
 
 class PenilaianPageController extends Controller
 {
@@ -31,9 +32,13 @@ class PenilaianPageController extends Controller
                 $query->orWhereHas('getMahasiswa', function ($query) use ($request) {
                     $query->where('nama', 'ILIKE', "%{$request->q}%");
                 });
+            })->when((int) $request->skema > 0, function ($query) use ($request) {
+                $query->whereHas('getEvent', function ($query) use ($request) {
+                    $query->where('skema_id', (int) $request->skema);
+                });
             })
             ->paginate(10)
-            ->appends($request->only('q'));
+            ->appends($request->only(['q', 'status', 'skema']));
             
         return view('menu.penilaian.index', [
             'data' => $data,

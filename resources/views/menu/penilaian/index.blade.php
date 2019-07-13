@@ -9,7 +9,7 @@
 
     @card(['title' => 'Mahasiswa yang belum dinilai'])
 
-    <form action="{{ url()->current() }}">
+    <form action="{{ url()->current() }}" id="filter">
 
         <div class="row">
             <div class="col-md-auto col-sm-12 mt-1">
@@ -23,6 +23,23 @@
                     @endforeach
 
                 </select>
+            </div>
+
+            <div class="col-md-auto mt-1">
+                <div class="form-group" style="position: relative">
+                    <input type="hidden" name="skema" v-model="filter.skema.id">
+                    <div class="dropdown dropdown-suggest">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="choosed">@{{ filter.skema.nama }}</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <input type="text" class="form-control" v-model="input.keyword_skema" @keyup="ubahOpsiDaftarSkema">
+                            <div style="max-height: 150px;overflow-y:scroll;">
+                            <a href="#" :key="skema.id" v-for="skema in daftarSkema" class="dropdown-item" @click.prevent="ubahOpsiSkema($event, skema)">@{{ skema.nama }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-auto col-sm-12 mt-1">
@@ -115,5 +132,39 @@
             }
         })
     }
+
+        new Vue({
+        el: '#filter',
+        data: {
+            url: {
+                daftar_skema: '{{ route('skema.daftar') }}',
+            },
+            filter: {
+                skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find((int) request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
+            },
+            input: {
+                keyword_skema: ''
+            },
+            daftarSkema: [{id: -1, nama: 'Semua Skema'}]
+        },
+        methods: {
+            ubahOpsiDaftarSkema: function (e) {
+                let that = this
+
+                axios.post(this.url.daftar_skema, {
+                    keyword: that.input.keyword_skema
+                }).then(function (response) {
+                    if (response.data.length > 0) {
+                        that.daftarSkema = response.data
+                    }
+                }).catch(function (error) {
+
+                })
+            },
+            ubahOpsiSkema: function (e, skema) {
+                this.filter.skema = skema
+            }
+        }
+    })
 </script>
 @endpush
