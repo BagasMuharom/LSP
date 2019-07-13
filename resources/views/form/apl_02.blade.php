@@ -228,7 +228,11 @@
         <table border="1" class="full">
             <tr>
                 <td rowspan="3" width="50%" class="top bold">
-                    Rekomendasi Asesor : 
+                    Rekomendasi Asesor : <br>
+                    1. {{ $uji->rekomendasi_asesor_asesmen_diri }} <br>
+                    2. Proses Asesmen dilanjutkan melalui : <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b style="border: 1px solid #000;" class="unicode">{!! $uji->proses_asesmen == 'Asesmen Portofolio' ? '&#10003;' : '' !!}</b> Asesmen Portofolio <br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b style="border: 1px solid #000;" class="unicode">{!! $uji->proses_asesmen == 'Uji Kompetensi' ? '&#10003;' : '&nbsp;&nbsp;' !!}</b> Uji Kompetensi
                 </td>
                 <td colspan="2" class="bold center">Peserta</td>
             </tr>
@@ -239,8 +243,8 @@
             <tr>
                 <td>Tanda tangan/<br>Tanggal</td>
                 <td>
-                    @if(!is_null($uji->ttd_peserta))
-                        <img style="width: 150px" src="{{ $uji->ttd_peserta }}" class="img-responsive">
+                    @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
+                        <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}" class="img-responsive">
                     @endif
                 </td>
             </tr>
@@ -267,8 +271,8 @@
             <tr>
                 <td>Tanda tangan/<br>Tanggal</td>
                 <td>
-                    @if(!is_null($asesor->pivot->ttd))
-                        <img src="{{ $asesor->pivot->ttd }}" class="img-responsive">
+                    @if($asesor->getTTD(false)->count() > 0)
+                        <img width="200" src="{{ $asesor->getTTD(false)->random()->ttd }}">
                     @endif
                 </td>
             </tr>

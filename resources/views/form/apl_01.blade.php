@@ -228,7 +228,13 @@
             </tr>
         </thead>
         <tbody>
+            @php
+            $total = 5;
+            @endphp
             @foreach ($persyaratan as $syarat)
+            @php
+            $total--;
+            @endphp
             <tr>
                 <td>{{ $loop->iteration + 2 }}</td>
                 <td>{{ $syarat->nama }}</td>
@@ -237,6 +243,16 @@
                 <td></td>
             </tr>
             @endforeach
+
+            @for($i = 1; $i <= $total; $i++)
+                <tr>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                </tr>
+            @endfor
         </tbody>
     </table>
 
@@ -257,7 +273,14 @@
             </tr>
         </thead>
         <tbody>
+            @php
+            $total = 3;
+            @endphp
+
             @foreach ($uji->getBuktiKompetensi() as $file => $bukti)
+            @php
+            $total--;
+            @endphp
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $bukti }}</td>
@@ -265,6 +288,15 @@
                     <td></td>
                 </tr>
             @endforeach
+
+            @for($i = 1; $i <= $total; $i++)
+                <tr>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                </tr>
+            @endfor
         </tbody>
     </table>
 
@@ -274,9 +306,9 @@
         <tbody>
             <tr>
                 <td rowspan="3" width="50%">
-                        <b>Rekomendasi (diisi oleh LSP):</b><br>
-                        Berdasarkan ketentuan persyaratan dasar pemohon, maka pemohon: 
-                        Diterima sebagai peserta sertifikasi
+                    <b>Rekomendasi (diisi oleh LSP):</b><br>
+                    Berdasarkan ketentuan persyaratan dasar pemohon, maka pemohon: 
+                    Diterima sebagai peserta sertifikasi
                 </td>
                 <td colspan="2">
                     <b>Pemohon : </b>
@@ -291,10 +323,8 @@
             <tr>
                 <td>Tanda tangan/Tanggal</td>
                 <td>
-                    @if(!is_null($uji->ttd_peserta))
-                        <img src="{{ $uji->ttd_peserta }}">
-                    @else
-                        <br><br>
+                    @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
+                        <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}" class="img-responsive">
                     @endif
                 </td>                    
             </tr>

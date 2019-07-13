@@ -28,7 +28,6 @@ class Uji extends Model
         'identifikasi_kesenjangan',
         'saran_tindak_lanjut',
         'rekomendasi_asesor',
-        'ttd_peserta',
         'rekomendasi_asesor_asesmen_diri',
         'catatan_asesmen_diri',
         'tanggal_uji',
@@ -36,7 +35,8 @@ class Uji extends Model
         'konfirmasi_penilaian_asesor',
         'konfirmasi_asesmen_diri',
         'helper',
-        'lulus'
+        'lulus',
+        'proses_asesmen'
     ];
 
     protected $casts = [

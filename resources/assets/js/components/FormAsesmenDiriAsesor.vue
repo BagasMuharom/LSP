@@ -118,6 +118,19 @@
             </tbody>
         </table>
 
+        <div class="card-body">
+            <label>Proses Asesmen dilanjutkan melalui :</label>
+            <div class="custom-control custom-control-lg custom-radio">
+                <input v-model="uji.proses_asesmen" name="proses_asesmen" type="radio" value="Asesmen Portofolio" class="custom-control-input" id="asesmen_portofolio">
+                <label class="custom-control-label disabled" for="asesmen_portofolio">Asesmen Portofolio</label>
+            </div>
+            
+            <div class="custom-control custom-control-lg custom-radio mt-3">
+                <input v-model="uji.proses_asesmen" name="proses_asesmen" type="radio" value="Uji Kompetensi" class="custom-control-input" id="uji_kompetensi">
+                <label class="custom-control-label disabled" for="uji_kompetensi">Uji Kompetensi</label>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col">
                 <div class="form-group p-3">
@@ -229,7 +242,8 @@
                     axios.post(that.$parent.url.asesmendiri, {
                         nilai: that.nilai,
                         catatan: that.uji.catatan_asesmen_diri,
-                        konfirmasi: konfirmasi
+                        konfirmasi: konfirmasi,
+                        proses_asesmen: that.uji.proses_asesmen
                     }).then(response => {
                         if (response.data.success) {
                             swal({

@@ -221,7 +221,8 @@ class UjiController extends Controller
         }
 
         $uji->update([
-            'catatan_asesmen_diri' => $request->catatan
+            'catatan_asesmen_diri' => $request->catatan,
+            'proses_asesmen' => $request->proses_asesmen
         ]);
 
         if ($request->konfirmasi == true) {
@@ -231,12 +232,12 @@ class UjiController extends Controller
 
             if ($uji->isTidakLulusPenilaianDiri()) {
                 $uji->update([
-                    'rekomendasi_asesor_asesmen_diri' => 'Proses uji kompetensi tidak dapat dilanjutkan dan perlu dilakukan kaji ulang.'
+                    'rekomendasi_asesor_asesmen_diri' => 'Asesmen tidak dapat dilanjutkan dan perlu dilakukan kaji ulang.'
                 ]);
             }
             else {
                 $uji->update([
-                    'rekomendasi_asesor_asesmen_diri' => 'Proses uji kompetensi dapat dilanjutkan'
+                    'rekomendasi_asesor_asesmen_diri' => 'Asesmen dapat dilanjutkan'
                 ]);
                 
                 if ($uji->getPenilaian()->count() == 0)
