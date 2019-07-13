@@ -155,10 +155,8 @@
                 </tr>
                 <tr>
                     <td>Tanda Tangan & Tanggal</td>
-                    <td class="text-center">
-                        <img width="200" src="{{ $asesor->pivot->ttd }}" class="img-responsive">
-                        <br>
-                        {{-- {{ formatDate($uji->updated_at) }} --}}
+                    <td>
+                        <img width="200" src="{{ $asesor->pivot->ttd }}">
                     </td>
                 </tr>
             @endforeach

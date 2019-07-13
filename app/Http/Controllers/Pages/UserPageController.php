@@ -30,7 +30,7 @@ class UserPageController extends Controller
             'colorlist' => [
                 'primary', 'warning', 'danger', 'success'
             ],
-            'total' => $daftarUser->count()
+            'total' => $daftarUser->paginate(20)->count()
         ]);
     }
 

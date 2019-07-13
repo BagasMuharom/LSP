@@ -267,8 +267,8 @@
             <tr>
                 <td>Tanda tangan/<br>Tanggal</td>
                 <td>
-                    @if(!is_null($uji->getAsesorUji()->where('id', $asesor->id)->first()->ttd))
-                        <img src="{{ $uji->getAsesorUji()->where('id', $asesor->id)->first()->ttd }}" class="img-responsive">
+                    @if(!is_null($asesor->pivot->ttd))
+                        <img src="{{ $asesor->pivot->ttd }}" class="img-responsive">
                     @endif
                 </td>
             </tr>

@@ -367,7 +367,7 @@
                     swal({
                         icon: 'warning',
                         title: 'Apa anda yakin ?',
-                        text: 'Anda tidak bisa mengedit setelah mengirim asesmen diri',
+                        text: 'Anda tidak bisa mengedit setelah mengirim penilaian',
                         buttons: {
                             confirm: {
                                 text: 'Yakin',
@@ -379,6 +379,9 @@
                             }
                         }
                     }).then(confirm => {
+                        if (!confirm)
+                            return
+                            
                         let data = new FormData()
                         data.append('nilai', JSON.stringify(that.nilai))
                         data.append('nilai_unit', JSON.stringify(that.nilaiUnit))
@@ -403,7 +406,7 @@
                                 swal({
                                     icon: 'danger',
                                     title: 'Gagal',
-                                    text: 'Gagal mengirim asesmen diri. Mohon ulangi beberapa saat lagi'
+                                    text: 'Gagal mengirim penilaian. Mohon ulangi beberapa saat lagi'
                                 })
                             }
                         })

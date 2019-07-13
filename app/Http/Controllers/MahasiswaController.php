@@ -179,7 +179,11 @@ class MahasiswaController extends Controller
             'pendidikan' => 'required|string',
             'kabupaten' => 'required|string',
             'provinsi' => 'required|string',
-            'jenis_kelamin' => 'required|string'
+            'jenis_kelamin' => 'required|string',
+            'alamat' => 'required|string',
+            'tgl_lahir' => 'required',
+            'tempat_lahir' => 'required|string',
+            'no_telepon' => 'required'
         ]);
 
         $mahasiswa->update([
@@ -188,11 +192,15 @@ class MahasiswaController extends Controller
             'email' => $request->email,
             'prodi_id' => $request->prodi,
             'nik' => $request->nik,
+            'alamat' => $request->alamat,
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
             'kabupaten' => $request->kabupaten,
             'provinsi' => $request->provinsi,
-            'jenis_kelamin' => $request->jenis_kelamin
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tgl_lahir' => $request->tgl_lahir,
+            'tempat_lahir' => $request->tempat_lahir,
+            'no_telepon' => $request->no_telepon
         ]);
 
         return response()->json([

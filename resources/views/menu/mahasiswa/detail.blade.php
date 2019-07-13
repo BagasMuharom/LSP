@@ -61,6 +61,23 @@
                             </p>
                         </div>
                     @endformgroup
+
+                    @formgroup(['row' => true])
+                        <label class="col-lg-3">Jenis Kelamin</label>
+                        <div class="col-lg-9">
+                            <p v-show="!editMode">@{{ mahasiswa.jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki' }}</p>
+
+                            <div v-show="editMode" class="custom-control custom-radio">
+                                <input type="radio" id="laki_laki" value="L" name="jenis_kelamin" class="custom-control-input" v-model="mahasiswa.jenis_kelamin">
+                                <label class="custom-control-label" for="laki_laki">Laki-laki</label>
+                            </div>
+                            
+                            <div v-show="editMode" class="custom-control custom-radio">
+                                <input type="radio" id="perempuan" value="P" name="jenis_kelamin" class="custom-control-input" v-model="mahasiswa.jenis_kelamin">
+                                <label class="custom-control-label" for="perempuan">Perempuan</label>
+                            </div>
+                        </div>
+                    @endformgroup
                     
                     @formgroup(['row' => true])
                         <label class="col-lg-3">Alamat</label>
@@ -371,6 +388,11 @@
                     pendidikan: that.mahasiswa.pendidikan,
                     kabupaten: that.mahasiswa.kabupaten,
                     provinsi: that.mahasiswa.provinsi,
+                    alamat: that.mahasiswa.alamat,
+                    tgl_lahir: that.mahasiswa.tgl_lahir,
+                    jenis_kelamin: that.mahasiswa.jenis_kelamin,
+                    no_telepon: that.mahasiswa.no_telepon,
+                    tempat_lahir: that.mahasiswa.tempat_lahir,
                     '_method': 'put'
                 }).then(function (response) {
                     that.sedangMenyimpan = false
