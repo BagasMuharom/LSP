@@ -80,31 +80,31 @@
             </tr>
             @foreach($skema->getSkemaUnit(false) as $unit)
                 <tr>
-                    <td rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">{{ $loop->iteration }}</td>
+                    <td style="text-align: center" rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">{{ $loop->iteration }}</td>
                     <td rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">
                         {{ $unit->kode }} dan {{ $unit->nama }}
                     </td>
                     <td>Rekaman hasil observasi</td>
-                    <td>L</td>
-                    <td>
+                    <td style="text-align: center">L</td>
+                    <td style="text-align: center">
                         <b class="unicode">{!! !in_array($unit->id, $uji->getUnitYangBelumKompeten(false)->pluck('id')->toArray()) ? '&#10003;' : '' !!}</b>
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         <b class="unicode">{!! in_array($unit->id, $uji->getUnitYangBelumKompeten(false)->pluck('id')->toArray()) ? '&#10003;' : '' !!}</b>
                     </td>
-                    <td rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">
+                    <td style="text-align: center" rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">
                         <b class="unicode">{!! !in_array($unit->id, $uji->getUnitYangBelumLulus(false)->pluck('id')->toArray()) ? '&#10003;' : '' !!}</b>
                     </td>
-                    <td rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">
+                    <td style="text-align: center" rowspan="{{ count($uji->getBuktiUnitTertentu($unit)) + 1 }}">
                         <b class="unicode">{!! in_array($unit->id, $uji->getUnitYangBelumLulus(false)->pluck('id')->toArray()) ? '&#10003;' : '' !!}</b>
                     </td>
                 </tr>
                 @foreach ($uji->getBuktiUnitTertentu($unit) as $bukti => $nilai)
                     <tr>
                         <td>Rekaman hasil {{ $bukti }}</td>
-                        <td>T</td>
-                        <td><b class="unicode">{!! $nilai === 'K' ? '&#10003;' : '' !!}</b></td>
-                        <td><b class="unicode">{!! $nilai === 'BK' ? '&#10003;' : '' !!}</b></td>
+                        <td style="text-align: center">T</td>
+                        <td style="text-align: center"><b class="unicode">{!! $nilai === 'K' ? '&#10003;' : '' !!}</b></td>
+                        <td style="text-align: center"><b class="unicode">{!! $nilai === 'BK' ? '&#10003;' : '' !!}</b></td>
                     </tr>
                 @endforeach
                 
@@ -123,7 +123,7 @@
         <tr>
             <td>
                 <b>Identifikasi kesenjangan pencapaian unjuk kerja :</b><br>
-                {!! $uji->identifikasi_kesenjangan !!}
+                {!! str_replace('\\', ':', $uji->identifikasi_kesenjangan) !!}
             </td>
         </tr>
         
@@ -140,7 +140,7 @@
             <tr>
                 <td width="40%" rowspan="{{ (($uji->getAsesorUji()->count() * 3) + 5) }}">
                     <b>Rekomendasi Asesor :</b><br>
-                    Peserta direkomendasikan <b>{!! $uji->isLulus() ? 'Kompeten' : '<del>Kompeten</del>' !!}/{!! !$uji->isLulus() ? 'Belum Kompeten' : '<del>Belum Kompeten</del>' !!} *)</b> pada <b>Skema sertifikasi/Klaster Asesmen *)</b> yang diujikan ({{ $uji->getSkema(false)->nama }})
+                    {!! $uji->rekomendasi_asesor !!}
                 </td>
                 <td colspan="2" class="text-center"><b>Asesor</b></td>
             </tr>

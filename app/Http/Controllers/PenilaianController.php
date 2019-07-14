@@ -71,17 +71,20 @@ class PenilaianController extends Controller
                 $uji->identifikasi_kesenjangan = 'Tidak ada kesenjangan';
                 $uji->saran_tindak_lanjut = 'Agar memelihara kompetensi yang telah dicapai';
                 $uji->lulus = true;
+                $uji->rekomendasi_asesor = "Asesi direkomendasikan <b>Kompeten</b> pada <b>skema {$uji->getSkema(false)->nama}</b>";
             } else {
                 $uji->umpan_balik = 'Terdapat Elemen Kompetensi/Kriteria Unjuk Kerja (KUK) yang diujikan belum tercapai';
 
                 $uji->identifikasi_kesenjangan = "Ditemukan kesenjangan pencapaian, sebagai berikut pada :<br/>";
+
+                $uji->rekomendasi_asesor = "Asesi direkomendasikan <b>Belum Kompeten</b> pada <b>skema {$uji->getSkema(false)->getJenis(false)->nama}</b><br>Asesmen yang diajukan (<b>{$uji->getSkema(false)->nama}</b>)";
 
                 foreach ($uji->getUnitYangBelumKompeten(false) as $unit) {
                     $uji->identifikasi_kesenjangan = $uji->identifikasi_kesenjangan . "{$unit->kode} ({$unit->nama})<br/>";
 
                     foreach ($uji->getElemenYangBelumKompeten($unit, false) as $elemen) {
                         foreach ($uji->getKriteriaYangBelumKompeten($elemen, false) as $kriteria) {
-                            $uji->identifikasi_kesenjangan = $uji->identifikasi_kesenjangan . "> {$elemen->nama} \ {$kriteria->unjuk_kerja}<br/>";
+                            $uji->identifikasi_kesenjangan = $uji->identifikasi_kesenjangan . "> {$elemen->nama} : {$kriteria->unjuk_kerja}<br/>";
                         }
                     }
                 }
