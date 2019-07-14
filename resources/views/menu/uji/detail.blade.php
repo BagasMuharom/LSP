@@ -238,7 +238,7 @@
                 <a class="btn btn-primary mb-1" href="{{ route('uji.cetak.apl01', ['uji' => encrypt($uji->id)]) }}" target="_blank">Cetak Form APL 01</a>
 
                 @can('cetakFormAsesmenDiri', $uji)
-                    <a class="btn btn-primary mb-1" target="_blank" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Cetak Form Asesmen Diri</a>
+                    <a class="btn btn-primary mb-1" target="_blank" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Cetak Form APL 02</a>
                 @endcan
 
                 @can('cetakMak02', $uji)

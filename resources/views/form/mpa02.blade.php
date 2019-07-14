@@ -69,7 +69,7 @@
 
             <table style="page-break-after: always" class="table-full table-border table-pd-5" border="1">
                 <tbody>
-                    <tr class="text-bold">
+                    <tr class="text-bold" style="text-align: center;">
                         <td rowspan="2">No.</td>
                         <td rowspan="2">Langkah Kerja</td>
                         <td rowspan="2">Poin yang diobservasi</td>
@@ -91,7 +91,7 @@
                             <td class="bb-hide">{{ $loop->iteration }}</td>
                             <td class="bb-hide">{{ $elemen->nama }}</td>
                             <td>{{ $elemen->getKriteria()->first()->unjuk_kerja }}</td>
-                            <td>
+                            <td style="text-align: center;">
                                 @if ($uji->getPenilaian()->where('id', $elemen->getKriteria()->first()->id)->first()->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                                     <b class="unicode">&#10003;</b>
                                 @endif
@@ -108,12 +108,12 @@
                                 <td class="bt-hide bb-hide"></td>
                                 <td class="bt-hide bb-hide"></td>
                                 <td>{{ $kriteria->unjuk_kerja }}</td>
-                                <td>
+                                <td style="text-align: center">
                                     @if ($penilaian->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                                     <b class="unicode">&#10003;</b>
                                     @endif
                                 </td>
-                                <td>
+                                <td style="text-align: center">
                                     @if ($penilaian->pivot->nilai == App\Support\Penilaian::BELUM_KOMPETEN)
                                     <b class="unicode">&#10003;</b>
                                     @endif
@@ -143,8 +143,9 @@
                 <tr>
                     <td>Tanda Tangan & Tanggal</td>
                     <td class="text-center">
-                        <img width="200" src="{{ $asesor->pivot->ttd }}" class="img-responsive">
-                        <br>
+                        @if($asesor->getTTD(false)->count() > 0)
+                        <img width="200" src="{{ $asesor->getTTD(false)->random()->ttd }}">
+                        @endif
                         {{-- {{ formatDate($uji->updated_at) }} --}}
                     </td>
                 </tr>
@@ -163,8 +164,9 @@
             <tr>
                 <td>Tanda Tangan & Tanggal</td>
                 <td class="text-center">
-                    <img width="200" src="{{ $uji->ttd_peserta }}" class="img-responsive">
-                    <br>
+                    @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
+                    <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}" class="img-responsive">
+                    @endif
                     {{-- {{ formatDate($uji->updated_at) }} --}}
                 </td>
             </tr>

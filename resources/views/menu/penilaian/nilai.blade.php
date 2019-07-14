@@ -233,7 +233,7 @@
                         <td>
                             @formgroup
                             <label>Umpan balik terhadap pencapaian unjuk kerja</label>
-                            <textarea class="form-control" rows="5" disabled></textarea>
+                            <textarea class="form-control" rows="2" disabled></textarea>
                             @endformgroup
                         </td>
                     </tr>
@@ -241,7 +241,7 @@
                         <td>
                             @formgroup
                             <label>Identifikasi kesenjangan pencapaian unjuk kerja</label>
-                            <textarea class="form-control" rows="5" disabled></textarea>
+                            <textarea class="form-control" rows="2" disabled></textarea>
                             @endformgroup
                         </td>
                     </tr>
@@ -249,46 +249,24 @@
                         <td>
                             @formgroup
                             <label>Saran tindak lanjut hasil asesmen</label>
-                            <textarea class="form-control" rows="5" disabled></textarea>
+                            <textarea class="form-control" rows="2" disabled></textarea>
                             @endformgroup
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <tr>
-                        <td rowspan="2" width="60%">
-                            @formgroup
-                            <label>Rekomendasi Asesor</label>
-                            <textarea class="form-control" v-model="rekomendasi_asesor" rows="20"></textarea>
-                            @endformgroup
-                        </td>
-                        <td width="40%">
-                            <template v-for="asesor in daftar_asesor">
-                            <br>
-                            <br>
-                            Tanda Tangan Asesor @{{ asesor.nama }}
-                            <br>
-                            <canvas :id="'ttd-asesor' + asesor.id" class="signature-pad" width="300" height="150"></canvas>
-                                <button class="btn btn-primary" @click="signature.asesor[asesor.id].clear()">Hapus</button>
-                            </template>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Tanda Tangan Peserta
-                            <br>
-                            <canvas id="ttd-asesi" class="signature-pad" width="300" height="150"></canvas>
-                            <button class="btn btn-primary" @click="signature.asesi.clear()">Hapus</button>
+                            @formgroup
+                            <label>Rekomendasi Asesor</label>
+                            <textarea class="form-control" rows="2" disabled>
+                            </textarea>
+                            @endformgroup
                         </td>
                     </tr>
                 </table>
             </div>
 
             <div class="card-footer border border-left-0 border-right-0 border-bottom-0 bg-light">
-                <button class="btn btn-success" @click="kirim">Beri Penilaian</button>
+                <button class="btn btn-success btn-lg" @click="kirim">Beri Penilaian</button>
             </div>
 
         </div>
@@ -317,46 +295,11 @@
                 centangSemuaUnitNilai: null,
                 nilai: @json($uji->getPenilaian(false)->pluck('pivot')->keyBy('kriteria_id')),
                 nilaiUnit: @json($uji->helper['nilai_unit']),
-                rekomendasi_asesor: '{!! str_replace('<br />', '\n', $uji->rekomendasi_asesor) !!}',
-                ttd_asesor: '',
-                ttd_peserta: '',
-                daftar_asesor: @json($uji->getAsesorUji(false)),
-                signature: {
-                    asesor: {},
-                    asesi: null
-                }
+                {{-- rekomendasi_asesor: '{!! str_replace('<br />', '\n', $uji->rekomendasi_asesor) !!}', --}}
+                daftar_asesor: @json($uji->getAsesorUji(false))
             },
 
             mounted: function () {
-                let ratio = Math.max(window.devicePixelRatio || 1, 1)
-
-                for (var asesor of this.daftar_asesor) {
-                    let canvas = document.getElementById('ttd-asesor' + asesor.id)
-                    
-                    this.signature.asesor[asesor.id] = new SignaturePad(canvas, {
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                        penColor: 'rgb(0, 0, 0)'
-                    });
-
-                    canvas.width = canvas.offsetWidth * ratio
-                    canvas.height = canvas.offsetHeight * ratio
-                    canvas.getContext("2d").scale(ratio, ratio)
-
-                    this.signature.asesor[asesor.id].fromDataURL(asesor.pivot.ttd)
-                }
-
-                let canvas_asesi = document.getElementById('ttd-asesi')
-
-                this.signature.asesi = new SignaturePad(canvas_asesi, {
-                    backgroundColor: 'rgba(255, 255, 255, 0)',
-                    penColor: 'rgb(0, 0, 0)'
-                });
-
-                canvas_asesi.width = canvas_asesi.offsetWidth * ratio
-                canvas_asesi.height = canvas_asesi.offsetHeight * ratio
-                canvas_asesi.getContext("2d").scale(ratio, ratio)
-                this.signature.asesi.fromDataURL("{{ $uji->ttd_peserta }}")
-
                 this.initUnitYangSelesai()
             },
 
@@ -385,12 +328,8 @@
                         let data = new FormData()
                         data.append('nilai', JSON.stringify(that.nilai))
                         data.append('nilai_unit', JSON.stringify(that.nilaiUnit))
-                        data.append('rekomendasi_asesor', that.rekomendasi_asesor)
+                        {{-- data.append('rekomendasi_asesor', that.rekomendasi_asesor) --}}
 
-                        for (let asesor of that.daftar_asesor)
-                            data.append('ttd_asesor[' + asesor.id + ']', that.signature.asesor[asesor.id].toDataURL())
-
-                        data.append('ttd_asesi', that.signature.asesi.toDataURL())
                         axios.post(that.url.penilaian, data).then(response => {
                             if (response.data.success) {
                                 swal({
