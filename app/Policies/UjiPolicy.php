@@ -125,6 +125,9 @@ class UjiPolicy
 
     public function buatSertifikat(Authenticatable $user, Uji $uji)
     {
+        if ($user instanceof Mahasiswa)
+            return false;
+            
         return ($uji->isLulus() && is_null($uji->getSertifikat(false)));
     }
 
