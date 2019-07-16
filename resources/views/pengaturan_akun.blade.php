@@ -123,64 +123,6 @@
         @endcard
         @endif
 
-        @card
-        @slot('title', 'Pengaturan Akun')
-
-        <form action="{{ route('pengaturan.akun') }}" method="post">
-
-            @csrf
-
-            @if(GlobalAuth::getAttemptedGuard() == 'user')
-                @formgroup            
-                    <label>MET</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->nip }}" disabled>
-                @endformgroup
-            @endif
-            
-            @if(GlobalAuth::getAttemptedGuard() == 'mhs')
-                @formgroup            
-                    <label>NIM</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->nim }}" disabled>
-                @endformgroup
-                
-                @formgroup            
-                    <label>NIK</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->nik }}" disabled>
-                @endformgroup
-                
-                @formgroup            
-                    <label>Alamat</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->alamat }}">
-                @endformgroup
-               
-                @formgroup            
-                    <label>No. telepon</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->no_telepon }}">
-                @endformgroup
-            @endif
-            
-            @formgroup(['name' => 'nama'])      
-                <label>Nama</label>
-                <input @if(GlobalAuth::getAttemptedGuard() == 'mhs') name="nama" @endif type="text" class="form-control" value="{{ GlobalAuth::user()->nama }}" {{ GlobalAuth::getAttemptedGuard() == 'mhs' ? 'disabled' : '' }}>
-            @endformgroup
-            
-            @if(GlobalAuth::getAttemptedGuard() == 'mhs')
-                @formgroup          
-                    <label>Program Studi</label>
-                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->getProdi(false)->nama }}" disabled>
-                @endformgroup
-            @endif
-            
-            @formgroup(['name' => 'email'])
-                <label>Alamat E-mail</label>
-                <input type="text" class="form-control" value="{{ GlobalAuth::user()->email }}" name="email">
-            @endformgroup
-
-            <button class="btn btn-primary">Simpan</button>
-
-        </form>
-
-        @endcard
     @endcol
     
     @col(['size' => 6])
@@ -207,6 +149,73 @@
         @endcard
     @endcol
 @endrow
+
+@card
+    
+    @slot('title', 'Pengaturan Akun')
+
+    <form action="{{ route('pengaturan.akun') }}" method="post">
+
+        @csrf
+        <div class="row">
+            <div class="col-md-6">
+                @if(GlobalAuth::getAttemptedGuard() == 'user')
+                    @formgroup            
+                        <label>MET</label>
+                        <input type="text" class="form-control" value="{{ GlobalAuth::user()->nip }}" disabled>
+                    @endformgroup
+                @endif
+
+                @if(GlobalAuth::getAttemptedGuard() == 'mhs')
+                    @formgroup            
+                        <label>NIM</label>
+                        <input type="text" class="form-control" value="{{ GlobalAuth::user()->nim }}" disabled>
+                    @endformgroup
+
+                    @formgroup            
+                        <label>NIK</label>
+                        <input type="text" class="form-control" value="{{ GlobalAuth::user()->nik }}" disabled>
+                    @endformgroup
+                @endif
+
+                @formgroup(['name' => 'nama'])      
+                    <label>Nama</label>
+                    <input @if(GlobalAuth::getAttemptedGuard() == 'mhs') name="nama" @endif type="text" class="form-control" value="{{ GlobalAuth::user()->nama }}" {{ GlobalAuth::getAttemptedGuard() == 'mhs' ? 'disabled' : '' }}>
+                @endformgroup
+                
+                @formgroup(['name' => 'email'])
+                    <label>Alamat E-mail</label>
+                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->email }}" name="email">
+                @endformgroup
+            </div>
+            
+            @if(GlobalAuth::getAttemptedGuard() == 'mhs')
+                <div class="col-md-6">
+                
+                @formgroup            
+                    <label>Alamat</label>
+                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->alamat }}">
+                @endformgroup
+                
+                @formgroup            
+                    <label>No. telepon</label>
+                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->no_telepon }}">
+                @endformgroup
+                
+                @formgroup          
+                    <label>Program Studi</label>
+                    <input type="text" class="form-control" value="{{ GlobalAuth::user()->getProdi(false)->nama }}" disabled>
+                @endformgroup
+                </div>
+            @endif
+
+        </div>
+
+        <button class="btn btn-primary">Simpan</button>
+
+    </form>
+
+@endcard
 
 <h4>Tanda Tangan</h4>
 
