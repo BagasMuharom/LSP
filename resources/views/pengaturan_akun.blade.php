@@ -211,29 +211,31 @@
 <h4>Tanda Tangan</h4>
 
 @row
-<div class="col-md-4" id="ttd-container">
+{{-- <div class="col-md-4" id="ttd-container"> --}}
     @card
         @slot('title', 'Tambahkan Tanda Tangan Baru')
 
-        <canvas id="tambah-ttd" class="signature-pad"></canvas>
+        <canvas width="300" height="150" id="tambah-ttd" class="signature-pad"></canvas>
 
         <button id="btn-tambah-ttd" class="btn btn-primary">Tambah</button>
         <button id="btn-reset-ttd" class="btn btn-primary">Reset</button>
     @endcard
-</div>
+{{-- </div> --}}
 
-@foreach (GlobalAuth::user()->getTTD(false) as $ttd)
-    <div class="col-md-4" id="ttd-container">
-    @card
-        @slot('title', 'Tanda Tangan')
-        <form action="{{ route('ttd.hapus', ['id' => $ttd->id]) }}" method="post">
-            @csrf
-            <img src="{{ $ttd->ttd }}">
-            <button type="submit" class="btn btn-outline-danger">Hapus</button>
-        </form>
-    @endcard
-    </div>
-@endforeach
+<div class="row">
+    @foreach (GlobalAuth::user()->getTTD(false) as $ttd)
+        <div class="col-md-4" id="ttd-container">
+        @card
+            @slot('title', 'Tanda Tangan')
+            <form action="{{ route('ttd.hapus', ['id' => $ttd->id]) }}" method="post">
+                @csrf
+                <img style="width: 100%" src="{{ $ttd->ttd }}">
+                <button type="submit" class="btn btn-outline-danger">Hapus</button>
+            </form>
+        @endcard
+        </div>
+    @endforeach
+</div>
 
 @endrow
 
@@ -243,13 +245,13 @@
 <script src="{{ asset('js/signature_pad.min.js') }}"></script>
 <script>
 
-function setRatio(canvas) {
+{{-- function setRatio(canvas) {
     let ratio = Math.max(window.devicePixelRatio || 1, 1)
 
     canvas.width = canvas.offsetWidth * ratio
     canvas.height = canvas.offsetHeight * ratio
     canvas.getContext("2d").scale(ratio, ratio)
-}
+} --}}
 
 let tambah_tdd = document.getElementById('tambah-ttd')
 tambah_ttd_sp = new SignaturePad(tambah_tdd, {
@@ -257,7 +259,7 @@ tambah_ttd_sp = new SignaturePad(tambah_tdd, {
     penColor: 'rgb(0, 0, 0)'
 })
 
-setRatio(tambah_tdd)
+{{-- setRatio(tambah_tdd) --}}
 
 $('#btn-reset-ttd').click(function () {
     tambah_ttd_sp.clear()
