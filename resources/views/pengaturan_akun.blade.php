@@ -219,17 +219,14 @@
 
 <h4>Tanda Tangan</h4>
 
-@row
-{{-- <div class="col-md-4" id="ttd-container"> --}}
-    @card
-        @slot('title', 'Tambahkan Tanda Tangan Baru')
+@card
+    @slot('title', 'Tambahkan Tanda Tangan Baru')
 
-        <canvas width="300" height="150" id="tambah-ttd" class="signature-pad"></canvas>
+    <canvas width="300" height="150" id="tambah-ttd" class="signature-pad"></canvas>
 
-        <button id="btn-tambah-ttd" class="btn btn-primary">Tambah</button>
-        <button id="btn-reset-ttd" class="btn btn-primary">Reset</button>
-    @endcard
-{{-- </div> --}}
+    <button id="btn-tambah-ttd" class="btn btn-primary">Tambah</button>
+    <button id="btn-reset-ttd" class="btn btn-primary">Reset</button>
+@endcard
 
 <div class="row">
     @foreach (GlobalAuth::user()->getTTD(false) as $ttd)
@@ -245,8 +242,6 @@
         </div>
     @endforeach
 </div>
-
-@endrow
 
 @endsection
 
