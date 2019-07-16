@@ -27,7 +27,6 @@ class PenilaianController extends Controller
         })->all();
 
         DB::transaction(function () use ($request, $uji, $nilai) {
-            $uji->rekomendasi_asesor = str_replace(array("\r\n", "\r", "\n"), "<br />", $request->rekomendasi_asesor);
             $helper = $uji->helper;
             $helper['nilai_unit'] = json_decode($request->nilai_unit, true);
             $uji->helper = $helper;
