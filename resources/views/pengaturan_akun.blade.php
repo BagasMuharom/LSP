@@ -233,7 +233,7 @@
 
 <div class="row">
     @foreach (GlobalAuth::user()->getTTD(false) as $ttd)
-        <div class="col-md-4" id="ttd-container">
+        <div class="col-md-3" id="ttd-container">
         @card
             @slot('title', 'Tanda Tangan')
             <form action="{{ route('ttd.hapus', ['id' => $ttd->id]) }}" method="post">
