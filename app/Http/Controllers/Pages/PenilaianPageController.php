@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\Facades\GlobalAuth;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class PenilaianPageController extends Controller
 {
@@ -36,7 +37,9 @@ class PenilaianPageController extends Controller
                 $query->whereHas('getEvent', function ($query) use ($request) {
                     $query->where('skema_id', (int) $request->skema);
                 });
-            })
+            })->distinct()->get(['id'])->pluck(['id']);
+
+        $data = Uji::whereIn('id', $data)
             ->paginate(10)
             ->appends($request->only(['q', 'status', 'skema']));
             
@@ -48,7 +51,7 @@ class PenilaianPageController extends Controller
 
     private function filterStatus(Request $request)
     {
-        $data = GlobalAuth::user()->getUjiAsAsesor();
+        $data = GlobalAuth::user()->getUjiAsAsesor()->distinct();
 
         if ($request->status == 0 || $request->status == null) {
             // dalam proses penilaian, artinya, uji yang belum asesmen diri oleh asesor
