@@ -27,7 +27,6 @@ class PenilaianController extends Controller
         })->all();
 
         DB::transaction(function () use ($request, $uji, $nilai) {
-            $uji->ttd_peserta = $request->ttd_asesi;
             $uji->rekomendasi_asesor = str_replace(array("\r\n", "\r", "\n"), "<br />", $request->rekomendasi_asesor);
             $helper = $uji->helper;
             $helper['nilai_unit'] = json_decode($request->nilai_unit, true);
@@ -41,11 +40,6 @@ class PenilaianController extends Controller
                 ]);
             }
 
-            foreach ($request->ttd_asesor as $id => $value) {
-                $uji->getAsesorUji()->updateExistingPivot($id, [
-                    'ttd' => $value,
-                ]);
-            }
         }, 5);
 
         return response()->json([
