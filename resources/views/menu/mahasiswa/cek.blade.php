@@ -49,8 +49,10 @@
 
                                 <td>PJP</td>
                                 <td>:</td>
-                                <td>{{ $mhs->prodi ?? '-' }}
-                                    , {{ \App\Models\Prodi::findByKeyOrName('', $mhs->prodi)->getJurusan(false)->nama ?? '-' }}, Fakultas {{ $mhs->fakultas }}</td>
+                                <td>
+                                    {{ $mhs->prodi ?? '-' }}
+                                    , {{ (!empty(\App\Models\Prodi::findByKeyOrName('', $mhs->prodi))) ? \App\Models\Prodi::findByKeyOrName('', $mhs->prodi)->getJurusan(false)->nama : '-'  }}, Fakultas {{ $mhs->fakultas }}
+                                </td>
                             </tr>
                             <tr>
                                 <td>IPK / Total SKS</td>
