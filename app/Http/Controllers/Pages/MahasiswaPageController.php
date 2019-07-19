@@ -184,7 +184,18 @@ class MahasiswaPageController extends Controller
 
         if (!empty($request->nims)){
             $nims = str_replace(' ', '', $request->nims);
-            $listmhs = ApiUnesa::getMahasiswaIn(explode(PHP_EOL, $nims));
+            $nims_ = [];
+            foreach (explode(PHP_EOL, $nims) as $nim){
+                $split = explode('-', $nim);
+                if (count($split) == 1){
+                    $nims_[] = $nim;
+                } else{
+                    $nims_[] = range((int)$split[0], (int)$split[1]);
+                }
+            }
+            $nims_ = array_flatten($nims_);
+            $nims_ = array_unique($nims_);
+            $listmhs = ApiUnesa::getMahasiswaIn($nims_);
         }
 
         return view('menu.mahasiswa.cek', [
