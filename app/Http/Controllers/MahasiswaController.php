@@ -99,49 +99,6 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Melakukan reset kata sandi oleh mahasiswa itu sendiri
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function resetKataSandiOlehUser(Request $request)
-    {
-        $request->validate([
-            'email' => 'required'
-        ]);
-
-        $user = Mahasiswa::where('email', $request->email)->first();
-
-        if (is_null($user))
-            $user = User::where('email', $request->email)->first();
-
-        if (is_null($user)) {
-            return back()->withErrors([
-                'email' => 'Email tidak ditemukan !'
-            ]);
-        }
-
-        try {
-            $password = bcrypt(strtoupper(str_random(8)));
-
-            Mail::to($user->email)->send(new ResetKataSandi($password));
-
-            $user->update([
-                'password' => $password
-            ]);
-        }
-        catch (\Exception $e) {
-            return back()->with([
-                'error' => 'Gagal mengirim kata sandi melalui email. Coba beberapa saat lagi. Jika masalah ini tetap terjadi, mohon hubungi admin untuk mereset secara manual'
-            ]);
-        }
-
-        return back()->with([
-            'success' => 'Berhasil mereset kata sandi, mohon cek email anda.'
-        ]);
-    }
-
-    /**
      * Proses mengktifkan akun mahasiswa
      *
      * @param Request $request

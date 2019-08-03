@@ -168,16 +168,6 @@ class MahasiswaPageController extends Controller
         return view('menu.mahasiswa.tambah');
     }
 
-    /**
-     * Menampilkan halaman reset kata sandi untuk mahasiswa
-     *
-     * @return void
-     */
-    public function resetKataSandi()
-    {
-        return view('auth.passwords.reset');
-    }
-
     public function cek(Request $request)
     {
         $listmhs = collect([]);

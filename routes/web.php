@@ -12,7 +12,7 @@ Route::namespace('Pages')->group(function () {
     ]);
 
     Route::get('reset-kata-sandi', [
-        'uses' => 'MahasiswaPageController@resetKataSandi',
+        'uses' => 'ForgotPasswordController@halamanResetKataSandi',
         'as' => 'reset.kata.sandi'
     ]);
 
@@ -41,7 +41,7 @@ Route::post('verifikasi/kirim-ulang', [
 
 // reset kata sandi
 Route::post('reset-kata-sandi', [
-    'uses' => 'MahasiswaController@resetKataSandiOlehUser',
+    'uses' => 'ForgotPasswordController@kirimKataSandi',
     'as' => 'reset.kata.sandi'
 ]);
 
