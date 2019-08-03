@@ -11,11 +11,6 @@ Route::namespace('Pages')->group(function () {
         'as' => 'verifikasi.email'
     ]);
 
-    Route::get('reset-kata-sandi', [
-        'uses' => 'ForgotPasswordController@halamanResetKataSandi',
-        'as' => 'reset.kata.sandi'
-    ]);
-
     // Halaman dashboard
     Route::get('dashboard', 'DashboardPageController')->name('dashboard');
 
@@ -39,11 +34,20 @@ Route::post('verifikasi/kirim-ulang', [
     'as' => 'email.kirim.ulang'
 ]);
 
-// reset kata sandi
-Route::post('reset-kata-sandi', [
-    'uses' => 'ForgotPasswordController@kirimKataSandi',
-    'as' => 'reset.kata.sandi'
-]);
+Route::namespace('Auth')->group(function () {
+
+    Route::get('reset-kata-sandi', [
+        'uses' => 'ForgotPasswordController@halamanResetKataSandi',
+        'as' => 'reset.kata.sandi'
+    ]);
+
+    // reset kata sandi
+    Route::post('reset-kata-sandi', [
+        'uses' => 'ForgotPasswordController@kirimKataSandi',
+        'as' => 'reset.kata.sandi'
+    ]);
+
+});
 
 // proses pengunggahan syarat untuk mahasiswa
 Route::post('unggah/syarat', [
