@@ -174,12 +174,33 @@ class MahasiswaPageController extends Controller
 
         if (!empty($request->nims)){
             $nims = str_replace(' ', '', $request->nims);
-            $listmhs = ApiUnesa::getMahasiswaIn(explode(PHP_EOL, $nims));
+            $nims_ = [];
+            foreach (explode(PHP_EOL, $nims) as $nim){
+                $split = explode('-', $nim);
+                if (count($split) == 1){
+                    $nims_[] = $nim;
+                } else{
+                    $nims_[] = range((int)$split[0], (int)$split[1]);
+                }
+            }
+            $nims_ = array_flatten($nims_);
+            $nims_ = array_unique($nims_);
+            $listmhs = ApiUnesa::getMahasiswaIn($nims_);
+            if ($request->ipk == 'desc'){
+                $listmhs = $listmhs->sortByDesc(function ($value, $key){
+                    return $value->aktivitas_kuliah->ipk;
+                });
+            } elseif ($request->ipk == 'asc'){
+                $listmhs = $listmhs->sortBy(function ($value, $key){
+                    return $value->aktivitas_kuliah->ipk;
+                });
+            }
         }
 
         return view('menu.mahasiswa.cek', [
             'listmhs' => $listmhs,
-            'nims' => $request->nims
+            'nims' => $request->nims,
+            'ipk' => $request->ipk
         ]);
     }
 
