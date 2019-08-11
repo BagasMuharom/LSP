@@ -27,6 +27,11 @@
         <label>Judul</label>
         <input type="text" name="nama" class="form-control" value="{{ $skema->nama }}" required>
         @endformgroup
+        
+        @formgroup
+        <label>Judul</label>
+        <input type="text" name="nama" class="form-control" value="{{ $skema->nama_english }}" required>
+        @endformgroup
         <hr>
 
         @formgroup
@@ -84,6 +89,17 @@
         @formgroup
         <label>Kualifikasi (dalam bahasa inggris)</label>
         <input type="text" name="qualification" class="form-control" value="{{ $skema->qualification }}" required>
+        @endformgroup
+        <hr>
+
+        @formgroup
+        <label>Bidang</label>
+        <input type="text" name="bidang" class="form-control" value="{{ $skema->bidang }}" required>
+        @endformgroup
+
+        @formgroup
+        <label>Field (bidang dalam bahasa inggris)</label>
+        <input type="text" name="field" class="form-control" value="{{ $skema->field }}" required>
         @endformgroup
         <hr>
 

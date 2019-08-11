@@ -31,13 +31,16 @@ class SkemaController extends Controller
             'jurusan_id' => 'required',
             'kode' => 'required',
             'nama' => 'required',
+            'nama_english' => 'required',
             'sektor' => 'required',
             'kbli' => 'required',
             'kbji' => 'required',
             'level_kkni' => 'required',
             'kode_unit_skkni' => 'required',
             'kualifikasi' => 'required',
-            'qualification' => 'required'
+            'qualification' => 'required',
+            'field' => 'required',
+            'bidang' => 'required'
         ]);
 
         try {
@@ -56,6 +59,7 @@ class SkemaController extends Controller
                 'jurusan_id' => $request->jurusan_id,
                 'kode' => $request->kode,
                 'nama' => $request->nama,
+                'nama_english' => $request->nama_english,
                 'sektor' => $request->sektor,
                 'keterangan' => $request->keterangan or '',
                 'kbli' => $request->kbli,
@@ -63,7 +67,9 @@ class SkemaController extends Controller
                 'level_kkni' => $request->level_kkni,
                 'kode_unit_skkni' => $request->kode_unit_skkni,
                 'kualifikasi' => $request->kualifikasi,
-                'qualification' => $request->qualification
+                'qualification' => $request->qualification,
+                'field' => $request->field,
+                'bidang' => $request->bidang
             ]);
 
             try{
@@ -146,13 +152,16 @@ class SkemaController extends Controller
             'jurusan_id' => 'required',
             'kode' => 'required',
             'nama' => 'required',
+            'nama_english' => 'required',
             'sektor' => 'required',
             'kbli' => 'required',
             'kbji' => 'required',
             'level_kkni' => 'required',
             'kode_unit_skkni' => 'required',
             'kualifikasi' => 'required',
-            'qualification' => 'required'
+            'qualification' => 'required',
+            'field' => 'required',
+            'bidang' => 'required'
         ]);
 
         if (Skema::isAvailable($request->kode)) {
@@ -165,6 +174,7 @@ class SkemaController extends Controller
                 'jurusan_id' => $request->jurusan_id,
                 'kode' => $request->kode,
                 'nama' => $request->nama,
+                'nama_english' => $request->nama_english,
                 'sektor' => $request->sektor,
                 'keterangan' => $request->keterangan or '',
                 'kbli' => $request->kbli,
@@ -172,7 +182,9 @@ class SkemaController extends Controller
                 'level_kkni' => $request->level_kkni,
                 'kode_unit_skkni' => $request->kode_unit_skkni,
                 'kualifikasi' => $request->kualifikasi,
-                'qualification' => $request->qualification
+                'qualification' => $request->qualification,
+                'field' => $request->field,
+                'bidang' => $request->bidang
             ]);
 
             if (TempatUji::check($request->tempat_uji_kode)) {

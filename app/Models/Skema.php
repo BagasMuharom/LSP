@@ -14,7 +14,7 @@ class Skema extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'jurusan_id', 'kode', 'nama', 'keterangan', 'sektor', 'jenis_id', 'lintas', 'harga', 'kbli', 'kbji', 'level_kkni', 'kode_unit_skkni', 'kualifikasi', 'qualification'
+        'jurusan_id', 'kode', 'nama', 'nama_english', 'keterangan', 'sektor', 'jenis_id', 'lintas', 'harga', 'kbli', 'kbji', 'level_kkni', 'kode_unit_skkni', 'kualifikasi', 'qualification', 'field', 'bidang'
     ];
 
     /**

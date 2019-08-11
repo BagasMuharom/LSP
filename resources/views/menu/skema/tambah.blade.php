@@ -26,6 +26,11 @@
         <label>Judul</label>
         <input type="text" name="nama" class="form-control" required>
         @endformgroup
+        
+        @formgroup
+        <label>Judul (Bahasa Inggris)</label>
+        <input type="text" name="nama" class="form-control" required>
+        @endformgroup
         <hr>
 
         @formgroup
@@ -67,13 +72,26 @@
         @endformgroup
         @endcol
         @endrow
+
         @formgroup
         <label>Kualifikasi</label>
         <input type="text" name="kualifikasi" class="form-control" required>
         @endformgroup
+        
         @formgroup
         <label>Kualifikasi (dalam bahasa inggris)</label>
         <input type="text" name="qualification" class="form-control" required>
+        @endformgroup
+        <hr>
+        
+        @formgroup
+        <label>Bidang</label>
+        <input type="text" name="bidang" class="form-control" required>
+        @endformgroup
+
+        @formgroup
+        <label>Field (bidang dalam bahasa inggris)</label>
+        <input type="text" name="field" class="form-control" required>
         @endformgroup
         <hr>
 
