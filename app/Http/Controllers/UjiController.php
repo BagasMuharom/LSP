@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kustomisasi;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Support\Form\FormAsesmenDiri;
 use App\Support\EksporUji;
 use App\Support\Filter\UjiFilter;
-use App\Models\{Uji, Syarat, Skema, Menu, Event};
-use Auth;
+use App\Models\{Uji, Syarat, Event};
 use Storage;
 use GlobalAuth;
-use PDF;
-use function Symfony\Component\Debug\header;
 
 class UjiController extends Controller
 {
@@ -254,128 +248,6 @@ class UjiController extends Controller
     }
 
     /**
-     * Mencetak asesmen diri
-     *
-     * @param Uji $uji  
-     * @return \Illuminate\Http\Response
-     */
-    public function cetakAsesmenDiri(Uji $uji)
-    {
-        $pdf = PDF::loadView('form.apl_02', [
-            'uji' => $uji,
-            'skema' => $uji->getSkema(false),
-            'mahasiswa' => $uji->getMahasiswa(false),
-            'asesmendiri' => $uji->getPenilaianDiri()
-        ]);
-
-        // return view('form.apl_02', [
-        //     'uji' => $uji,
-        //     'skema' => $uji->getSkema(false),
-        //     'mahasiswa' => $uji->getMahasiswa(false),
-        //     'asesmendiri' => $uji->getPenilaianDiri()
-        // ]);
-
-        return $pdf->stream();
-    }
-
-    /**
-     * Menyetak form pendaftaran
-     *
-     * @param Uji $uji
-     * @return void
-     */
-    public function cetakFormPendaftaran(Uji $uji)
-    {
-        // return view('form.pendaftaran');
-        $mahasiswa = $uji->getMahasiswa(false);
-        $daftarSyarat = $uji->getSyaratUji(false);
-        $persyaratan = $uji->getSkema(false)->getSyarat(false);
-        $pdf = PDF::loadView('form.pendaftaran', [
-            'mahasiswa' => $mahasiswa,
-            'daftarSyarat' => $daftarSyarat,
-            'skema' => $uji->getSkema(false),
-            'persyaratan' => $persyaratan
-        ]);
-        $pdf->setPaper('A4');
-
-        return $pdf->stream();
-        return view('form.pendaftaran', [
-            'mahasiswa' => $mahasiswa,
-            'daftarSyarat' => $daftarSyarat,
-            'persyaratan' => $persyaratan,
-            'skema' => $uji->getSkema(false)
-        ]);
-    }
-
-    /**
-     * Menyetak form mak
-     *
-     * @param \App\Support\EksporUji $uji
-     * @return mixed
-     */
-    public function cetakMpa02(Uji $uji)
-    {
-        $pdf = PDF::loadView('form.mpa02', [
-            'uji' => $uji,
-            'skema' => $uji->getSkema(false)
-        ]);
-        $pdf->setPaper('A4');
-
-        return view('form.mpa02', [
-            'uji' => $uji,
-            'skema' => $uji->getSkema(false)
-        ]);
-
-        return $pdf->stream();
-    }
-
-    /**
-     * menyetak form MAK 02
-     *
-     * @return mixed
-     */
-    public function cetakMak02(Uji $uji)
-    {
-        $pdf = PDF::loadView('form.mak_02', [
-            'uji' => $uji,
-            'skema' => $uji->getSkema(false)
-        ]);
-
-        // return view('form.mak_02', [
-        //     'uji' => $uji,
-        //     'skema' => $uji->getSkema(false)
-        // ]);
-
-        return $pdf->stream();
-    }
-    
-    /**
-     * menyetak form APL 01
-     *
-     * @return mixed
-     */
-    public function cetakApl01(Uji $uji)
-    {
-        $persyaratan = $uji->getSkema(false)->getSyarat(false);
-
-        $pdf = PDF::loadView('form.apl_01', [
-            'uji' => $uji,
-            'mahasiswa' => $uji->getMahasiswa(false),
-            'skema' => $uji->getSkema(false),
-            'persyaratan' => $persyaratan
-        ]);
-
-        // return view('form.apl_01', [
-        //     'uji' => $uji,
-        //     'mahasiswa' => $uji->getMahasiswa(false),
-        //     'skema' => $uji->getSkema(false),
-        //     'persyaratan' => $persyaratan
-        // ]);
-
-        return $pdf->stream();
-    }
-
-    /**
      * Melakukan ekspor uji dalam bentuk excel sesuai format untuk bnsp
      *
      * @param Request $request
@@ -543,6 +415,56 @@ class UjiController extends Controller
 
         return back()->with([
             'success' => 'Berhasil mengubah status kelulusan !'
+        ]);
+    }
+
+    /**
+     * Melakukan pengisian form MAK 04
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function isimak4(Request $request, Uji $uji)
+    {
+        $request->validate([
+            'hasil.*' => 'required'
+        ]);
+
+        $temp = $uji->helper;
+
+        $temp['mak4']['jawaban'] = $request->hasil;
+        $temp['mak4']['catatan'] = $request->catatan;
+
+        $uji->helper = $temp;
+        $uji->save();
+
+        if (GlobalAuth::getAttemptedGuard() == 'mhs') {
+            return redirect()->route('sertifikasi.riwayat');
+        }
+
+        return redirect()->route('uji.troubleshoot', [
+            'uji' => encrypt($uji->id)
+        ]);
+    }
+
+    /**
+     * Menghapus key "mak4" pada kolom "helper" di tabel "uji" untuk uji tertentu
+     *
+     * @param \App\Support\EksporUji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function resetMak4(Uji $uji)
+    {
+        $temp = $uji->helper;
+
+        unset($temp['mak4']);
+
+        $uji->helper = $temp;
+        $uji->save();
+
+        return response()->json([
+            'success' => 'Berhasil mereset MAK 04 !'
         ]);
     }
 

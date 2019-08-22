@@ -123,6 +123,13 @@ class UjiPolicy
         return is_null($uji->terverifikasi_bag_sertifikasi) and !is_null($uji->terverifikasi_admin);
     }
 
+    /**
+     * Mengecek apakah user terkait bisa menerbitkan sertifikat
+     *
+     * @param \Illuminate\Foundation\Auth\User $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
     public function buatSertifikat(Authenticatable $user, Uji $uji)
     {
         if ($user instanceof Mahasiswa)
@@ -272,6 +279,21 @@ class UjiPolicy
     }
     
     /**
+     * Mengecek apakah bisa menyetak form mak 02
+     *
+     * @param Authenticatable $user
+     * @param Uji $uji
+     * @return boolean
+     */
+    public function cetakMak04(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
+
+        return $uji->isMengisiMak4();
+    }
+    
+    /**
      * Mengecek apakah bisa menyetak form mpa 02
      *
      * @param Authenticatable $user
@@ -287,6 +309,14 @@ class UjiPolicy
             Uji::LULUS,
             Uji::TIDAK_LULUS
         ]));
+    }
+
+    public function cetakMak01(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
+
+        return true;
     }
 
     /**
@@ -433,6 +463,26 @@ class UjiPolicy
             return true;
 
         return false;
+    }
+
+    /**
+     * Mengecek apakah user terkait dapat mengisi form mak4
+     *
+     * @param \Illuminate\Foundation\Auth\User $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
+    public function isimak4(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof User && !$user->hasRole(Role::SUPER_ADMIN))
+            return false;
+
+        if ($user instanceof Mahasiswa) {
+            if ($uji->isMengisiMak4())
+                return false;
+        }
+
+        return true;
     }
 
 }

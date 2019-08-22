@@ -96,31 +96,60 @@ Route::prefix('uji')->group(function () {
         'as' => 'uji.troubleshoot'
     ]);
 
-    Route::prefix('cetak')->group(function () {
+    Route::prefix('mak4')->group(function () {
+
+        Route::get('isi/{uji}', [
+            'uses' => 'Pages\UjiPageController@isimak4',
+            'as' => 'uji.isi.mak4'
+        ]);
+
+        Route::post('isi/{uji}', [
+            'uses' => 'UjiController@isimak4',
+            'as' => 'uji.isi.mak4'
+        ]);
+
+        Route::post('reset/{uji}', [
+            'uses' => 'UjiController@resetMak4',
+            'as' => 'uji.reset.mak4'
+        ]);
+
+    });
+
+    Route::prefix('cetak')->namespace('Pages')->group(function () {
 
         Route::get('asesmen/diri/{uji}', [
-            'uses' => 'UjiController@cetakAsesmenDiri',
+            'uses' => 'FormPageController@cetakApl02',
             'as' => 'uji.cetak.asesmen.diri'
         ]);
         
         Route::get('form/pendaftaran/{uji}', [
-            'uses' => 'UjiController@cetakFormPendaftaran',
+            'uses' => 'FormPageController@cetakFormPendaftaran',
             'as' => 'uji.cetak.form.pendaftaran'
         ]);
 
         Route::get('mpa02/{uji}', [
-            'uses' => 'UjiController@cetakMpa02',
+            'uses' => 'FormPageController@cetakMpa02',
             'as' => 'uji.cetak.mpa02'
         ]);
         
         Route::get('mak02/{uji}', [
-            'uses' => 'UjiController@cetakMak02',
+            'uses' => 'FormPageController@cetakMak02',
             'as' => 'uji.cetak.mak02'
+        ]);
+        
+        Route::get('mak01/{uji}', [
+            'uses' => 'FormPageController@cetakMak01',
+            'as' => 'uji.cetak.mak01'
         ]);
 
         Route::get('apl01/{uji}', [
-            'uses' => 'UjiController@cetakApl01',
+            'uses' => 'FormPageController@cetakApl01',
             'as' => 'uji.cetak.apl01'
+        ]);
+
+        Route::get('mak04/{uji}', [
+            'uses' => 'FormPageController@cetakMak04',
+            'as' => 'uji.cetak.mak04'
         ]);
 
     });

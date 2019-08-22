@@ -776,6 +776,11 @@ class Uji extends Model
         });
     }
 
+    /**
+     * Mendapatkan daftar bukti komptensi yang diunggah oleh asesi
+     *
+     * @return mixed
+     */
     public function getBuktiKompetensi()
     {
         $files = collect([]);
@@ -786,6 +791,19 @@ class Uji extends Model
         }
 
         return $files;
+    }
+
+    /**
+     * Mengecek apakah mak4 telah diisi pada uji tertentu
+     *
+     * @return boolean
+     */
+    public function isMengisiMak4()
+    {
+        if (in_array('mak4', collect($this->helper)->keys()->toArray()))
+            return true;
+
+        return false;
     }
 
 }

@@ -282,6 +282,25 @@
                 @endformgroup
             @endcard
 
+            @card(['id' => 'lainnya'])
+                @slot('title', 'Lainnya')
+
+                @formgroup(['row' => true, 'class' => 'mb-0'])
+                <label class="col-lg-6"><b>Telah mengisi form MAK 04</b></label>
+                <div class="col-lg-6">
+                    <p>
+                        {{ booleanPrint($uji->isMengisiMak4()) }}
+                    </p>
+
+                    @if($uji->isMengisiMak4())
+                        <button class="btn btn-block btn-outline-danger" @click="resetMak4">Reset Isian Form</button>
+                    @endif
+
+                    <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-block btn-warning">Isi Kembali Form MAK 04</a>
+                </div>
+                @endformgroup
+            @endcard
+
             @card
                 @slot('title', 'Status Kelulusan')
 
@@ -540,6 +559,49 @@ new Vue({
             })
         },
         // end function
+    }
+})
+
+new Vue({
+    el: '#lainnya',
+    methods: {
+        resetMak4() {
+            swal({
+                title: 'Apa anda yakin ?',
+                text: 'Aksi ini tidak bisa dibatalkan',
+                buttons: {
+                    confirm: {
+                        text: 'Yakin',
+                        closeModal: false
+                    },
+                    cancel: {
+                        text: 'Batal',
+                        visible: true
+                    }
+                },
+                dangerMode: true
+            }).then(function (confirm) {
+                if (!confirm)
+                    return
+
+                axios.post('{{ route('uji.reset.mak4', ['uji' => encrypt($uji->id)]) }}')
+                    .then(function (response) {
+                        if (response.data.success) {
+                            swal({
+                                title: 'Berhasil !',
+                                text: 'Berhasil mereset MAK 04'
+                            }).then(function () {
+                                window.location.reload()
+                            })
+                        }
+                    }).catch(function (error) {
+                        swal({
+                            title: 'Ups !',
+                            text: 'Terdapat Gangguan'
+                        })
+                    })
+            })
+        }
     }
 })
 </script>

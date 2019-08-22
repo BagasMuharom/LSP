@@ -47,6 +47,9 @@
                                 @can('isiKuesioner', $uji)
                                 <a href="{{ route('sertifikat.kuesioner.isi', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-success">Isi Kuesioner</a>
                                 @endif
+                                @can('isimak4', $uji)
+                                <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary">Isi Form MAK 04</a>
+                                @endif
                             </div>
                         </td>
                     </tr>

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
-use App\Models\TempatUji;
+use App\Models\KomponenMak4;
 use App\Models\Uji;
 use App\Support\Filter\UjiFilter;
-use Auth;
 use GlobalAuth;
 use Illuminate\Http\Request;
 
@@ -152,6 +151,20 @@ class UjiPageController extends Controller
     {
         return view('menu.uji.troubleshoot', [
             'uji' => $uji
+        ]);
+    }
+
+    /**
+     * Menampilkan halaman untuk mengisi form MAK 04
+     *
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function isimak4(Uji $uji)
+    {
+        return view('menu.uji.mak4', [
+            'uji' => $uji,
+            'daftarKomponen' => KomponenMak4::all()
         ]);
     }
 

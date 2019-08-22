@@ -240,9 +240,17 @@
                 @can('cetakFormAsesmenDiri', $uji)
                     <a class="btn btn-primary mb-1" target="_blank" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Cetak Form APL 02</a>
                 @endcan
+                
+                @can('cetakMak01', $uji)
+                    <a href="{{ route('uji.cetak.mak01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 01</a>
+                @endif
 
                 @can('cetakMak02', $uji)
                     <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 02</a>
+                @endif
+                
+                @can('cetakMak04', $uji)
+                    <a href="{{ route('uji.cetak.mak04', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 04</a>
                 @endif
                 
                 @can('cetakMpa02', $uji)
