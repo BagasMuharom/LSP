@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Pages;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Support\Facades\GlobalAuth;
 
 class PengaturanPageController extends Controller
 {
@@ -15,7 +16,15 @@ class PengaturanPageController extends Controller
 
     public function __invoke()
     {
-        return view('pengaturan_akun');
+        $daftarBerkas = [];
+
+        if (GlobalAuth::getAttemptedGuard() == 'user') {
+            $daftarBerkas = Storage::files('data/user/' . GlobalAuth::user()->id);
+        }
+
+        return view('pengaturan_akun', [
+            'daftarBerkas' => $daftarBerkas
+        ]);
     }
 
 }

@@ -82,6 +82,26 @@ Route::post('hapus-ttd/{id}', [
     'as' => 'ttd.hapus'
 ]);
 
+// Mengelola berkas dari user tertentu
+Route::prefix('berkas')->group(function () {
+
+    Route::post('unggah', [
+        'uses' => 'PengaturanAkunController@unggahBerkas',
+        'as' => 'user.berkas.unggah'
+    ]);
+    
+    Route::delete('hapus/{user}', [
+        'uses' => 'PengaturanAkunController@hapusBerkas',
+        'as' => 'user.berkas.hapus'
+    ]);
+
+    Route::get('lihat/{user}/{filename}', [
+        'uses' => 'PengaturanAkunController@lihatBerkas',
+        'as' => 'user.berkas.lihat'
+    ]);
+
+});
+
 // Mendapatkan daftar syarat dari skema tertentu
 Route::post('skema/daftar-syarat', [
     'uses' => 'SkemaController@getDaftarSyarat',

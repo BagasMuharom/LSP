@@ -9,6 +9,24 @@
 @card(['id' => 'root'])
     @slot('title', 'Daftar User')
 
+    {{-- Filter --}}
+    <form action="{{ url()->current() }}" method="get">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Pencarian</label>
+                    <input type="text" name="keyword" class="form-control" placeholder="Ketik nama" value="{{ request()->has('keyword') ? request('keyword') : '' }}">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>&nbsp;</label><br>
+                    <button class="btn btn-primary" type="submit">Cari</button>
+                </div>
+            </div>
+        </div>    
+    </form>
+
     <button class="btn btn-primary" @click="form">Tambah User Baru</button>
 
     @slot('table')
@@ -48,7 +66,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="3">
+                    <td colspan="5">
                         <p class="alert alert-info text-center">
                             Tidak ada data.
                         </p>

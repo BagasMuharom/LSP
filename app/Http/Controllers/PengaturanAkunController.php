@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GlobalAuth;
 use Hash;
 use Storage;
+use App\Models\User;
 
 class PengaturanAkunController extends Controller
 {
@@ -132,9 +133,59 @@ class PengaturanAkunController extends Controller
      */
     private function generateDir($file, $name)
     {
-        $mhs = GlobalAuth::user();
-
         return $name . '.' . $file->getCLientOriginalExtension();
+    }
+
+    /**
+     * Mengunggah berkas yang dikirim oleh user
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
+    public function unggahBerkas(Request $request)
+    {
+        $user = GlobalAuth::user();
+
+        $request->file('berkas')->storeAs('data/user/' . $user->id . '/', $this->generateDir(
+            $request->file('berkas'), $request->nama
+        ));
+
+        return back()->with([
+            'success' => 'Berhasil mengunggah berkas !'
+        ]);
+    }
+
+    /**
+     * Menghapus berkas dari user tertentu
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusBerkas(Request $request, User $user)
+    {
+        $filename = 'data/user/' . $user->id . '/' . $request->filename;
+
+        Storage::delete($filename);
+
+        return back()->with([
+            'success' => 'Berhasil menghapus berkas !'
+        ]);
+    }
+
+    /**
+     * Menampilkan berkas tertentu dari user tertentu
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    public function lihatBerkas(User $user, $filename)
+    {
+        $filename = 'data/user/' . $user->id . '/' . $filename;
+
+        return response()->file(
+            storage_path('app/' . $filename)
+        );
     }
 
 }

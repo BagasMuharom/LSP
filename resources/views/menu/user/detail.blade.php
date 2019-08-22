@@ -121,6 +121,35 @@
             </div>
         @endslot
     @endcard
+
+    @card
+        @slot('title', 'Daftar Berkas')
+
+        @slot('list')
+            <ul class="list-group">
+                @forelse($daftarBerkas as $berkas)
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            {{ basename($berkas) }}
+                        </div>
+                        <div>
+                            <form action="{{ route('user.berkas.hapus', ['user' => encrypt($user->id)]) }}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <a target="_blank" href="{{ route('user.berkas.lihat', ['user' => encrypt($user->id), 'filename' => basename($berkas)]) }}" class="btn btn-primary btn-sm">Lihat</a>
+                                <input type="hidden" name="filename" value="{{ basename($berkas) }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                        </div>
+                    </li>
+                @empty
+                    <li class="list-group-item d-flex justify-content-between">
+                    Tidak ada berkas.
+                    </li>
+                @endforelse
+            </ul>
+        @endslot
+    @endcard
 @endcol
 
 @endrow

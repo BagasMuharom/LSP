@@ -164,4 +164,10 @@ class UserController extends Controller
             'redirect' => route('user')
         ]);
     }
+
+    public function lihatBerkas(Request $request)
+    {
+        
+    }
+
 }
