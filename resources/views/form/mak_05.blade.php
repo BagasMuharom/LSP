@@ -56,8 +56,8 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $uji->getMahasiswa(false)->nama }}</td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-center"><b class="unicode">{!! $uji->isLulus() ? '&#10003;' : '' !!}</b></td>
+                        <td class="text-center"><b class="unicode">{!! $uji->isLulus() ? '' : '&#10003;' !!}</b></td>
                         <td></td>
                     </tr>
                 @endforeach
