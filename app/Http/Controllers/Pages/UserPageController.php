@@ -63,8 +63,6 @@ class UserPageController extends Controller
             storage_path('app/data/user/' . $user->id)
         );
 
-        return $user->id;
-
         return view('menu.user.detail', [
             'user' => $user,
             'daftarRole' => $user->getUserRole(false),
