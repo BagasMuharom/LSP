@@ -130,7 +130,7 @@
                 @forelse($daftarBerkas as $berkas)
                     <li class="list-group-item d-flex justify-content-between">
                         <div>
-                            {{ basename($berkas) }}
+                            {{ encrypt(basename($berkas)) }}
                         </div>
                         <div>
                             <form action="{{ route('user.berkas.hapus', ['user' => encrypt($user->id)]) }}" method="post">
