@@ -166,7 +166,7 @@
                                     <form action="{{ route('user.berkas.hapus', ['user' => encrypt(GlobalAuth::user()->id)]) }}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <a target="_blank" href="{{ route('user.berkas.lihat', ['user' => encrypt(GlobalAuth::user()->id), 'filename' => basename($berkas)]) }}" class="btn btn-primary btn-sm">Lihat</a>
+                                        <a target="_blank" href="{{ route('user.berkas.lihat', ['user' => encrypt(GlobalAuth::user()->id), 'filename' => urlencode(basename($berkas))]) }}" class="btn btn-primary btn-sm">Lihat</a>
                                         <input type="hidden" name="filename" value="{{ basename($berkas) }}"/>
                                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                     </form>
