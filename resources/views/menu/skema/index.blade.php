@@ -24,7 +24,23 @@
                 @endforeach
             </div>
         </div>
-
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                {{ $jrs }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach($daftarjurusan as $jurusan)
+                    <form action="{{ url()->current() }}">
+                        <input type="hidden" name="q" value="{{ $q }}">
+                        <input type="hidden" name="j" value="{{ $j }}">
+                        <input type="hidden" name="jrs" value="{{ $jurusan->nama }}">
+                        <a class="dropdown-item" href=""
+                           onclick="event.preventDefault();$(this).parent().submit()">{{ $jurusan->getFakultas(false)->nama }} | {{ $jurusan->nama }}</a>
+                    </form>
+                @endforeach
+            </div>
+        </div>
         <a class="btn btn-success" href="{{ route('skema.tambah') }}">Tambah Skema</a>
         <a class="btn btn-info" href="{{ route('skema.jenis') }}">Lihat Jenis Skema</a>
     </div>

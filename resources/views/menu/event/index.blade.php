@@ -192,7 +192,7 @@
                                         <th>NIM</th>
                                         <th>Nama</th>
                                         <th>Prodi</th>
-                                        <th>Sertakan</th>
+                                        <th><button type="button" class="btn btn-success btn-sm" onclick="checkAll($(this))">Check/Uncheck</button></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -226,6 +226,15 @@
 @push('js')
     <script src="{{ asset('tempusdominus/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('tempusdominus/tempusdominus-bootstrap-4.js') }}"></script>
+    <script>
+        function checkAll(b) {
+            event.preventDefault()
+            b.parent().parent().parent().next().children().each(function () {
+                cetak = $(this).children().eq(3).children().eq(0)
+                cetak.prop('checked', !cetak.is(":checked"))
+            })
+        }
+    </script>
     <script>
         $('.dt').datetimepicker({
             format: 'YYYY-MM-DD'

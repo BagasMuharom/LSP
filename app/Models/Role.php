@@ -14,11 +14,14 @@ class Role extends Model
 
     const ASESOR = 'ASESOR';
 
+    const KETUA = 'KETUA';
+
     const ALL = [
         self::SUPER_ADMIN,
         self::ADMIN,
         self::SERTIFIKASI,
-        self::ASESOR
+        self::ASESOR,
+        self::KETUA
     ];
 
     protected $table = 'role';

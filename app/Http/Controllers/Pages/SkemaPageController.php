@@ -24,15 +24,29 @@ class SkemaPageController extends Controller
     {
         $request->j = empty($request->j) ? 'SEMUA JENIS' : ((Jenis::check($request->j)) ? Jenis::findLike($request->j)->nama : 'SEMUA JENIS');
         $data = ($request->j == 'SEMUA JENIS') ? Skema::withTrashed() : Skema::withTrashed()->where('jenis_id', Jenis::findLike($request->j)->id);
-        $data = $data->orderByDesc('deleted_at')->orderBy('kode')->orderBy('nama')->when($request->q, function ($query) use ($request) {
-            return $query->where('nama', 'ILIKE', "%{$request->q}%")
-                ->orWhere('kode', 'ILIKE', "%{$request->q}%");
-        })->paginate(10)->appends($request->only(['q', 'j']));
+        $data = $data->orderByDesc('deleted_at')
+            ->orderBy(
+                'kode'
+            )->orderBy(
+                'nama'
+            )->when($request->q, function ($query) use ($request) {
+                return $query->where('nama', 'ILIKE', "%{$request->q}%")
+                    ->orWhere('kode', 'ILIKE', "%{$request->q}%");
+            })->when($request->jrs, function ($query) use ($request) {
+                return $query->whereHas('getJurusan', function ($query) use ($request) {
+                    return $query->where('nama', $request->jrs);
+                });
+            })->paginate(
+                10
+            )->appends($request->only(['q', 'j']));
+        $request->jrs = empty($request->jrs) ? 'SEMUA JURUSAN' : $request->jrs;
         return view('menu.skema.index', [
             'data' => $data,
             'no' => 0,
             'q' => $request->q,
             'daftarjenis' => Jenis::all(),
+            'daftarjurusan' => Jurusan::orderBy('fakultas_id')->get(),
+            'jrs' => $request->jrs,
             'j' => $request->j,
             'menu' => Menu::findByRoute(Menu::SKEMA)
         ]);
