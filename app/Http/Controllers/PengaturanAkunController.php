@@ -146,6 +146,8 @@ class PengaturanAkunController extends Controller
     {
         $user = GlobalAuth::user();
 
+        return $user;
+
         $request->file('berkas')->storeAs('data/user/' . $user->id . '/', $this->generateDir(
             $request->file('berkas'), $request->nama
         ));
