@@ -59,9 +59,7 @@ class UserPageController extends Controller
      */
     public function show(User $user)
     {
-        $daftarBerkas = Storage::files(
-            storage_path('app/data/user/' . $user->id)
-        );
+        $daftarBerkas = Storage::files('data/user/' . $user->id);
 
         return view('menu.user.detail', [
             'user' => $user,
