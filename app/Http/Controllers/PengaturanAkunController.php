@@ -183,9 +183,11 @@ class PengaturanAkunController extends Controller
     {
         $filename = 'data/user/' . $user->id . '/' . $filename;
 
-        return response()->file(
-            storage_path('app/' . $filename)
-        );
+        $file = Storage::get($filename);
+
+        return response($file, 200)
+            ->header('Content-Type', Storage::mimeType($filename))
+            ->header('Content-Length', strlen($file));
     }
 
 }
