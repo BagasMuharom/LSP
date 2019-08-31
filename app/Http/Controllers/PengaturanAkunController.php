@@ -181,7 +181,7 @@ class PengaturanAkunController extends Controller
      */
     public function lihatBerkas(User $user, $filename)
     {
-        $filename = urldecode($filename);
+        $filename = decrypt($filename);
         $filename = 'data/user/' . $user->id . '/' . $filename;
 
         $file = Storage::get($filename);
