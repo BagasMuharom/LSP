@@ -64,6 +64,9 @@ class CreateSkemaTable extends Migration
             $table->string('kode_unit_skkni');
             $table->string('kualifikasi');
             $table->string('qualification');
+            $table->string('bidang');
+            $table->string('field');
+            $table->string('nama_english');
             $table->softDeletes();
         });
     }

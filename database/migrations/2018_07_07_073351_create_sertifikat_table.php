@@ -48,6 +48,7 @@ class CreateSertifikatTable extends Migration
                 ->nullable()
                 ->index()
                 ->unique();
+            $table->string('berkas');
             $table->timestamps();
         });
     }
