@@ -132,6 +132,25 @@
                 </p>
             </div>
         </div>
+        
+        <div class="form-group row">
+            <label class="col-lg-4 text-right">Berkas Scan Sertifikat</label>
+            <div class="col-lg-8">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-primary btn-pilih-berkas" type="button">Pilih Berkas</button>
+                    </div>
+                    <div class="custom-file">
+                        <input class="custom-file-input" type="file" @change="pilihBerkas($event)" name="berkas">
+                        <label class="custom-file-label">Anda belum memilih berkas</label>
+                    </div>
+                </div>
+
+                <p class="alert alert-danger mt-3 mb-0" v-if="errors.berkas != undefined">
+                    @{{ errors.berkas[0] }}
+                </p>
+            </div>
+        </div>
         @endcol
     @endrow
 
@@ -148,13 +167,14 @@
                     tambah: '{{ route('sertifikat.tambah', ['uji' => encrypt($uji->id)]) }}'
                 },
                 sertifikat: {
-                    nomor: '',
-                    mulai_berlaku: new Date(),
+                    nomor: null,
+                    mulai_berlaku: null,
                     masa_berlaku: 3,
-                    no_urut_Cetak: '',
-                    no_urut_skema: '',
-                    tahun: '',
-                    tgl_cetak: new Date()
+                    no_urut_cetak: null,
+                    no_urut_skema: null,
+                    tahun: null,
+                    tgl_cetak: null,
+                    berkas: null
                 },
                 pemilik: @json($uji->getMahasiswa(false)),
                 prodi: @json($uji->getMahasiswa(false)->getProdi(false)),
@@ -173,15 +193,21 @@
             mounted() {
                 let that = this
 
+                // Mengatur konfigurasi untuk flatpickr
                 let config = {
-                    defaultDate: that.sertifikat.mulai_berlaku,
+                    defaultDate: new Date(),
                     altInput: true,
                     altFormat: 'l, d F Y',
-                    locale: 'id'
+                    locale: 'id',
+                    dateFormat: 'Y-m-d'
                 }
-
+                
+                // Inisialisasi objek dom ke dalam flatpickr
                 flatpickr(this.$refs['issue-date'], config);
                 flatpickr(this.$refs['tanggal-cetak'], config);
+
+                this.sertifikat.mulai_berlaku = this.formatDate(new Date())
+                this.sertifikat.tgl_cetak = this.formatDate(new Date())
             },
 
             methods: {
@@ -205,13 +231,21 @@
                         if (!confirm)
                             return
 
-                        axios.post(that.url.tambah, {
-                            issue_date: new Date(that.sertifikat.mulai_berlaku),
-                            masa_berlaku: that.sertifikat.masa_berlaku,
-                            no_urut_cetak: that.sertifikat.no_urut_cetak,
-                            no_urut_skema: that.sertifikat.no_urut_skema,
-                            tanggal_cetak: that.sertifikat.tgl_cetak,
-                            tahun: that.sertifikat.tahun
+                        var formData = new FormData()
+
+                        formData.append('issue_date', that.sertifikat.mulai_berlaku)
+                        formData.append('masa_berlaku', that.sertifikat.masa_berlaku)
+                        formData.append('no_urut_cetak', that.sertifikat.no_urut_cetak)
+                        formData.append('no_urut_skema', that.sertifikat.no_urut_skema)
+                        formData.append('tanggal_cetak', that.sertifikat.tgl_cetak)
+                        formData.append('tahun', that.sertifikat.tahun)
+                        formData.append('berkas', that.sertifikat.berkas)
+                        formData.append('_method', 'put')
+
+                        axios.post(that.url.tambah, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
                         }).then(function (response) {
                             if (response.data.success) {
                                 swal({
@@ -243,7 +277,19 @@
                     var c = new Date(year + Number(years), month, day)
 
                     return c
-                }   
+                },
+
+                pilihBerkas: function ($event) {
+                    this.sertifikat.berkas = $event.target.files[0]
+                },
+
+                formatDate: function (date) {
+                    var day = date.getDate()
+                    var month = date.getMonth() + 1
+                    var year = date.getFullYear()
+
+                    return year + '-' + month + '-' + day
+                }
             },
             computed: {
                 expireDate: function () {  

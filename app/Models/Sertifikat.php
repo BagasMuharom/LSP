@@ -9,7 +9,7 @@ class Sertifikat extends Model
     protected $table = 'sertifikat';
 
     protected $fillable = [
-        'uji_id', 'nomor_sertifikat', 'created_at', 'updated_at', 'nama_pemegang', 'skema_id', 'no_urut_cetak', 'no_urut_skema', 'tanggal_cetak', 'issue_date', 'expire_date', 'tahun', 'tahun_cetak', 'nomor_registrasi'
+        'uji_id', 'nomor_sertifikat', 'created_at', 'updated_at', 'nama_pemegang', 'skema_id', 'no_urut_cetak', 'no_urut_skema', 'tanggal_cetak', 'issue_date', 'expire_date', 'tahun', 'tahun_cetak', 'nomor_registrasi', 'berkas'
     ];
 
     /**

@@ -138,6 +138,25 @@
             @endif
         </div>
     </div>
+
+    <div class="form-group row" v-show="editMode">
+        <label class="col-lg-3">Berkas Scan Sertifikat</label>
+        <div class="col-lg-9">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary btn-pilih-berkas" type="button">Pilih Berkas</button>
+                </div>
+                <div class="custom-file">
+                    <input class="custom-file-input" type="file" @change="pilihBerkas($event)" name="berkas">
+                    <label class="custom-file-label">Anda belum memilih berkas</label>
+                </div>
+            </div>
+
+            <p class="alert alert-danger mt-3 mb-0" v-if="errors.berkas != undefined">
+                @{{ errors.berkas[0] }}
+            </p>
+        </div>
+    </div>
     
     <div class="form-group row" v-if="editMode">
         <label class="col-lg-3"></label>
@@ -205,14 +224,22 @@
                         if (!confirm)
                             return
 
-                        axios.post(that.url.edit, {
-                            issue_date: that.sertifikat.issue_date,
-                            masa_berlaku: that.masa_berlaku,
-                            tanggal_cetak: that.sertifikat.tanggal_cetak,
-                            no_urut_cetak: that.sertifikat.no_urut_cetak,
-                            no_urut_skema: that.sertifikat.no_urut_skema,
-                            tahun: that.sertifikat.tahun,
-                            '_method': 'put'
+                        var formData = new FormData()
+
+                        formData.append('issue_date', that.sertifikat.issue_date)
+                        formData.append('masa_berlaku', that.masa_berlaku)
+                        formData.append('no_urut_cetak', that.sertifikat.no_urut_cetak)
+                        formData.append('no_urut_skema', that.sertifikat.no_urut_skema)
+                        formData.append('tanggal_cetak', that.sertifikat.tanggal_cetak)
+                        formData.append('tahun', that.sertifikat.tahun)
+
+                        if ('object' === typeof that.sertifikat.berkas)
+                            formData.append('berkas', that.sertifikat.berkas)
+
+                        axios.post(that.url.edit, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
                         }).then(function (response) {
                             if (response.data.success) {
                                 swal({
@@ -232,8 +259,12 @@
                             }
                         })
                     })
-                }
+                },
                 @endcan
+
+                pilihBerkas: function ($event) {
+                    this.sertifikat.berkas = $event.target.files[0]
+                }
             },
 
             computed: {

@@ -46,12 +46,12 @@ Route::prefix('sertifikat')->group(function () {
         'as' => 'sertifikat.ekspor'
     ]);
 
-    Route::post('tambah/{uji}', [
+    Route::put('tambah/{uji}', [
         'uses' => 'SertifikatController@store',
         'as' => 'sertifikat.tambah'
     ]);
 
-    Route::put('edit/{sertifikat}', [
+    Route::post('edit/{sertifikat}', [
         'uses' => 'SertifikatController@update',
         'as' => 'sertifikat.edit'
     ]);
@@ -59,6 +59,11 @@ Route::prefix('sertifikat')->group(function () {
     Route::delete('hapus/{sertifikat}', [
         'uses' => 'SertifikatController@destroy',
         'as' => 'sertifikat.hapus'
+    ]);
+
+    Route::get('lihat-berkas/{sertifikat}', [
+        'uses' => 'SertifikatController@lihatBerkasSertifikat',
+        'as' => 'sertifikat.lihat.berkas'
     ]);
 
 });

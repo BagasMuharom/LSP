@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Uji, Sertifikat, Kuesioner};
+use App\Models\{Uji, Sertifikat, Kuesioner, Mahasiswa, Skema};
 use Carbon\Carbon;
 use App\Support\Filter\SertifikatFilter;
 use App\Support\{EksporSertifikat, EksporSertifikatBnsp};
+use Illuminate\Support\Facades\Storage;
 
 class SertifikatController extends Controller
 {
@@ -15,8 +16,10 @@ class SertifikatController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:user', 'menu:sertifikat'])->except('isiKuesioner');
-        $this->middleware(['auth:mhs'])->only('isiKuesioner');
+        $this->middleware(['auth:user', 'menu:sertifikat'])->except([
+            'isiKuesioner', 'lihatBerkasSertifikat'
+        ]);
+        $this->middleware(['auth:mhs'])->only(['isiKuesioner', 'lihatBerkasSertifikat']);
     }
 
     /**
@@ -33,8 +36,11 @@ class SertifikatController extends Controller
             'tanggal_cetak' => 'required|date',
             'no_urut_cetak' => 'required|numeric',
             'no_urut_skema' => 'required|numeric',
-            'tahun' => 'required|numeric'
+            'tahun' => 'required|numeric',
+            'berkas' => 'required|file|max:512|image'
         ]);
+
+        $fullpath = $this->uploadBerkasSertifikat($request, $uji->getMahasiswa(false), $uji->getSkema(false));
 
         $uji->getSertifikat()->save(new Sertifikat([
             'issue_date' => $request->issue_date,
@@ -42,7 +48,8 @@ class SertifikatController extends Controller
             'no_urut_cetak' => $request->no_urut_cetak,
             'tahun' => $request->tahun,
             'no_urut_skema' => $request->no_urut_skema,
-            'tanggal_cetak' => $request->tanggal_cetak
+            'tanggal_cetak' => $request->tanggal_cetak,
+            'berkas' => $fullpath
         ]));
 
         return response()->json([
@@ -50,6 +57,24 @@ class SertifikatController extends Controller
             'message' => 'Berhasil menambahkan sertifikat baru !',
             'redirect' => route('sertifikat')
         ]);
+    }
+
+    /**
+     * Mengunggah berkas scan sertifikat ke dalam folder mahasiswa sesuai nim
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Mahasiswa $mahasiswa
+     * @param Skema $skema
+     * @return string
+     */
+    private function uploadBerkasSertifikat(Request $request, Mahasiswa $mahasiswa, Skema $skema)
+    {
+        $path = 'data/' . $mahasiswa->nim . '/sertifikat';
+        $filename = $skema->nama . ' ' . $request->issue_date . '.' . $request->file('berkas')->getClientOriginalExtension();
+
+        $request->file('berkas')->storeAs($path, $filename);
+
+        return $path . '/' . $filename;
     }
 
     /**
@@ -70,7 +95,8 @@ class SertifikatController extends Controller
             'tanggal_cetak' => 'required|date',
             'no_urut_cetak' => 'required|numeric',
             'no_urut_skema' => 'required|numeric',
-            'tahun' => 'required|numeric'
+            'tahun' => 'required|numeric',
+            'berkas' => 'nullable|max:512|image'
         ]);
 
         $sertifikat->update([
@@ -81,6 +107,15 @@ class SertifikatController extends Controller
             'no_urut_skema' => $request->no_urut_skema,
             'tahun' => $request->tahun
         ]);
+
+        if ($request->has('berkas')) {
+            Storage::delete($sertifikat->berkas);
+            $fullpath = $this->uploadBerkasSertifikat($request, $sertifikat->getMahasiswa(false), $sertifikat->getSkema(false));
+
+            $sertifikat->update([
+                'berkas' => $fullpath
+            ]);
+        }
 
         return response()->json([
             'success' => true,
@@ -182,6 +217,19 @@ class SertifikatController extends Controller
         return redirect()->route('sertifikasi.riwayat')->with([
             'success' => 'Berhasil mengisi kuesioner !'
         ]);
+    }
+
+    /**
+     * Menampilkan file berkas sertifikat
+     *
+     * @param App\Models\Sertifikat $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function lihatBerkasSertifikat(Sertifikat $sertifikat)
+    {
+        return response()->file(
+            storage_path('app/' . $sertifikat->berkas)
+        );
     }
 
 }

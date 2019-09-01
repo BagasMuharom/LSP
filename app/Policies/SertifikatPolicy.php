@@ -79,4 +79,12 @@ class SertifikatPolicy
         return ($user->hasMenu(Menu::where('route', Menu::SERTIFIKAT)->first()) && ($user->hasRole(Role::SUPER_ADMIN) || $user->hasRole(Role::ADMIN)));
     }
 
+    public function lihatBerkasSertifikat(Authenticatable $user, Sertifikat $sertifikat)
+    {
+        if (is_null($sertifikat))
+            return false;
+
+        return true;
+    }
+
 }

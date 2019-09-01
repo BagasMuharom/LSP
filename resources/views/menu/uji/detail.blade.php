@@ -174,7 +174,11 @@
                         @endcan
 
                         @can('troubleshoot', \App\Models\Uji::class)
-                        <a target="__blank" href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
+                            <a target="__blank" href="{{ route('uji.troubleshoot', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning">Troubleshoot</a>
+                        @endcan
+
+                        @can('lihatBerkasSertifikat', $uji->getSertifikat(false))
+                            <a href="{{ route('sertifikat.lihat.berkas', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-success mb-1">Lihat Sertifikat</a>
                         @endcan
                 @endslot
             @endcard
@@ -231,35 +235,93 @@
             @card()
                 @slot('title', 'Pemberkasan')
 
-                @can('cetakFormPendaftaran', $uji)
-                    <a class="btn btn-primary mb-1" href="{{ route('uji.cetak.form.pendaftaran', ['uji' => encrypt($uji->id)]) }}" target="_blank">Cetak Form Pendaftaran</a>
-                @endcan
+                @slot('table')
+                    <table class="table table-border">
+                        <thead>
+                            <tr>
+                                <th>Nama Berkas/Form</th>
+                                <th>Cetak Berkas/Form</th>
+                            </tr>
+                        </thead>
 
-                <a class="btn btn-primary mb-1" href="{{ route('uji.cetak.apl01', ['uji' => encrypt($uji->id)]) }}" target="_blank">Cetak Form APL 01</a>
+                        <tbody>
+                            @can('cetakFormPendaftaran', $uji)
+                            <tr>
+                                <td>
+                                    Form pendaftaran
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.form.pendaftaran', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakApl01', $uji)
+                            <tr>
+                                <td>APL 01</td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.apl01', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakApl02', $uji)
+                            <tr>
+                                <td>APL 02</td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 1</a>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 2</a>
+                                </td>
+                            </tr>
+                            @endcan
 
-                @can('cetakFormAsesmenDiri', $uji)
-                    <a class="btn btn-primary mb-1" target="_blank" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}">Cetak Form APL 02</a>
-                @endcan
-                
-                @can('cetakMak01', $uji)
-                    <a href="{{ route('uji.cetak.mak01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 01</a>
-                @endif
-
-                @can('cetakMak02', $uji)
-                    <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 02</a>
-                @endif
-                
-                @can('cetakMak04', $uji)
-                    <a href="{{ route('uji.cetak.mak04', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MAK 04</a>
-                @endif
-                
-                @can('cetakMpa02', $uji)
-                    <a href="{{ route('uji.cetak.mpa02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-info mb-1" target="_blank">Cetak MPA 02</a>
-                @endif
-
-                @can('cetakKuesioner', $uji)
-                    <a href="{{ route('sertifikat.kuesioner.cetak', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-primary mb-1" target="_blank">Cetak Kuesioner</a>
-                @endcan
+                            @can('cetakMak01', $uji)
+                            <tr>
+                                <td>MAK 01</td>
+                                <td>
+                                    <a href="{{ route('uji.cetak.mak01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakMak02', $uji)
+                            <tr>
+                                <td>MAK 02</td>
+                                <td>
+                                    <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakMak04', $uji)
+                            <tr>
+                                <td>MAK 04</td>
+                                <td>
+                                    <a href="{{ route('uji.cetak.mak04', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakMpa02', $uji)
+                            <tr>
+                                <td>MPA 02</td>
+                                <td>
+                                    <a href="{{ route('uji.cetak.mpa02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                            
+                            @can('cetakKuesioner', $uji)
+                            <tr>
+                                <td>Kuesioner</td>
+                                <td>
+                                    <a href="{{ route('sertifikat.kuesioner.cetak', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+                            @endcan
+                        </tbody>
+                    </table>
+                @endslot
             @endcard
         @endcol
     @endrow
