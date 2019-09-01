@@ -225,7 +225,22 @@ class UjiPolicy
      * @param Uji $uji
      * @return boolean
      */
-    public function cetakFormAsesmenDiri(Authenticatable $user, Uji $uji)
+    public function cetakApl01(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
+
+        return true;
+    }
+    
+    /**
+     * Mengecek apakah user bisa menyetak form apl-02
+     *
+     * @param Authenticatable $user
+     * @param Uji $uji
+     * @return boolean
+     */
+    public function cetakApl02(Authenticatable $user, Uji $uji)
     {
         if ($user instanceof Mahasiswa)
             return false;
