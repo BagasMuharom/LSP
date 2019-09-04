@@ -81,12 +81,22 @@ class FormPageController extends Controller
             'asesmendiri' => $uji->getPenilaianDiri()
         ]);
 
-        // return view('form.apl_02', [
-        //     'uji' => $uji,
-        //     'skema' => $uji->getSkema(false),
-        //     'mahasiswa' => $uji->getMahasiswa(false),
-        //     'asesmendiri' => $uji->getPenilaianDiri()
-        // ]);
+        return $pdf->stream();
+    }
+
+    /**
+     * Menyetak form APL 02 Versi 2
+     *
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function cetakApl02V2(Uji $uji)
+    {
+        $pdf = PDF::loadView('form.apl_02_v2', [
+            'uji' => $uji,
+            'skema' => $uji->getSkema(false),
+            'mahasiswa' => $uji->getMahasiswa(false)
+        ]);
 
         return $pdf->stream();
     }
@@ -189,6 +199,25 @@ class FormPageController extends Controller
         //     'uji' => $uji,
         //     'skema' => $uji->getSkema(false)
         // ]);
+
+        return $pdf->stream();
+    }
+
+    /**
+     * Menyetak form FR AI 02
+     *
+     * @param \App\Models\Uji $uji
+     * @return mixed
+     */
+    public function cetakFRAI02(Uji $uji)
+    {
+        $pdf = PDF::loadView('form.fr_ai_02', [
+            'uji' => $uji,
+            'skema' => $uji->getSkema(false),
+            'mahasiswa' => $uji->getMahasiswa(false)
+        ]);
+
+        $pdf->setPaper('A4');
 
         return $pdf->stream();
     }
