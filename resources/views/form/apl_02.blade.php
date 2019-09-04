@@ -2,37 +2,8 @@
 
 <head>
     <title>Form Asesmen Diri</title>
+    @include('form.layouts.style')
     <style>
-        @page {
-            margin: 2cm;
-        }
-
-        * {
-            font-size: 11pt;
-            font-family: 'Calibri';
-        }
-
-        header {
-            position: fixed;
-            top: -8%;
-            left: 0px;
-            right: 0px;
-            background-color: lightblue;
-            height: 50px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: -60px;
-            left: 0px;
-            right: 0px;
-            background-color: lightblue;
-            height: 50px;
-        }
-
-        table {
-            /* page-break-inside: auto; */
-        }
 
         section {
             page-break-after: always;
@@ -74,25 +45,10 @@
             font-weight: normal;
             padding: 3px;
         }
-
-        .center {
-            text-align: center
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .top {
-            vertical-align: text-top;
-        }
     </style>
 </head>
 
 <body>
-    {{-- <header>header on each page</header>
-    <footer>footer on each page <span class="page-number"></span></footer> --}}
-
     <h4>FR-APL-02  ASESMEN MANDIRI</h4>
     <table border="1" class="full">
         <tr>
@@ -115,7 +71,7 @@
             <td colspan="2">Nama Asesor</td>
             <td>:</td>
             <td>
-                <ol>
+                <ol style="margin: 0;padding-left: 20px;">
                     @foreach($uji->getAsesorUji(false) as $asesor)
                     <li>{{ $asesor->nama }}</li>
                     @endforeach

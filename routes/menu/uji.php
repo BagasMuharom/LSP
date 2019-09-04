@@ -50,6 +50,11 @@ Route::prefix('uji')->group(function () {
         'uses' => 'UjiController@lihatBuktiKomepetensi',
         'as' => 'uji.lihat.bukti.kompetensi'
     ]);
+    
+    Route::get('lihat/portofolio/{uji}/{portofolio}', [
+        'uses' => 'UjiController@lihatPortofolio',
+        'as' => 'uji.lihat.portofolio'
+    ]);
 
     Route::post('update/nilai/asesmendiri/{uji}', [
         'uses' => 'UjiController@updateNilaiAsesmenDiri',
@@ -117,9 +122,14 @@ Route::prefix('uji')->group(function () {
 
     Route::prefix('cetak')->namespace('Pages')->group(function () {
 
-        Route::get('asesmen/diri/{uji}', [
+        Route::get('apl02/{uji}', [
             'uses' => 'FormPageController@cetakApl02',
-            'as' => 'uji.cetak.asesmen.diri'
+            'as' => 'uji.cetak.apl02'
+        ]);
+        
+        Route::get('apl02v2/{uji}', [
+            'uses' => 'FormPageController@cetakApl02V2',
+            'as' => 'uji.cetak.apl02v2'
         ]);
         
         Route::get('form/pendaftaran/{uji}', [
@@ -150,6 +160,11 @@ Route::prefix('uji')->group(function () {
         Route::get('mak04/{uji}', [
             'uses' => 'FormPageController@cetakMak04',
             'as' => 'uji.cetak.mak04'
+        ]);
+        
+        Route::get('frai02/{uji}', [
+            'uses' => 'FormPageController@cetakFRAI02',
+            'as' => 'uji.cetak.frai02'
         ]);
 
     });

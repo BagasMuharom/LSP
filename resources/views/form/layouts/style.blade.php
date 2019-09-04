@@ -1,98 +1,110 @@
 <style>
-        @page {
-            margin: 2cm;
-        }
+@page {
+    margin: 2cm;
+}
 
-        * {
-            box-sizing: border-box
-        }
+* {
+    box-sizing: border-box
+}
 
-        table {
-            page-break-after: avoid
-        }
+table {
+    page-break-after: avoid
+}
 
-        h1, h2, h3, h4, h5, h6 {
-            margin: 0;
-        }
-        html, body {
-            font-size: 11pt;
-        }
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+html, body {
+    font-size: 11pt;
+}
 
-        .fs-11 {
-            font-size: 11pt;
-        }
+.fs-11 {
+    font-size: 11pt;
+}
 
-        .fs-12 {
-            font-size: 12pt;
-        }
+.fs-12 {
+    font-size: 12pt;
+}
 
-        .fs-14 {
-            font-size: 14pt;
-        }
+.fs-14 {
+    font-size: 14pt;
+}
 
-        .table-pd-5 td {
-            padding: 5px;
-            vertical-align: top
-        }
-        
-        .table-pd-5 th {
-            padding: 5px;
-            vertical-align: top
-        }
+.table-pd-5 td {
+    padding: 5px;
+    vertical-align: top
+}
 
-        .text-center {
-            text-align: center;
-        }
+.table-pd-5 th {
+    padding: 5px;
+    vertical-align: top
+}
 
-        .table-full {
-            width: 100%;
-        }
+.text-center {
+    text-align: center;
+}
 
-        .table-border {
-            border-collapse: collapse;
-        }
+.table-full {
+    width: 100%;
+}
 
-        .unicode {
-            font-family: DejaVu Sans;
-        }
+.table-border {
+    border-collapse: collapse;
+}
 
-        .bg-biru {
-            background-color: rgb(198, 217, 241);
-        }
+.unicode {
+    font-family: DejaVu Sans;
+}
 
-        .text-justify {
-            text-align: justify;
-        }
+.bg-biru {
+    background-color: rgb(198, 217, 241);
+}
 
-        .unicode {
-            font-family: DejaVu Sans !important;
-        }
+.text-justify {
+    text-align: justify;
+}
 
-        .bt-hide {
-            border-top: none;
-        }
+.unicode {
+    font-family: DejaVu Sans !important;
+}
 
-        .bb-hide {
-            border-bottom: none;
-        }
+.bt-hide {
+    border-top: none;
+}
 
-        .bl-hide {
-            border-bottom: none;
-        }
+.bb-hide {
+    border-bottom: none;
+}
 
-        .br-hide {
-            border-right: none;
-        }
+.bl-hide {
+    border-bottom: none;
+}
 
-        .text-bold {
-            font-weight: bold;
-        }
+.br-hide {
+    border-right: none;
+}
 
-        .text-italic {
-            font-style: italic;
-        }
+.text-bold {
+    font-weight: bold;
+}
 
-        .valign-middle {
-            vertical-align: middle
-        }
-    </style>
+.text-italic {
+    font-style: italic;
+}
+
+.valign-middle {
+    vertical-align: middle
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.top {
+    vertical-align: text-top;
+}
+
+.center {
+    text-align: center
+}
+</style>
