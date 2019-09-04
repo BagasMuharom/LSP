@@ -59,10 +59,33 @@
 
             <button type="submit" class="btn btn-primary mb-2" @click.prevent="tambahBukti">Tambah Bukti Kompetensi</button>
         </template>
+        
+        <!-- Tambahan portofolio -->
+        <template v-if="skema != -1">
+            <h5>Unggah Portofolio (Tidak Wajib)</h5>
+            <p>Jika anda memiliki portofolio yang berhubungan dengan skema anda</p>
+            <form class="form-inline" v-for="(value, index) in daftarPortofolio" :key="index">
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control" v-model="value.nama">
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" :id="'portofolio' + index" @change="ubahFilePortofolio($event, value)">
+                        <label class="custom-file-label">Pilih File</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-danger mb-2" @click.prevent="hapusBukti(index)">Hapus</button>
+            </form>
+
+            <button type="submit" class="btn btn-primary mb-2" @click.prevent="tambahPortofolio">Tambah Portofolio</button>
+        </template>
 
         <p v-show="daftarSyarat.length > 0" class="alert alert-warning">
             Mohon untuk mengoreksi kembali data-data yang dimasukkan.
         </p>
+
+        <br>
 
         <button v-if="skema != -1" type="submit" class="btn btn-primary btn-lg">Daftar</button>
     </form>
@@ -81,7 +104,8 @@
                 csrf: null,
                 valErrors: {},
                 event: null,
-                daftarBuktiKompetensi: []
+                daftarBuktiKompetensi: [],
+                daftarPortofolio: []
             }
         },
         mounted() {
@@ -158,6 +182,13 @@
                         }
                     }
                     
+                    for (let portofolio of that.daftarPortofolio) {
+                        if (portofolio.nama != null && portofolio.nama != '' && portofolio.file != null) {
+                            formData.append('portofolio_nama[]', portofolio.nama)
+                            formData.append('portofolio_file[]', portofolio.file)
+                        }
+                    }
+                    
                     // Ajax memulai proses pendaftaran
                     axios.post(that.url.action, formData, config).then(function (response) {
                         if (response.data.success) {
@@ -207,12 +238,25 @@
                     nama: null
                 });
             },
+            
+            tambahPortofolio() {
+                this.daftarPortofolio.push({
+                    file: null,
+                    nama: null
+                });
+            },
 
             hapusBukti(index) {
                 this.daftarBuktiKompetensi.splice(index, 1)
             },
 
             ubahFileBukti(e, form) {
+                let file = e.target.files[0]
+
+                form.file = file
+            },
+
+            ubahFilePortofolio(e, form) {
                 let file = e.target.files[0]
 
                 form.file = file

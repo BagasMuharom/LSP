@@ -794,6 +794,23 @@ class Uji extends Model
     }
 
     /**
+     * Mendapatkan daftar portofolio yang diunggah asesi
+     *
+     * @return mixed
+     */
+    public function getPortofolio()
+    {
+        $files = collect([]);
+        $daftar = Storage::files('public/portofolio/' . $this->id);
+
+        foreach ($daftar as $file) {
+            $files->put(pathinfo($file, PATHINFO_BASENAME), pathinfo($file, PATHINFO_FILENAME));
+        }
+
+        return $files;
+    }
+
+    /**
      * Mengecek apakah mak4 telah diisi pada uji tertentu
      *
      * @return boolean

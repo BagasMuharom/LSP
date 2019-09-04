@@ -34,7 +34,8 @@ class UjiController extends Controller
         $request->validate([
             'event' => 'required|numeric|exists:event,id',
             'syarat.*' => 'nullableimage',
-            'bukti_kompetensi_file.*' => 'nullable|mimes:pdf,jpg,jpeg,png,gif|max:1024'
+            'bukti_kompetensi_file.*' => 'nullable|mimes:pdf,jpg,jpeg,png,gif|max:1024',
+            'portofolio_file.*' => 'nullable|mimes:pdf,jpg,jpeg,png,gif|max:1024'
         ]);
         
         $event = Event::find($request->event);
@@ -67,10 +68,19 @@ class UjiController extends Controller
             ]);
         }
 
+        // Mengunggah bukti kompetensi
         if ($request->has('bukti_kompetensi_nama')) {
             foreach ($request->bukti_kompetensi_nama as $index => $namaBukti) {
                 $filename = ucwords($namaBukti) . '.' . $request->file('bukti_kompetensi_file')[$index]->getClientOriginalExtension();
                 $request->file('bukti_kompetensi_file')[$index]->storeAs('public/bukti_kompetensi/' . $uji->id, $filename);
+            }
+        }
+        
+        // Mengunggah portofolio
+        if ($request->has('portofolio_nama')) {
+            foreach ($request->portofolio_nama as $index => $namaPortofolio) {
+                $filename = ucwords($namaPortofolio) . '.' . $request->file('portofolio_file')[$index]->getClientOriginalExtension();
+                $request->file('portofolio_file')[$index]->storeAs('public/portofolio/' . $uji->id, $filename);
             }
         }
 
@@ -319,6 +329,25 @@ class UjiController extends Controller
 
         return response()->file(
             storage_path('app/public/bukti_kompetensi/' . $uji->id . '/' . $bukti)
+        );
+    }
+    
+    /**
+     * Melihat file portofolio
+     *
+     * @param \App\Support\EksporUji $uji
+     * @param string $bukti
+     * @return mixed
+     */
+    public function lihatPortofolio(Uji $uji, $portofolio)
+    {
+        GlobalAuth::authorize('view', $uji);
+
+        if (Storage::exists('portofolio/' . $uji->id . '/' . $portofolio))
+            return abort(404);
+
+        return response()->file(
+            storage_path('app/public/portofolio/' . $uji->id . '/' . $portofolio)
         );
     }
 

@@ -223,12 +223,26 @@
 
                 <label><b>Bukti Kompetensi</b></label>
                 <ul class="list-group">
-                    @foreach ($uji->getBuktiKompetensi() as $file => $bukti)
+                    @forelse ($uji->getBuktiKompetensi() as $file => $bukti)
                         <li class="list-group-item">
                             {{ $bukti }}
                             <a class="btn btn-primary float-right" target="_blank" href="{{ route('uji.lihat.bukti.kompetensi', ['uji' => encrypt($uji->id), 'bukti' => $file]) }}">Lihat Berkas</a>
                         </li>
-                    @endforeach
+                    @empty
+                        <p class="alert alert-info">Tidak ada bukti kompetensi yang diunggah.</p>
+                    @endforelse
+                </ul>
+                
+                <label><b>Portofolio</b></label>
+                <ul class="list-group">
+                    @forelse ($uji->getPortofolio() as $file => $portofolio)
+                        <li class="list-group-item">
+                            {{ $portofolio }}
+                            <a class="btn btn-primary float-right btn-sm" target="_blank" href="{{ route('uji.lihat.portofolio', ['uji' => encrypt($uji->id), 'portofolio' => $file]) }}">Lihat Berkas</a>
+                        </li>
+                    @empty
+                        <p class="alert alert-info">Tidak ada portofolio yang diunggah.</p>
+                    @endforelse
                 </ul>
             @endcard
 
@@ -269,8 +283,8 @@
                             <tr>
                                 <td>APL 02</td>
                                 <td>
-                                    <a class="btn btn-primary" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 1</a>
-                                    <a class="btn btn-primary" href="{{ route('uji.cetak.asesmen.diri', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 2</a>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.apl02', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 1</a>
+                                    <a class="btn btn-primary" href="{{ route('uji.cetak.apl02v2', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 2</a>
                                 </td>
                             </tr>
                             @endcan
