@@ -493,9 +493,24 @@ class UjiPolicy
             return false;
 
         if ($user instanceof Mahasiswa) {
-            if ($uji->isMengisiMak4())
+            if ($uji->isHelperHasKey('mak4'))
                 return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Mengecek apakah user dapat mengisi form FR AI 02
+     *
+     * @param \Illuminate\Foundation\Auth\User $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
+    public function isiFRAI02(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
 
         return true;
     }

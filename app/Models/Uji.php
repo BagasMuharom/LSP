@@ -811,16 +811,45 @@ class Uji extends Model
     }
 
     /**
-     * Mengecek apakah mak4 telah diisi pada uji tertentu
-     *
+     * Mengecek apakah helper memiliki key tertentu
+     * 
      * @return boolean
      */
-    public function isMengisiMak4()
+    public function isHelperHasKey($key)
     {
-        if (in_array('mak4', collect($this->helper)->keys()->toArray()))
+        if (in_array($key, collect($this->helper)->keys()->toArray()))
             return true;
 
         return false;
+    }
+
+    /**
+     * Mendapatkan isian untuk form FR AI 02
+     *
+     * @return mixed
+     */
+    public function getIsianFRAI02()
+    {
+        // Jika pada helper tidak terdapat key 'frai02'
+        // maka dikembalikan array kosong 
+        if (!isset($this->helper['frai02'])) {
+            return collect([
+                'hasil' => collect([])
+            ]);
+        }
+
+        $frai02 = $this->helper['frai02'];
+        $frai02_hasil = collect($this->helper['frai02']['hasil']);
+
+        $frai02_hasil = $frai02_hasil->map(function ($item) {
+            $item['unit'] = UnitKompetensi::find($item['unit']);
+
+            return collect($item);
+        });
+
+        $frai02['hasil'] = collect($frai02_hasil);
+
+        return collect($frai02);
     }
 
 }

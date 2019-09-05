@@ -49,6 +49,12 @@ class PenilaianPageController extends Controller
         ]);
     }
 
+    /**
+     * Melakukan filter uji terhadap status tertentu
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
     private function filterStatus(Request $request)
     {
         $data = GlobalAuth::user()->getUjiAsAsesor()->distinct();
@@ -110,4 +116,21 @@ class PenilaianPageController extends Controller
             'uji' => $uji
         ]);
     }
+
+    /**
+     * Mengisi form FR AI 02 oleh asesor
+     *
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function isiFRAI02(Uji $uji)
+    {
+        return view('menu.penilaian.fr_ai_02', [
+            'uji' => $uji,
+            'mahasiswa' => $uji->getMahasiswa(false),
+            'skema' => $uji->getSkema(false),
+            'daftarRespon' => $uji->getIsianFRAI02()
+        ]);
+    }
+
 }

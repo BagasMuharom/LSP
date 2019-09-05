@@ -120,6 +120,25 @@ Route::prefix('uji')->group(function () {
 
     });
 
+    Route::prefix('frai02')->group(function () {
+
+        Route::get('isi/{uji}', [
+            'uses' => 'Pages\PenilaianPageController@isiFRAI02',
+            'as' => 'uji.isi.fr_ai_02'
+        ]);
+        
+        Route::put('isi/{uji}', [
+            'uses' => 'PenilaianController@tambahResponFRAI02',
+            'as' => 'uji.tambah.respon.fr_ai_02'
+        ]);
+        
+        Route::post('edit/{uji}', [
+            'uses' => 'PenilaianController@editResponFRAI02',
+            'as' => 'uji.edit.respon.fr_ai_02'
+        ]);
+
+    });
+
     Route::prefix('cetak')->namespace('Pages')->group(function () {
 
         Route::get('apl02/{uji}', [

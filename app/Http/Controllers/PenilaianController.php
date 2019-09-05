@@ -115,4 +115,59 @@ class PenilaianController extends Controller
         return back()->with('success', 'Berhasil membatalkan konfirmasi !');
     }
 
+    /**
+     * Menambah respon untuk form FR AI 02
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function tambahResponFRAI02(Request $request, Uji $uji)
+    {
+        // mendapatkan kolom helper
+        $helper = $uji->helper;
+
+        $helper['frai02']['hasil'][] = [
+            'pertanyaan' => $request->pertanyaan,
+            'jawaban' => $request->jawaban,
+            'unit' => $request->unit,
+            'memuaskan' => $request->memuaskan
+        ];
+
+        $uji->update([
+            'helper' => $helper
+        ]);
+
+        return back()->with([
+            'success' => 'Berhasil menambahkan respon !'
+        ]);
+    }
+
+    /**
+     * Mengedit respon 
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function editResponFRAI02(Request $request, Uji $uji)
+    {
+        $daftarRespon = [];
+        $helper = $uji->helper;
+
+        foreach ($request->input('respon') as $respon) {
+            $daftarRespon[] = $respon;
+        }
+
+        $helper['frai02']['hasil'] = $daftarRespon;
+
+        $uji->update([
+            'helper' => $helper
+        ]);
+
+        return back()->with([
+            'success' => 'Berhasil mengedit respon !'
+        ]);
+    }
+
 }
