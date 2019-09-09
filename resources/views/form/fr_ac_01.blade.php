@@ -79,7 +79,7 @@
     </tr>
 </table>
 <br>
-<small>Beri tanda centang () di kolom yang sesuai untuk mencerminkan bukti yang diperoleh untuk menentukan Kompetensi siswa untuk setiap Unit Kompetensi.</small>
+<small>Beri tanda centang (&#10003;) di kolom yang sesuai untuk mencerminkan bukti yang diperoleh untuk menentukan Kompetensi siswa untuk setiap Unit Kompetensi.</small>
 <table class="table border">
     <tr>
         <td>Unit kompetensi</td>
