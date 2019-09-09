@@ -823,6 +823,11 @@ class Uji extends Model
         return false;
     }
 
+    /**
+     * evaluasi portofolio FR.AI.04
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function getEvaluasiPortofolio()
     {
         try {
