@@ -125,3 +125,7 @@ Route::get('test/FR.AI.04', function () {
 Route::get('test/fr_ai_05', function () {
     return view('form.fr_ai_05');
 });
+
+Route::get('test/fr_ac_01', function () {
+    return view('form.fr_ac_01');
+});
