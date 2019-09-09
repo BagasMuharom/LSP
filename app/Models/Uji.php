@@ -823,6 +823,36 @@ class Uji extends Model
         return false;
     }
 
+    public function getEvaluasiPortofolio()
+    {
+        try {
+            $evals = [];
+            for ($c = 0; $c < count($this->helper); $c++){
+                $data = [];
+                $data['jenis'] = $this->helper['FR.AI.04']['jenis'][$c];
+                $data['unit'] = UnitKompetensi::find($this->helper['FR.AI.04']['unit'][$c]);
+                $data['bukti'] = [];
+                for ($i = 0; $i < count($this->helper['FR.AI.04']['dokumen_'.$c]); $i++){
+                    $_ = [
+                        'dokumen' => $this->helper['FR.AI.04']['dokumen_'.$c][$i],
+                        'valid' => $this->helper['FR.AI.04']['valid_'.$c][$i],
+                        'memadai' => $this->helper['FR.AI.04']['memadai_'.$c][$i],
+                        'asli' => $this->helper['FR.AI.04']['asli_'.$c][$i],
+                        'terkini' => $this->helper['FR.AI.04']['terkini_'.$c][$i],
+                    ];
+                    $data['bukti'][] = (object)$_;
+                }
+                $data['tindak_lanjut'] = $this->helper['FR.AI.04']['tindak_lanjut'][$c];
+                $data['bukti_tambahan'] = $this->helper['FR.AI.04']['bukti_tambahan'][$c];
+                $evals[] = (object)$data;
+            }
+        } catch (\Exception $exception){
+            $evals = [];
+        }
+
+        return collect($evals);
+    }
+
     /**
      * Mendapatkan isian untuk form FR AI 02
      *

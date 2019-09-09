@@ -27,4 +27,14 @@ Route::group(['prefix' => 'penilaian'], function () {
         'as' => 'penilaian.batalkan.konfirmasi'
     ]);
 
+    Route::get('fr-ai-04/{uji}', [
+        'uses' => 'Pages\PenilaianPageController@FRAI04',
+        'as' => 'penilaian.fr-ai-04'
+    ]);
+
+    Route::post('fr-ai-04/eval/{uji}', [
+        'uses' => 'PenilaianController@evaluasiPortofolio',
+        'as' => 'penilaian.eval.fr-ai-04'
+    ]);
+
 });
