@@ -33,9 +33,11 @@
                             <span class="choosed">@{{ filter.skema.nama }}</span>
                         </button>
                         <div class="dropdown-menu">
-                            <input type="text" class="form-control" v-model="input.keyword_skema" @keyup="ubahOpsiDaftarSkema">
+                            <input type="text" class="form-control" v-model="input.keyword_skema"
+                                   @keyup="ubahOpsiDaftarSkema">
                             <div style="max-height: 150px;overflow-y:scroll;">
-                            <a href="#" :key="skema.id" v-for="skema in daftarSkema" class="dropdown-item" @click.prevent="ubahOpsiSkema($event, skema)">@{{ skema.nama }}</a>
+                                <a href="#" :key="skema.id" v-for="skema in daftarSkema" class="dropdown-item"
+                                   @click.prevent="ubahOpsiSkema($event, skema)">@{{ skema.nama }}</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +46,7 @@
 
             <div class="col-md-auto col-sm-12 mt-1">
                 <input type="text" id="input-group-2" name="q" class="form-control"
-                            placeholder="Cari berdasarkan nama atau keterangan" value="{{ $q }}">
+                       placeholder="Cari berdasarkan nama atau keterangan" value="{{ $q }}">
             </div>
 
             <div class="col-md-auto col-sm-12 mt-1">
@@ -53,7 +55,7 @@
                 </button>
             </div>
         </div>
-        
+
     </form>
 
     @slot('table')
@@ -74,23 +76,38 @@
                     <td>{{ $uji->getSkema(false)->nama }}</t>
                     <td>
                         <div class="btn-group">
-                            @can('penilaian', $uji)
-                            <a class="btn btn-info btn-sm text-white"
-                               href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}">Lakukan Penilaian</a>
-                            @endcan
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Penilaian
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @can('penilaian', $uji)
+                                        <a class="dropdown-item"
+                                           href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}">Lakukan
+                                            Penilaian</a>
+                                    @endcan
 
-                            @can('penilaianDiri', $uji)
-                            <a href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}"
-                               class="btn btn-primary btn-sm">Asesmen Diri</a>
-                            @endcan
+                                    @can('penilaianDiri', $uji)
+                                        <a href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}"
+                                           class="dropdown-item">Asesmen Diri</a>
+                                    @endcan
+
+                                    <a href="{{ route('penilaian.fr-ai-04', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</a>
+                                </div>
+                            </div>
 
                             @can('konfirmasiPenilaian', $uji)
-                                <a class="btn btn-success btn-sm text-white" onclick="konfirmasi('{{ route('penilaian.konfirmasi', ['uji' => encrypt($uji->id)]) }}')">Konfirmasi Penilaian</a>
+                                <a class="btn btn-success btn-sm text-white"
+                                   onclick="konfirmasi('{{ route('penilaian.konfirmasi', ['uji' => encrypt($uji->id)]) }}')">Konfirmasi
+                                    Penilaian</a>
                             @endcan
 
-                            <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}" class="btn btn-warning btn-sm">Detail Uji</a>
+                            <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}"
+                               class="btn btn-warning btn-sm">Detail Uji</a>
                         </div>
-                    </t>
+                        </t>
                 </tr>
             @empty
                 <tr>
@@ -113,58 +130,58 @@
 @endsection
 
 @push('js')
-<script>
-    function konfirmasi(route){
-        event.preventDefault()
-        swal({
-            title: "Anda tidak dapat mengubah nilai ketika nilai dikonfirmasi. Apakah anda yakin ingin mengkonfirmasi?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((choice) => {
-            if (choice) {
-                swal('Sedang memuat. . .', {
-                    buttons: false,
-                    closeOnClickOutside: false
-                })
-                $('#konfirmasi').attr('action', route)
-                $('#konfirmasi').submit()
-            }
-        })
-    }
+    <script>
+        function konfirmasi(route) {
+            event.preventDefault()
+            swal({
+                title: "Anda tidak dapat mengubah nilai ketika nilai dikonfirmasi. Apakah anda yakin ingin mengkonfirmasi?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((choice) => {
+                if (choice) {
+                    swal('Sedang memuat. . .', {
+                        buttons: false,
+                        closeOnClickOutside: false
+                    })
+                    $('#konfirmasi').attr('action', route)
+                    $('#konfirmasi').submit()
+                }
+            })
+        }
 
         new Vue({
-        el: '#filter',
-        data: {
-            url: {
-                daftar_skema: '{{ route('skema.daftar') }}',
+            el: '#filter',
+            data: {
+                url: {
+                    daftar_skema: '{{ route('skema.daftar') }}',
+                },
+                filter: {
+                    skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find((int) request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
+                },
+                input: {
+                    keyword_skema: ''
+                },
+                daftarSkema: [{id: -1, nama: 'Semua Skema'}]
             },
-            filter: {
-                skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find((int) request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
-            },
-            input: {
-                keyword_skema: ''
-            },
-            daftarSkema: [{id: -1, nama: 'Semua Skema'}]
-        },
-        methods: {
-            ubahOpsiDaftarSkema: function (e) {
-                let that = this
+            methods: {
+                ubahOpsiDaftarSkema: function (e) {
+                    let that = this
 
-                axios.post(this.url.daftar_skema, {
-                    keyword: that.input.keyword_skema
-                }).then(function (response) {
-                    if (response.data.length > 0) {
-                        that.daftarSkema = response.data
-                    }
-                }).catch(function (error) {
+                    axios.post(this.url.daftar_skema, {
+                        keyword: that.input.keyword_skema
+                    }).then(function (response) {
+                        if (response.data.length > 0) {
+                            that.daftarSkema = response.data
+                        }
+                    }).catch(function (error) {
 
-                })
-            },
-            ubahOpsiSkema: function (e, skema) {
-                this.filter.skema = skema
+                    })
+                },
+                ubahOpsiSkema: function (e, skema) {
+                    this.filter.skema = skema
+                }
             }
-        }
-    })
-</script>
+        })
+    </script>
 @endpush

@@ -168,4 +168,20 @@ class PenilaianController extends Controller
         ]);
     }
 
+    /**
+     * Simpan hasil evaluasi FR.AI.04
+     *
+     * @param Request $request
+     * @param Uji $uji
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function evaluasiPortofolio(Request $request, Uji $uji)
+    {
+        $helper = $uji->helper;
+        $helper['FR.AI.04'] = $request->except('_token');
+        $uji->helper = $helper;
+        $uji->save();
+        return back()->with('success', 'Data telah disimpan');
+    }
+
 }

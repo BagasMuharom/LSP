@@ -133,4 +133,15 @@ class PenilaianPageController extends Controller
         ]);
     }
 
+
+    public function FRAI04(Uji $uji)
+    {
+        $portofolios = $uji->getPortofolio();
+        $types = ['Valid', 'Memadai', 'Asli', 'Terkini'];
+        return view('menu.penilaian.fr_ai_04', [
+            'portofolios' => $portofolios,
+            'uji' => $uji,
+            'types' => $types,
+        ]);
+    }
 }

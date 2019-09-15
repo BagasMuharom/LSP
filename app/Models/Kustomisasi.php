@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use function Complex\sec;
 use Illuminate\Database\Eloquent\Model;
 
 class Kustomisasi extends Model
@@ -30,6 +31,10 @@ class Kustomisasi extends Model
 
     const PENGUMUMAN = 'pengumuman';
 
+    const MAPS = 'maps';
+
+    const MAPS_URL = 'maps_url';
+
     const ALL = [
         self::NAMA,
         self::LOGO,
@@ -42,7 +47,9 @@ class Kustomisasi extends Model
         self::NO_TELP,
         self::ALAMAT,
         self::NO_LISENSI,
-        self::PENGUMUMAN
+        self::PENGUMUMAN,
+        self::MAPS,
+        self::MAPS_URL
     ];
 
     protected $table = 'kustomisasi';

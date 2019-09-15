@@ -174,6 +174,37 @@
         <button class="btn btn-success">Simpan</button>
     </form>
     @endcard
+
+    @card(['title' => 'MAPS'])
+    @alert(['type' => 'info'])
+    Terakhir diperbarui {{ $maps->updated_at->diffForHumans() }} oleh <b>{{ $maps->getUser(false)->nama }}</b>
+    @endalert
+    <img src="{{ $maps->value }}" class="img-fluid mx-auto d-block" style="max-height: 325px; min-height: 325px">
+    <br>
+    <form action="{{ route('kustomisasi.update.file', ['kustomisasi' => encrypt($maps->key)]) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @formgroup
+        <div class="custom-file">
+            <input name="value" type="file" accept="image/*" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div>
+        @endformgroup
+        <button class="btn btn-success">Simpan</button>
+    </form>
+    @endcard
+
+    @card(['title' => 'MAPS URL'])
+    @alert(['type' => 'info'])
+    Terakhir diperbarui {{ $mapsUrl->updated_at->diffForHumans() }} oleh <b>{{ $mapsUrl->getUser(false)->nama }}</b>
+    @endalert
+    <form action="{{ route('kustomisasi.update', ['kustomisasi' => encrypt($mapsUrl->key)]) }}" method="post">
+        @csrf
+        @formgroup
+        <textarea class="form-control" rows="3" name="value">{{ $mapsUrl->value }}</textarea>
+        @endformgroup
+        <button class="btn btn-success">Simpan</button>
+    </form>
+    @endcard
 @endsection
 
 @push('js')
