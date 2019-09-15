@@ -77,7 +77,7 @@ class Mahasiswa extends Authenticatable
     public function getEventTersedia($queryReturn = true)
     {
         // mendapatkan daftar dana yang sudah pernah diikuti oleh mahasiswa terkait
-        $temp = Dana::whereHas('getEvent.getUji', function ($query) {
+        $temp = Dana::where('berulang', false)->whereHas('getEvent.getUji', function ($query) {
             $query->where('nim', GlobalAuth::user()->nim);
         })->get()->pluck('id');
 
@@ -87,9 +87,7 @@ class Mahasiswa extends Authenticatable
         $skema = Event::whereHas('getMahasiswaMandiriEvent', function ($query) {
             $query->where('mahasiswa.nim', GlobalAuth::user()->nim);
         })->orWhere(function ($query) use ($temp) {
-            $query->whereNotIn('dana_id', $temp->toArray())->whereHas('getDana', function ($query) {
-                $query->where('berulang', false);
-            });
+            $query->whereNotIn('dana_id', $temp->toArray());
         })->whereHas('getSkema', function ($query) {
             $query->where(function ($query) {
                 $query->where('jurusan_id', GlobalAuth::user()->getJurusan(false)->id)
