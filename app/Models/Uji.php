@@ -817,10 +817,7 @@ class Uji extends Model
      */
     public function isHelperHasKey($key)
     {
-        if (in_array($key, collect($this->helper)->keys()->toArray()))
-            return true;
-
-        return false;
+        return collect($this->helper)->has($key);
     }
 
     /**
@@ -834,7 +831,10 @@ class Uji extends Model
         // maka dikembalikan array kosong 
         if (!isset($this->helper['frai02'])) {
             return collect([
-                'hasil' => collect([])
+                'hasil' => collect([]),
+                'umum' => [
+                    'pengetahuan_kandidat' => null
+                ]
             ]);
         }
 

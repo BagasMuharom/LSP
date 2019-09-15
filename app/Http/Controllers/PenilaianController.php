@@ -133,6 +133,7 @@ class PenilaianController extends Controller
             'unit' => $request->unit,
             'memuaskan' => $request->memuaskan
         ];
+        $helper['frai02']['umum']['pengetahuan_kandidat'] = "Memuaskan";
 
         $uji->update([
             'helper' => $helper
@@ -152,14 +153,11 @@ class PenilaianController extends Controller
      */
     public function editResponFRAI02(Request $request, Uji $uji)
     {
-        $daftarRespon = [];
+        $daftarRespon = $request->input('respon');
         $helper = $uji->helper;
 
-        foreach ($request->input('respon') as $respon) {
-            $daftarRespon[] = $respon;
-        }
-
         $helper['frai02']['hasil'] = $daftarRespon;
+        $helper['frai02']['umum']['pengetahuan_kandidat'] = $request->pengetahuan_kandidat;
 
         $uji->update([
             'helper' => $helper
