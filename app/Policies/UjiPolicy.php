@@ -168,7 +168,8 @@ class UjiPolicy
         return in_array($uji->getStatus()['code'], [
             Uji::MENGISI_ASESMEN_DIRI,
             Uji::LULUS_ASESMEN_DIRI,
-            Uji::PROSES_PENILAIAN
+            Uji::PROSES_PENILAIAN,
+            Uji::TERVERIFIKASI_BAG_SERTIFIKASI
         ]) && ($user->hasRole(Role::SUPER_ADMIN) || $user->hasRole(Role::ADMIN));
     }
 
