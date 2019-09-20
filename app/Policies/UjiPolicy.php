@@ -305,7 +305,7 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return $uji->isMengisiMak4();
+        return $uji->isHelperHasKey('mak4');
     }
     
     /**
@@ -326,9 +326,34 @@ class UjiPolicy
         ]));
     }
 
+    /**
+     * Mengecek apakah bisa menyetak form MAK 01
+     *
+     * @param Authenticatable $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
     public function cetakMak01(Authenticatable $user, Uji $uji)
     {
         if ($user instanceof Mahasiswa)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Mengecek apakah bisa menyetak form FR AI 02
+     *
+     * @param Authenticatable $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
+    public function cetakFRAI02(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
+
+        if (!$uji->isHelperHasKey('frai02'))
             return false;
 
         return true;
