@@ -94,6 +94,12 @@
                                            class="dropdown-item">Asesmen Diri</a>
                                     @endcan
 
+                                    @can('isiFRAI02', $uji)
+                                        <a href="{{ route('uji.isi.fr_ai_02', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">
+                                            Isi FR.AI.02
+                                        </a>
+                                    @endcan
+
                                     <a href="{{ route('penilaian.fr-ai-04', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</a>
                                 </div>
                             </div>

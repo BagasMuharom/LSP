@@ -541,4 +541,16 @@ class UjiPolicy
         return true;
     }
 
+    /**
+     * Mengecek apakah user dapat melihat berkas sertifikat mahasiswa
+     *
+     * @param \Illuminate\Foundation\Auth\User $user
+     * @param \App\Models\Uji $uji
+     * @return boolean
+     */
+    public function lihatBerkasSertifikat(Authenticatable $user, Uji $uji)
+    {
+        return true;
+    }
+
 }

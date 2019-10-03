@@ -328,7 +328,6 @@
                         let data = new FormData()
                         data.append('nilai', JSON.stringify(that.nilai))
                         data.append('nilai_unit', JSON.stringify(that.nilaiUnit))
-                        {{-- data.append('rekomendasi_asesor', that.rekomendasi_asesor) --}}
 
                         axios.post(that.url.penilaian, data).then(response => {
                             if (response.data.success) {

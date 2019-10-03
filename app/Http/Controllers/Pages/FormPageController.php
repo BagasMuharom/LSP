@@ -214,7 +214,9 @@ class FormPageController extends Controller
         $pdf = PDF::loadView('form.fr_ai_02', [
             'uji' => $uji,
             'skema' => $uji->getSkema(false),
-            'mahasiswa' => $uji->getMahasiswa(false)
+            'mahasiswa' => $uji->getMahasiswa(false),
+            'daftarResponPerUnit' => $uji->getIsianFRAI02()['hasil']->groupBy('unit.id'),
+            'isian' => $uji->getIsianFRAI02()['umum']
         ]);
 
         $pdf->setPaper('A4');

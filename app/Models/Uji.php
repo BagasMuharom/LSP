@@ -864,7 +864,7 @@ class Uji extends Model
     {
         // Jika pada helper tidak terdapat key 'frai02'
         // maka dikembalikan array kosong 
-        if (!isset($this->helper['frai02'])) {
+        if (!$this->isHelperHasKey('frai02')) {
             return collect([
                 'hasil' => collect([]),
                 'umum' => [

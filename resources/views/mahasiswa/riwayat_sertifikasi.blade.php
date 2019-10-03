@@ -42,15 +42,15 @@
                             <h5><span class="badge badge-{{ $uji->getStatus()['color'] }}">{{ $uji->getStatus()['status'] }}</span></h5>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-sm">
-                                <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary">Detail</a>
-                                @can('isiKuesioner', $uji)
-                                <a href="{{ route('sertifikat.kuesioner.isi', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-success">Isi Kuesioner</a>
-                                @endif
-                                @can('isimak4', $uji)
-                                <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary">Isi Form MAK 04</a>
-                                @endif
-                            </div>
+                            <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
+
+                            @can('isiKuesioner', $uji)
+                            <a href="{{ route('sertifikat.kuesioner.isi', ['sertifikat' => encrypt($uji->getSertifikat(false)->id)]) }}" class="btn btn-success btn-sm mb-1">Isi Kuesioner</a>
+                            @endif
+
+                            @can('isimak4', $uji)
+                            <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary btn-sm mb-1">Isi Form MAK 04</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

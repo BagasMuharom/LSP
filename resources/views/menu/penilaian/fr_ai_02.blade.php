@@ -18,6 +18,14 @@
     @include('layouts.include.alert')
 
     @card
+        <h5>Anda akan mengisi isian Form FR AI 02 untuk mahasiswa berikut : </h5>
+        <p>
+            Nama&emsp; : {{ $mahasiswa->nama }}<br>
+            Skema&emsp;: {{ $skema->nama }}
+        </p>
+    @endcard
+
+    @card
         @slot('title', 'Tambah Pertanyaan dan Respon')
 
         <form id="form" action="{{ route('uji.tambah.respon.fr_ai_02', ['uji' => encrypt($uji->id)]) }}" method="post">
@@ -108,6 +116,20 @@
             @endforelse
 
             @if(count($daftarRespon['hasil']) > 0)
+
+            <label>Pengetahuan kandiddat adalah :</label>
+            <div class="custom-control custom-control-lg custom-radio mb-3">
+                <input type="radio" class="custom-control-input" id="pengetahuan_kandidat_memuaskan" name="pengetahuan_kandidat" value="Memuaskan" {{ isset($daftarRespon['umum']) && $daftarRespon['umum']['pengetahuan_kandidat'] == 'Memuaskan' ? 'checked' : '' }}>
+                <label class="custom-control-label" for="pengetahuan_kandidat_memuaskan">Memuaskan</label>
+            </div>
+            
+            <div class="custom-control custom-control-lg custom-radio">
+                <input type="radio" class="custom-control-input" id="pengetahuan_kandidat_tidak_memuaskan" name="pengetahuan_kandidat" value="Tidak Memuaskan" {{ isset($daftarRespon['umum']) && $daftarRespon['umum']['pengetahuan_kandidat'] == 'Tidak Memuaskan' ? 'checked' : '' }}>
+                <label class="custom-control-label" for="pengetahuan_kandidat_tidak_memuaskan">Tidak Memuaskan</label>
+            </div>
+
+            <hr style="border-color: #aaa">
+
             <div class="d-flex justify-content-center">
                 <button onclick="event.preventDefault();if(confirm('Apa anda yakin ?')) $('#form-edit').submit()" class="btn btn-primary btn-lg mt-3">Simpan</button>
             </div>
