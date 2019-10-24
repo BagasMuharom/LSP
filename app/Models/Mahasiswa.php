@@ -92,7 +92,7 @@ class Mahasiswa extends Authenticatable
             $query->where(function ($query) {
                 $query->where('jurusan_id', GlobalAuth::user()->getJurusan(false)->id)
                     ->orWhere('lintas', true);
-            })->whereNotIn('id', GlobalAuth::user()->getUji()->with('getEvent.getSkema')->get()->pluck('getEvent.getSkema.id')->toArray());
+            });
         })->onGoing();
         
         if ($queryReturn)
