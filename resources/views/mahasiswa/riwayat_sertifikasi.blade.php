@@ -49,7 +49,7 @@
                             @endif
 
                             @can('isimak4', $uji)
-                            <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary btn-sm mb-1">Isi Form MAK 04</a>
+                            {{-- <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary btn-sm mb-1">Isi Form MAK 04</a> --}}
                             @endif
                         </td>
                     </tr>
