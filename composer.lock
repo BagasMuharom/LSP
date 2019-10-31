@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a1b41e62510e0958e265f9c3af401de",
+    "content-hash": "aa39115ded87540b559c6a2346f15e5b",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -98,6 +98,99 @@
             ],
             "description": "Rotation of PDF pages.",
             "time": "2018-06-24T11:51:41+00:00"
+        },
+        {
+            "name": "digitaldream/dbreader",
+            "version": "1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/digitaldreams/dbreader.git",
+                "reference": "54bfe8e024a91e536d629bf2a04e3adc6a9ef496"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digitaldreams/dbreader/zipball/54bfe8e024a91e536d629bf2a04e3adc6a9ef496",
+                "reference": "54bfe8e024a91e536d629bf2a04e3adc6a9ef496",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DbReader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tuhin",
+                    "email": "digitaldreams40@gmail.com"
+                }
+            ],
+            "description": "Database Reader",
+            "time": "2017-09-18T17:06:51+00:00"
+        },
+        {
+            "name": "digitaldream/laracrud",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/digitaldreams/laracrud.git",
+                "reference": "a9ad22db3cb4cd90325e27573897663278f6cf07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digitaldreams/laracrud/zipball/a9ad22db3cb4cd90325e27573897663278f6cf07",
+                "reference": "a9ad22db3cb4cd90325e27573897663278f6cf07",
+                "shasum": ""
+            },
+            "require": {
+                "digitaldream/dbreader": "~1.0",
+                "laravel/framework": ">=5.5",
+                "php": ">=7.0.0"
+            },
+            "suggest": {
+                "dingo/api": "To make API",
+                "intervention/image": "For Image",
+                "tymon/jwt-auth": "For API authentication"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaraCrud\\LaraCrudServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaraCrud\\": "src/lara-crud/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tuhin Bepari",
+                    "email": "digitaldreams40@gmail.com",
+                    "homepage": "http://www.tuhinbepari.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Do you have a well structed database and you want to make a Laravel Application on top of it. By using this tools you can generate Models which have necessary methods and property, Request class with rules, generate route from controllers method and its parameter and full features form with validation error message and more with a single line of command",
+            "homepage": "https://github.com/digitaldreams/laracrud",
+            "keywords": [
+                "code generator",
+                "crud",
+                "laravel",
+                "laravel code generator"
+            ],
+            "time": "2019-09-13T03:45:23+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
