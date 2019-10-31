@@ -22,12 +22,13 @@ class CreateTempatUjiTable extends Migration
             $table->string('nama');
             $table->integer('jurusan_id')->unsigned();
             $table->foreign('jurusan_id')
-                    ->references('id')
-                    ->on('jurusan');
-            $table->integer('user_id');
+                ->references('id')
+                ->on('jurusan');
+            $table->integer('user_id')
+                ->unsigned();
             $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users');
+                ->references('id')
+                ->on('users');
         });
     }
 
