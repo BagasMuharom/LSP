@@ -16,7 +16,7 @@ class CreateAsesorUjiTable extends Migration
         Schema::create('asesor_uji', function (Blueprint $table) {
             $table->integer('user_id')
                 ->unsigned();
-            $table->integer('uji_id')
+            $table->bigInteger('uji_id')
                 ->unsigned();
             $table->foreign('user_id')
                 ->references('id')

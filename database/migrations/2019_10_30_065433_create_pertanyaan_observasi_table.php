@@ -15,10 +15,11 @@ class CreatePertanyaanObservasiTable extends Migration
     {
         Schema::create('pertanyaan_observasi', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('unit_kompetensi_id');
+            $table->integer('unit_kompetensi_id')
+                ->unsigned();
             $table->foreign('unit_kompetensi_id')
-                    ->references('id')
-                    ->on('unit_komepetensi');
+                ->references('id')
+                ->on('unit_kompetensi');
             $table->text('pertanyaan');
             $table->timestamps();
             $table->softDeletes();
