@@ -224,4 +224,23 @@ class FormPageController extends Controller
         return $pdf->stream();
     }
 
+    public function cetakFRAI01(Uji $uji)
+    {
+        $pdf = PDF::loadView('form.fr_ai_01', [
+            'uji' => $uji,
+            'skema' => $uji->getSkema(false),
+            'mahasiswa' => $uji->getMahasiswa(false)
+        ]);
+
+        // return view('form.fr_ai_01', [
+        //     'uji' => $uji,
+        //     'skema' => $uji->getSkema(false),
+        //     'mahasiswa' => $uji->getMahasiswa(false)
+        // ]);
+
+        $pdf->setPaper('A4');
+
+        return $pdf->stream();
+    }
+
 }
