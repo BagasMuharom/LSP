@@ -24,6 +24,7 @@ class CreateElemenKompetensiTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('nama');
+            $table->string('benchmark', 20);
             $table->softDeletes();
         });
     }
