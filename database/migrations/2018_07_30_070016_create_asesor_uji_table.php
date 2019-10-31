@@ -28,8 +28,6 @@ class CreateAsesorUjiTable extends Migration
                 ->on('uji')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->text('ttd')
-                ->nullable();
         });
     }
 
