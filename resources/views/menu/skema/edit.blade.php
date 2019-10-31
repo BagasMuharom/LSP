@@ -29,8 +29,8 @@
         @endformgroup
         
         @formgroup
-        <label>Judul</label>
-        <input type="text" name="nama" class="form-control" value="{{ $skema->nama_english }}" required>
+        <label>Judul (dalam bahasa inggris)</label>
+        <input type="text" name="nama_english" class="form-control" value="{{ $skema->nama_english }}" required>
         @endformgroup
         <hr>
 
