@@ -25,6 +25,7 @@ class CreateKriteriaTable extends Migration
                 ->onDelete('cascade');
             $table->text('unjuk_kerja');
             $table->text('pertanyaan');
+            $table->text('kalimat_aktif');
             $table->softDeletes();
         });
     }

@@ -24,6 +24,10 @@ class CreateTempatUjiTable extends Migration
             $table->foreign('jurusan_id')
                     ->references('id')
                     ->on('jurusan');
+            $table->integer('user_id');
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users');
         });
     }
 

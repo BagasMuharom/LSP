@@ -16,7 +16,7 @@ class KomponenMak4Table extends Migration
         Schema::create('komponen_mak_4', function (Blueprint $table) {
             $table->increments('id');
             $table->string('komponen');
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

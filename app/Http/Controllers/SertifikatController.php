@@ -17,10 +17,10 @@ class SertifikatController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:user', 'menu:sertifikat'])->except([
-            'isiKuesioner'
+            'isiKuesioner', 'lihatBerkasSertifikat'
         ]);
 
-        $this->middleware(['auth:mhs'])->only(['isiKuesioner']);
+        $this->middleware(['auth:mhs'])->only(['isiKuesioner', 'lihatBerkasSertifikat']);
     }
 
     /**
@@ -38,7 +38,7 @@ class SertifikatController extends Controller
             'no_urut_cetak' => 'required|numeric',
             'no_urut_skema' => 'required|numeric',
             'tahun' => 'required|numeric',
-            'berkas' => 'required|file|max:512|image'
+            'berkas' => 'required|file|max:1024'
         ]);
 
         $fullpath = $this->uploadBerkasSertifikat($request, $uji->getMahasiswa(false), $uji->getSkema(false));
