@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dana;
-use App\Models\Event;
-use App\Models\Skema;
-use App\Models\Uji;
-use App\Support\Facades\GlobalAuth;
-use App\Support\RotatePdf;
+use App\Models\{Dana, Event, Role, Skema};
 use CzProject\PdfRotate\PdfRotate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -22,6 +17,33 @@ class EventController extends Controller
             'auth:user',
             'menu:event'
         ]);
+    }
+
+    /**
+     * Mendapatkan daftar event untuk ditampilkan pada filter
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDaftarEvent(Request $request)
+    {
+        $daftarEvent = Event::when($request->has('keyword'), function ($query) use ($request) {
+            $query->wherehas('getSkema', function ($query) use ($request) {
+                $query->where('nama', 'ILIKE', '%' . $request->keyword . '%');
+            })->orWhereHas('getDana', function ($query) use ($request) {
+                $query->where('nama', 'ILIKE', '%' . $request->keyword . '%');
+            });
+        })->with(['getSkema', 'getDana'])->get();
+
+        $daftarEvent = $daftarEvent->map(function ($event) {
+            $event->nama = $event->getSkema->nama . ' (' . $event->getDana->nama . ') ' . formatDate($event->tgl_uji, true, false);
+
+            return $event;
+        });
+
+        return response()->json(
+            $daftarEvent->toArray()
+        );
     }
 
     public function update(Event $event, Request $request)
@@ -179,11 +201,14 @@ class EventController extends Controller
     public function cetakMak05(Request $request, Event $event)
     {
         $daftarUji = $event->getUji()->whereIn('nim', $request->mahasiswa)->get();
+
         $pdf = PDF::loadView('form.mak_05', [
             'event' => $event,
             'skema' => $event->getSkema(false),
             'daftarUji' => $daftarUji,
-            'asesor' => $daftarUji->first()->getAsesorUji(false)
+            'asesor' => $daftarUji->first()->getAsesorUji(false),
+            'ketua' => Role::where('nama', 'KETUA LSP')->first()->getUserRole()->first(),
+            'daftarAsesorUji' => $daftarUji->first()->getAsesorUji(false)
         ]);
 
         return $pdf->stream();

@@ -42,4 +42,9 @@ Route::group(['prefix' => 'event'], function (){
         'as' => 'event.cetak.mak06'
     ]);
 
+    Route::post('daftar', [
+        'uses' => 'EventController@getDaftarEvent',
+        'as' => 'event.daftar'
+    ]);
+
 });

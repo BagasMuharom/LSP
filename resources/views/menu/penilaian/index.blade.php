@@ -27,17 +27,17 @@
 
             <div class="col-md-auto mt-1">
                 <div class="form-group" style="position: relative">
-                    <input type="hidden" name="skema" v-model="filter.skema.id">
+                    <input type="hidden" name="event" v-model="filter.event.id">
                     <div class="dropdown dropdown-suggest">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span class="choosed">@{{ filter.skema.nama }}</span>
+                            <span class="choosed">@{{ namaEvent }}</span>
                         </button>
                         <div class="dropdown-menu">
-                            <input type="text" class="form-control" v-model="input.keyword_skema"
-                                   @keyup="ubahOpsiDaftarSkema">
+                            <input type="text" class="form-control" v-model="input.keyword_event"
+                                   @keyup="ubahOpsiDaftarEvent">
                             <div style="max-height: 150px;overflow-y:scroll;">
-                                <a href="#" :key="skema.id" v-for="skema in daftarSkema" class="dropdown-item"
-                                   @click.prevent="ubahOpsiSkema($event, skema)">@{{ skema.nama }}</a>
+                                <a href="#" :key="event.id" v-for="event in daftarEvent" class="dropdown-item"
+                                   @click.prevent="ubahOpsiEvent($event, event)">@{{ event.nama }}</a>
                             </div>
                         </div>
                     </div>
@@ -160,32 +160,40 @@
             el: '#filter',
             data: {
                 url: {
-                    daftar_skema: '{{ route('skema.daftar') }}',
+                    daftar_event: '{{ route('event.daftar') }}',
                 },
                 filter: {
-                    skema: {!! request()->has('skema') && request('skema') != -1 ? App\Models\Skema::find((int) request('skema')) : '{id: -1, nama: "Semua Skema"}' !!}
+                    event: {!! request()->has('event') && request('event') != -1 ? App\Models\Event::with(['getSkema', 'getDana'])->find((int) request('event')) : '{id: -1, nama: "Semua Event"}' !!}
                 },
                 input: {
-                    keyword_skema: ''
+                    keyword_event: ''
                 },
-                daftarSkema: [{id: -1, nama: 'Semua Skema'}]
+                daftarEvent: [{id: -1, nama: 'Semua Event'}]
             },
             methods: {
-                ubahOpsiDaftarSkema: function (e) {
+                ubahOpsiDaftarEvent: function (e) {
                     let that = this
 
-                    axios.post(this.url.daftar_skema, {
-                        keyword: that.input.keyword_skema
+                    axios.post(this.url.daftar_event, {
+                        keyword: that.input.keyword_event
                     }).then(function (response) {
                         if (response.data.length > 0) {
-                            that.daftarSkema = response.data
+                            that.daftarEvent = response.data
                         }
                     }).catch(function (error) {
 
                     })
                 },
-                ubahOpsiSkema: function (e, skema) {
-                    this.filter.skema = skema
+                ubahOpsiEvent: function (e, event) {
+                    this.filter.event = event
+                }
+            },
+
+            computed: {
+                namaEvent: function () {
+                    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+
+                    return this.filter.event.get_skema.nama + ' (' + this.filter.event.get_dana.nama + ') ' + (new Date(Date.parse(this.filter.event.tgl_uji))).toLocaleDateString('id-ID', options)
                 }
             }
         })
