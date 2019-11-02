@@ -190,6 +190,11 @@ Route::prefix('uji')->group(function () {
             'uses' => 'FormPageController@cetakFRAI01',
             'as' => 'uji.cetak.frai01'
         ]);
+        
+        Route::get('frac01/{uji}', [
+            'uses' => 'FormPageController@cetakFRAC01',
+            'as' => 'uji.cetak.frac01'
+        ]);
 
     });
 

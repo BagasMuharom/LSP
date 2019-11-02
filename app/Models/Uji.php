@@ -14,6 +14,10 @@ class Uji extends Model
 
     protected $table = 'uji';
 
+    protected $dates = [
+        'tanggal_uji', 'created_at', 'deleted_at'
+    ];
+
     protected $fillable = [
         'nim',
         'event_id',

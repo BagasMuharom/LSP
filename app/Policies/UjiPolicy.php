@@ -553,4 +553,8 @@ class UjiPolicy
         return true;
     }
 
+    public function cetakFRAC01(Authenticatable $user, Uji $uji)
+    {
+        return $uji->isFinished();
+    }
 }

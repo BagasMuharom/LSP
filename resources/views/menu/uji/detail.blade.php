@@ -381,6 +381,15 @@
                                     <a href="{{ route('uji.cetak.frai01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
                                 </td>
                             </tr>
+                            
+                            @can('cetakFRAC01', $uji)
+                                <tr>
+                                    <td>FR.AC.01 Formulir Rekaman Asesmen Kompetensi</td>
+                                    <td>
+                                        <a href="{{ route('uji.cetak.frac01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                    </td>
+                                </tr>
+                            @endcan
                         </tbody>
                     </table>
                 @endslot

@@ -238,6 +238,18 @@ class FormPageController extends Controller
         //     'mahasiswa' => $uji->getMahasiswa(false)
         // ]);
 
+    public function cetakFRAC01(Uji $uji)
+    {
+        $asesi = $uji->getMahasiswa(false);
+        $asesors = $uji->getAsesorUji(false);
+        $skema = $uji->getSkema(false);
+
+        $pdf = PDF::loadView('form.fr_ac_01', [
+            'asesi' => $asesi,
+            'asesors' => $asesors,
+            'skema' => $skema,
+            'uji' => $uji
+        ]);
         $pdf->setPaper('A4');
 
         return $pdf->stream();

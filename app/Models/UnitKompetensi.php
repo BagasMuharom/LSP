@@ -65,4 +65,9 @@ class UnitKompetensi extends Model
     {
         return (UnitKompetensi::withTrashed()->where('kode', $kode)->count() > 0);
     }
+
+    public function pertanyaanObservasi()
+    {
+        return $this->hasMany(PertanyaanObservasi::class, 'unit_kompetensi_id');
+    }
 }
