@@ -163,6 +163,7 @@
 
         @formgroup
         <label>Jurusan</label>
+        <br>
         <select name="tempat_uji_jurusan_id" class="form-control select" required>
             @if($skema->hasTempatUji())
                 <option value="{{ $skema->getTempatUji(false)->jurusan_id }}">{{ $skema->getTempatUji(false)->getJurusan(false)->nama }} (Fakultas {{ $skema->getTempatUji(false)->getJurusan(false)->getFakultas(false)->nama }})</option>
@@ -177,6 +178,21 @@
                 @endforeach
             @endif
         </select>
+        <br><br>
+        <label>Admin TUK</label>
+        <br>
+        @if($admintuk->count() > 0)
+            <select name="tempat_uji_user_id" class="select">
+                <option></option>
+                @foreach($admintuk as $user)
+                    <option value="{{ $user->id }}" {{ ($user->id == $skema->getTempatUji(false)->user_id) ? 'selected' : '' }}>{{ $user->nama }}</option>
+                @endforeach
+            </select>
+        @else
+            <div class="alert alert-warning">
+                Belum ada admin TUK
+            </div>
+        @endif
         @endformgroup
         @endcard
 

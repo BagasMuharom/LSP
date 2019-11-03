@@ -162,3 +162,9 @@ if (!function_exists('booleanPrint')) {
         return $bool ? 'Ya' : 'Tidak';
     }
 }
+
+if (!function_exists('carbon')){
+    function carbon(){
+        return Carbon::now();
+    }
+}

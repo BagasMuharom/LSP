@@ -179,7 +179,10 @@ class EventController extends Controller
                 'no' => 1,
                 'uji' => $uji,
                 'ujiLulus' => $ujiLulus,
-                'ujiTidakLulus' => $ujiTidakLulus
+                'ujiTidakLulus' => $ujiTidakLulus,
+                'ketuaLsp' => User::query()->whereHas('getUserRole', function ($query) {
+                    return $query->where('nama', Role::KETUA);
+                })->first()
             ])->setPaper('A4');
 //            file_put_contents(public_path('tmp/'.$potraitFileName), $pdfPotrait->output());
             return $pdfPotrait->download($combinedFileName.'_part1.pdf');

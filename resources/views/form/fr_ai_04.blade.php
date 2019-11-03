@@ -6,104 +6,134 @@
             border-collapse: collapse;
             width: 100%;
         }
-
+        .center {
+            text-align: center
+        }
         table, th, td {
-            border: 2px solid black;
+            border: 1px solid black;
+        }
+
+        .bg-hijau {
+            background-color: rgb(231, 241, 162);
+        }
+
+        .unicode {
+            font-family: DejaVu Sans;
         }
     </style>
 </head>
 
 <body>
-<h3><b>FR-APL-02 ASESMEN MANDIRI</b></h3>
+<h3><b>FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</b></h3>
 <table>
     <tr>
-        <td>Nama Asesi:</td>
-        <td></td>
+        <td class="bg-hijau"><b>Nama Asesi:</b></td>
+        <td>{{ $uji->getMahasiswa(false)->nama }}</td>
     </tr>
     <tr>
-        <td>Nama Asesor:</td>
-        <td></td>
+        <td class="bg-hijau"><b>Nama Asesor:</b></td>
+        <td>
+            @foreach ($uji->getAsesorUji(false) as $asesor)
+                {{ $loop->iteration }}. {{ $asesor->nama }}<br>
+            @endforeach
+        </td>
     </tr>
     <tr>
-        <td>Tempat kerja:</td>
-        <td></td>
+        <td class="bg-hijau"><b>Tempat kerja:</b></td>
+        <td>{{ $uji->getTempatUji(false)->nama }}</td>
     </tr>
     <tr>
-        <td>Nomor dan Judul Skema:</td>
-        <td></td>
+        <td class="bg-hijau"><b>Nomor dan Judul Skema:</b></td>
+        <td>{{ $uji->getSkema(false)->kode }} {{ $uji->getSkema(false)->nama }}</td>
     </tr>
     <tr>
-        <td>Jenis Portofolio:</td>
-        <td></td>
+        <td class="bg-hijau"><b>Jenis Portofolio:</b></td>
+        <td>{{ $form->jenis }}</td>
     </tr>
 </table>
 <br>
-<table>
-    <tr>
-        <td>Nomor dan Judul Unit Kompetensi:</td>
-        <td></td>
-    </tr>
-</table>
-<table>
-    <tr>
-        <td rowspan="2">Dokumen portofolio menunjukkan kepatuhan terhadap aturan bukti:</td>
-        <td colspan="2">Valid</td>
-        <td colspan="2">Memadai</td>
-        <td colspan="2">Asli</td>
-        <td colspan="2">Terkini</td>
-    </tr>
-    <tr>
-        <td>Ya</td>
-        <td>Tidak</td>
-
-        <td>Ya</td>
-        <td>Tidak</td>
-
-        <td>Ya</td>
-        <td>Tidak</td>
-
-        <td>Ya</td>
-        <td>Tidak</td>
-    </tr>
-    @foreach([1,2,3,4,5,6,7,8] as $c)
+@foreach($form->validasi as $unit => $datas)
+    <table>
         <tr>
-            <td>{{ $c }}</td>
-
-            <td>&#10003;</td>
-            <td>&#10003;</td>
-
-            <td>&#10003;</td>
-            <td>&#10003;</td>
-
-            <td>&#10003;</td>
-            <td>&#10003;</td>
-
-            <td>&#10003;</td>
-            <td>&#10003;</td>
+            <td width="30%"><b>Nomor dan Judul Unit Kompetensi:</b></td>
+            <td width="70%">{{ $unit }}</td>
         </tr>
-    @endforeach
-</table>
+    </table>
+    <table>
+        <tr>
+            <td rowspan="2"><b>Dokumen portofolio menunjukkan kepatuhan terhadap aturan bukti:</b></td>
+            <td colspan="2" class="bg-hijau"><b>Valid</b></td>
+            <td colspan="2" class="bg-hijau"><b>Memadai</b></td>
+            <td colspan="2" class="bg-hijau"><b>Asli</b></td>
+            <td colspan="2" class="bg-hijau"><b>Terkini</b></td>
+        </tr>
+        <tr>
+            <td>Ya</td>
+            <td>Tidak</td>
+
+            <td>Ya</td>
+            <td>Tidak</td>
+
+            <td>Ya</td>
+            <td>Tidak</td>
+
+            <td>Ya</td>
+            <td>Tidak</td>
+        </tr>
+        @foreach($datas as $data)
+            <tr>
+                <td>{{ $loop->iteration }}. {{ $data->dokumen }}</td>
+
+                @foreach(['valid', 'memadai', 'asli', 'terkini'] as $v)
+                    <td class="unicode">@if($data->{$v} == 'Ya') &#10003; @endif</td>
+                    <td class="unicode">@if($data->{$v} == 'Tidak') &#10003; @endif</td>
+                @endforeach
+            </tr>
+        @endforeach
+    </table>
+    <br>
+@endforeach
+
 <br>
 <table>
     <tr>
         <td>
-            Sebagai tindak lanjut dari hasil verifikasi bukti, substansi materi di bawah ini harus diklarifikasi selama wawancara:
+            <b>Sebagai tindak lanjut dari hasil verifikasi bukti, substansi materi di bawah ini harus diklarifikasi selama wawancara:</b><br>
+            {{ $form->tindak_lanjut }}
         </td>
     </tr>
 </table>
 <br>
 <table>
     <tr>
-        <td colspan="2">Bukti tambahan diperlukan pada unit / elemen kompetensi sebagai berikut:</td>
+        <td>
+            <b>Bukti tambahan diperlukan pada unit / elemen kompetensi sebagai berikut:</b><br>
+            {{ $form->bukti_tambahan }}
+        </td>
     </tr>
+</table>
+<table>
+    <tbody>
     <tr>
-        <td>Tanda Tangan Asesi:</td>
-        <td></td>
+        <td width="35%" class="bg-hijau"><b>Tanda Tangan Asesi :</b></td>
+        <td>
+            @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
+                <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}"
+                     class="img-responsive">
+            @endif
+        </td>
     </tr>
-    <tr>
-        <td>Tanda Tangan Asesor:</td>
-        <td></td>
-    </tr>
+    @foreach($uji->getAsesorUji(false) as $asesor)
+        <tr>
+            <td class="bg-hijau"><b>Tanda Tangan Asesor {{ $loop->iteration }} :</b></td>
+            <td>
+                @if($asesor->getTTD(false)->count() > 0)
+                    <img width="200" src="{{ $asesor->getTTD(false)->random()->ttd }}">
+                @endif
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
 </table>
 </body>
 

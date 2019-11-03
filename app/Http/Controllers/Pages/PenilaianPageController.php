@@ -136,10 +136,23 @@ class PenilaianPageController extends Controller
     {
         $portofolios = $uji->getPortofolio();
         $types = ['Valid', 'Memadai', 'Asli', 'Terkini'];
+        $frai04 = $uji->isHelperHasKey('FR.AI.04') ? $uji->helper['FR.AI.04'] : [];
         return view('menu.penilaian.fr_ai_04', [
             'portofolios' => $portofolios,
             'uji' => $uji,
             'types' => $types,
+            'frai04' => $frai04
+        ]);
+    }
+
+    public function FRAI05(Uji $uji)
+    {
+        $form = $uji->isHelperHasKey('FR.AI.05') ? $uji->helper['FR.AI.05'] : [];
+        $n_form = $uji->isHelperHasKey('FR.AI.05') ? count($uji->helper['FR.AI.05']['unit']) : 0;
+        return view('menu.penilaian.fr_ai_05', [
+            'uji' => $uji,
+            'form' => $form,
+            'n_form' => $n_form
         ]);
     }
 }

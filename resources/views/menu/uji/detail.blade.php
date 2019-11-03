@@ -390,6 +390,22 @@
                                     </td>
                                 </tr>
                             @endcan
+
+                            <tr>
+                                <td>FR.AI.04 Ceklis Evaluasi Portofolio</td>
+                                <td>
+                                    <a href="{{ route('uji.cetak.frai04', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                </td>
+                            </tr>
+
+                            @foreach($uji->getFRAI05() as $data)
+                                <tr>
+                                    <td>FR.AI.05 Ceklis Evaluasi Portofolio<br>({{ $data->unit }})</td>
+                                    <td>
+                                        <a href="{{ route('uji.cetak.frai05', ['uji' => encrypt($uji->id), 'c' => encrypt($loop->iteration - 1)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 @endslot

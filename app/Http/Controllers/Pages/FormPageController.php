@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Pages;
 
+use Illuminate\Contracts\Encryption\DecryptException;
 use PDF;
 use App\Models\Uji;
 use App\Http\Controllers\Controller;
 use App\Models\KomponenMak4;
 use App\Support\Facades\GlobalAuth;
+use function Matrix\trace;
 
 class FormPageController extends Controller
 {
@@ -256,4 +258,41 @@ class FormPageController extends Controller
         return $pdf->stream();
     }
 
+    public function cetakFRAI04(Uji $uji)
+    {
+        $pdf = PDF::loadView('form.fr_ai_04', [
+            'uji' => $uji,
+            'form' => $uji->getFRAI04()
+        ]);
+        $pdf->setPaper('A4');
+
+        return $pdf->stream();
+//        return view('form.fr_ai_04', [
+//            'uji' => $uji,
+//            'form' => $uji->getFRAI04()
+//        ]);
+    }
+
+    public function cetakFRAI05(Uji $uji, $c)
+    {
+        try {
+            $c = decrypt($c);
+            $c = (int)$c;
+        } catch (DecryptException $exception){
+            return 'Dekripsi gagal!';
+        }
+
+        $pdf = PDF::loadView('form.fr_ai_05', [
+            'uji' => $uji,
+            'data' => $uji->getFRAI05()[$c]
+        ]);
+        $pdf->setPaper('A4');
+
+        return $pdf->stream();
+
+//        return view('form.fr_ai_05', [
+//            'uji' => $uji,
+//            'data' => $uji->getFRAI05()[$c]
+//        ]);
+    }
 }

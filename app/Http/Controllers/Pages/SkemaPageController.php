@@ -6,6 +6,9 @@ use App\Models\Jenis;
 use App\Models\Jurusan;
 use App\Models\Menu;
 use App\Models\Skema;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
@@ -68,9 +71,12 @@ class SkemaPageController extends Controller
                 'skema' => Skema::findOrFail(decrypt($request->id)),
                 'daftarjenis' => Jenis::all(),
                 'daftarjurusan' => Jurusan::all(),
+                'admintuk' => User::query()->whereHas('getUserRole', function ($query) {
+                    return $query->where('nama', 'ADMIN TUK');
+                })->get(),
                 'menu' => Menu::findByRoute(Menu::SKEMA)
             ]);
-        } catch (MethodNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
             return back()->with('error', 'Data tidak ditemukan!');
         }
     }
