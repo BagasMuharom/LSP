@@ -66,8 +66,16 @@ class UnitKompetensi extends Model
         return (UnitKompetensi::withTrashed()->where('kode', $kode)->count() > 0);
     }
 
-    public function pertanyaanObservasi()
+    /**
+     * Mendapatkan daftar pertanyaan untuk uji observasi
+     *
+     * @return mixed
+     */
+    public function getPertanyaanObservasi($queryReturn = true)
     {
-        return $this->hasMany(PertanyaanObservasi::class, 'unit_kompetensi_id');
+        $relasi = $this->hasMany(PertanyaanObservasi::class, 'unit_kompetensi_id');
+
+        return $queryReturn ? $relasi : $relasi->get();
     }
+
 }

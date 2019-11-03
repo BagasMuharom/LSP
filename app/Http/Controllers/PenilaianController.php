@@ -122,49 +122,26 @@ class PenilaianController extends Controller
      * @param \App\Models\Uji $uji
      * @return \Illuminate\Http\Response
      */
-    public function tambahResponFRAI02(Request $request, Uji $uji)
+    public function isiFRAI02(Request $request, Uji $uji)
     {
-        // mendapatkan kolom helper
-        $helper = $uji->helper;
+        // return $request->all();
 
-        $helper['frai02']['hasil'][] = [
-            'pertanyaan' => $request->pertanyaan,
-            'jawaban' => $request->jawaban,
-            'unit' => $request->unit,
-            'memuaskan' => $request->memuaskan
-        ];
-        $helper['frai02']['umum']['pengetahuan_kandidat'] = "Memuaskan";
+        // menghapus data jawaban sebelumnya
+        $jawaban = $uji->getJawabanObservasi();
+        $jawaban->detach();
 
-        $uji->update([
-            'helper' => $helper
-        ]);
+        // menyimpan jawaban baru
+        $isian = $request->input('isian');
+
+        foreach ($isian as $pertanyaan_id => $isi) {
+            $uji->getJawabanObservasi()->attach($pertanyaan_id, [
+                'jawaban'   => $isi['jawaban'],
+                'memuaskan' => $isi['memuaskan'] === 'Ya' ? true : false
+            ]);
+        }
 
         return back()->with([
             'success' => 'Berhasil menambahkan respon !'
-        ]);
-    }
-
-    /**
-     * Mengedit respon 
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Uji $uji
-     * @return \Illuminate\Http\Response
-     */
-    public function editResponFRAI02(Request $request, Uji $uji)
-    {
-        $daftarRespon = $request->input('respon');
-        $helper = $uji->helper;
-
-        $helper['frai02']['hasil'] = $daftarRespon;
-        $helper['frai02']['umum']['pengetahuan_kandidat'] = $request->pengetahuan_kandidat;
-
-        $uji->update([
-            'helper' => $helper
-        ]);
-
-        return back()->with([
-            'success' => 'Berhasil mengedit respon !'
         ]);
     }
 

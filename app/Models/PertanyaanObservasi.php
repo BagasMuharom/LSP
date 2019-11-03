@@ -23,8 +23,7 @@ class PertanyaanObservasi extends Model
     /**
      * Mass assignable columns
      */
-    protected $fillable = ['unit_kompetensi_id',
-        'pertanyaan'];
+    protected $fillable = ['unit_kompetensi_id', 'pertanyaan'];
 
     /**
      * Date time columns.
@@ -34,12 +33,33 @@ class PertanyaanObservasi extends Model
     /**
      * unitKompetensi
      *
+     * @param boolean $queryReturn
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function unitKompetensi()
+    public function unitKompetensi($queryReturn = true)
     {
-        return $this->belongsTo(UnitKompetensi::class, 'unit_kompetensi_id');
+        $query = $this->belongsTo(UnitKompetensi::class, 'unit_kompetensi_id');
+
+        return $queryReturn ? $query : $query->get();
     }
 
+    /**
+     * Mendapatkan jawaban pertanyaan berdasarkan uji tertentu
+     *
+     * @param boolean $queryReturn
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getJawabanObservasi($queryReturn = true)
+    {
+        $query = $this->belongsToMany(
+                    Uji::class, 
+                    'jawaban_pertanyaan_observasi', 
+                    'pertanyaan_observasi_id', 
+                    'uji_id')->withPivot([
+                        'jawaban', 'memuaskan'
+                    ]);
+        
+        return $queryReturn ? $query : $query->get();
+    }
 
 }

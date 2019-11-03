@@ -96,7 +96,7 @@
 
                                     @can('isiFRAI02', $uji)
                                         <a href="{{ route('uji.isi.fr_ai_02', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">
-                                            Isi FR.AI.02
+                                            Isi Uji Observasi
                                         </a>
                                     @endcan
 

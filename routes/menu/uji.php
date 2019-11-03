@@ -127,14 +127,9 @@ Route::prefix('uji')->group(function () {
             'as' => 'uji.isi.fr_ai_02'
         ]);
         
-        Route::put('isi/{uji}', [
-            'uses' => 'PenilaianController@tambahResponFRAI02',
-            'as' => 'uji.tambah.respon.fr_ai_02'
-        ]);
-        
-        Route::post('edit/{uji}', [
-            'uses' => 'PenilaianController@editResponFRAI02',
-            'as' => 'uji.edit.respon.fr_ai_02'
+        Route::post('isi/{uji}', [
+            'uses' => 'PenilaianController@isiFRAI02',
+            'as' => 'uji.isi.fr_ai_02'
         ]);
 
     });

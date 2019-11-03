@@ -860,35 +860,23 @@ class Uji extends Model
     }
 
     /**
-     * Mendapatkan isian untuk form FR AI 02
+     * Mendapatkan jawaban pertanyaan berdasarkan uji tertentu
+     * 
      *
-     * @return mixed
+     * @param boolean $queryReturn
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getIsianFRAI02()
+    public function getJawabanObservasi($queryReturn = true)
     {
-        // Jika pada helper tidak terdapat key 'frai02'
-        // maka dikembalikan array kosong 
-        if (!$this->isHelperHasKey('frai02')) {
-            return collect([
-                'hasil' => collect([]),
-                'umum' => [
-                    'pengetahuan_kandidat' => null
-                ]
-            ]);
-        }
-
-        $frai02 = $this->helper['frai02'];
-        $frai02_hasil = collect($this->helper['frai02']['hasil']);
-
-        $frai02_hasil = $frai02_hasil->map(function ($item) {
-            $item['unit'] = UnitKompetensi::find($item['unit']);
-
-            return collect($item);
-        });
-
-        $frai02['hasil'] = collect($frai02_hasil);
-
-        return collect($frai02);
+        $query = $this->belongsToMany(
+                    PertanyaanObservasi::class, 
+                    'jawaban_pertanyaan_observasi', 
+                    'uji_id',
+                    'pertanyaan_observasi_id')->withPivot([
+                        'jawaban', 'memuaskan'
+                    ]);
+        
+        return $queryReturn ? $query : $query->get();
     }
 
 }

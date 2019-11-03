@@ -124,10 +124,10 @@ class PenilaianPageController extends Controller
     public function isiFRAI02(Uji $uji)
     {
         return view('menu.penilaian.fr_ai_02', [
-            'uji' => $uji,
+            'uji'       => $uji,
             'mahasiswa' => $uji->getMahasiswa(false),
-            'skema' => $uji->getSkema(false),
-            'daftarRespon' => $uji->getIsianFRAI02()
+            'skema'     => $uji->getSkema(false),
+            'isian'     => $uji->getJawabanObservasi()
         ]);
     }
 
