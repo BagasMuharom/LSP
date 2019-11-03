@@ -184,4 +184,13 @@ class PenilaianController extends Controller
         return back()->with('success', 'Data telah disimpan');
     }
 
+    public function FRAI05(Request $request, Uji $uji)
+    {
+        $helper = $uji->helper;
+        $helper['FR.AI.05'] = $request->except('_token');
+        $uji->helper = $helper;
+        $uji->save();
+        return back()->with('success', 'Data telah disimpan');
+    }
+
 }

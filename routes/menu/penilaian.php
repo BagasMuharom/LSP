@@ -37,4 +37,13 @@ Route::group(['prefix' => 'penilaian'], function () {
         'as' => 'penilaian.eval.fr-ai-04'
     ]);
 
+    Route::get('fr-ai-05/{uji}', [
+        'uses' => 'Pages\PenilaianPageController@FRAI05',
+        'as' => 'penilaian.fr-ai-05'
+    ]);
+
+    Route::post('fr-ai-05/eval/{uji}', [
+        'uses' => 'PenilaianController@FRAI05',
+        'as' => 'penilaian.eval.fr-ai-05'
+    ]);
 });

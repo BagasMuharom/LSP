@@ -232,7 +232,12 @@
                     <br>
                     Tanda tangan :
                     <br>
-                    <img src="{{ $asesors[$no++]->getUjiAsAsesor()->first()->pivot->ttd }}" width="150px">
+                    @if($asesors[$no]->getTTD(false)->count() > 0)
+                        <img src="{{ $asesors[$no++]->getTTD(false)->random()->ttd }}" width="200">
+                    @else
+                        <br><br><br><br><br>
+                        @php $no++ @endphp
+                    @endif
                 @endif
             </td>
             <td>
@@ -244,18 +249,27 @@
                     <br>
                     Tanda tangan :
                     <br>
-                    <img src="{{ $asesors[$no++]->getUjiAsAsesor()->first()->pivot->ttd }}" width="150px">
+                    @if($asesors[$no]->getTTD(false)->count() > 0)
+                        <img src="{{ $asesors[$no++]->getTTD(false)->random()->ttd }}" width="200">
+                    @else
+                        <br><br><br><br><br>
+                        @php $no++ @endphp
+                    @endif
                 @endif
             </td>
             <td>
                 @if($ketua)
                     <br>
-                    Nama : Soeparno
+                    Nama : {{ $ketuaLsp->nama }}
                     <br><br>
                     Jabatan : Ketua LSP
                     <br>
                     Tanda tangan :
-                    <br><br><br><br><br>
+                    @if($ketuaLsp->getTTD(false)->count() > 0)
+                        <img src="{{ $ketuaLsp->getTTD(false)->random()->ttd }}" width="200">
+                    @else
+                        <br><br><br><br><br>
+                    @endif
                     @php $ketua = false @endphp
                 @endif
             </td>

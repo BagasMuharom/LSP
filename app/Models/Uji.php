@@ -891,4 +891,58 @@ class Uji extends Model
         return collect($frai02);
     }
 
+    public function getFRAI04()
+    {
+        if (!$this->isHelperHasKey('FR.AI.04')){
+            return [];
+        }
+
+        $validasi = [];
+        $frai04 = collect($this->helper['FR.AI.04']);
+        for ($c = 0; $c < count($frai04['unit']); $c++){
+            $v = [];
+            $unit = UnitKompetensi::query()->find($frai04['unit'][$c]);
+            $v['unit'] = $unit->kode.' '.$unit->nama;
+            foreach ($frai04->keys() as $key){
+                if (!in_array($key, ['tindak_lanjut', 'bukti_tambahan', 'unit', 'jenis'])){
+                    $v[$key] = $frai04[$key][$c];
+                }
+            }
+            $validasi[] = ((object)$v);
+        }
+        $validasi = (object)$validasi;
+
+        $frai04 = [
+            'jenis' => $frai04['jenis'],
+            'validasi' => collect($validasi)->groupBy('unit'),
+            'tindak_lanjut' => $frai04['tindak_lanjut'],
+            'bukti_tambahan' => $frai04['bukti_tambahan']
+        ];
+        $frai04 = (object)$frai04;
+
+        return $frai04;
+    }
+
+    public function getFRAI05()
+    {
+        if (!$this->isHelperHasKey('FR.AI.05')){
+            return [];
+        }
+
+        $datas = [];
+        $frai05 = collect($this->helper['FR.AI.05']);
+        for ($c = 0; $c < count($frai05['unit']); $c++){
+            $data = [];
+            foreach ($frai05->keys() as $key){
+                $data[$key] = $frai05[$key][$c];
+            }
+            $unit = UnitKompetensi::query()->find($frai05['unit'][$c]);
+            $data['unit'] = $unit->kode.' '.$unit->nama;
+            $datas[] = ((object)$data);
+        }
+        $datas = (object)$datas;
+
+        return collect($datas);
+    }
+
 }

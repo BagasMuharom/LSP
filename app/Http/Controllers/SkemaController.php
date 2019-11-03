@@ -84,6 +84,9 @@ class SkemaController extends Controller
                     'jurusan_id' => $request->tempat_uji_jurusan_id
                 ]);
             }
+            $tu->user_id = $request->tempat_uji_user_id;
+            $tu->save();
+
             $skema->tempat_uji_id = $tu->id;
             $skema->save();
 

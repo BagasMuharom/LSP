@@ -11,7 +11,7 @@ class TempatUji extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'kode', 'nama', 'jurusan_id'
+        'kode', 'nama', 'jurusan_id', 'user_id'
     ];
 
     /**
@@ -67,5 +67,16 @@ class TempatUji extends Model
     {
         $kode = strtoupper($kode);
         return TempatUji::where('kode', $kode)->first();
+    }
+
+    /**
+     * @param bool $query
+     * @return Model|\Illuminate\Database\Eloquent\Relations\BelongsTo|object|null
+     */
+    public function getUser($query = true)
+    {
+        $data = $this->belongsTo(User::class, 'user_id');
+
+        return $query ? $data : $data->first();
     }
 }

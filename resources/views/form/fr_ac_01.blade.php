@@ -10,6 +10,10 @@
             width: 100%;
             border-collapse: collapse;
         }
+
+        .unicode {
+            font-family: DejaVu Sans;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +88,7 @@
     </tr>
 </table>
 <br>
-<small>Beri tanda centang (&#10003;) di kolom yang sesuai untuk mencerminkan bukti yang diperoleh untuk menentukan Kompetensi siswa untuk setiap Unit Kompetensi.</small>
+<small class="unicode">Beri tanda centang (&#10003;) di kolom yang sesuai untuk mencerminkan bukti yang diperoleh untuk menentukan Kompetensi siswa untuk setiap Unit Kompetensi.</small>
 <table class="table border">
     <tr>
         <td>Unit kompetensi</td>
@@ -100,12 +104,12 @@
         @php $unit = \App\Models\UnitKompetensi::query()->find($unit) @endphp
         <tr>
             <td>{{ $unit->kode.' '.$unit->nama }}</td>
-            <td>&#10003;</td>
-            <td>{!! (isset($bukti['Portofolio']) && !empty($bukti['Portofolio'])) ? '&#10003;' : '' !!}</td>
-            <td>{!! (isset($bukti['Verifikasi Pihak Ketiga']) && !empty($bukti['Verifikasi Pihak Ketiga'])) ? '&#10003;' : '' !!}</td>
-            <td>{!! (isset($bukti['Tes Lisan']) && !empty($bukti['Tes Lisan'])) ? '&#10003;' : '' !!}</td>
-            <td>{!! (isset($bukti['Tes Tertulis']) && !empty($bukti['Tes Tertulis'])) ? '&#10003;' : '' !!}</td>
-            <td>{!! (isset($bukti['Studi Kasus']) && !empty($bukti['Studi Kasus'])) ? '&#10003;' : '' !!}</td>
+            <td class="unicode">&#10003;</td>
+            <td class="unicode">{!! (isset($bukti['Portofolio']) && !empty($bukti['Portofolio'])) ? '&#10003;' : '' !!}</td>
+            <td class="unicode">{!! (isset($bukti['Verifikasi Pihak Ketiga']) && !empty($bukti['Verifikasi Pihak Ketiga'])) ? '&#10003;' : '' !!}</td>
+            <td class="unicode">{!! (isset($bukti['Tes Lisan']) && !empty($bukti['Tes Lisan'])) ? '&#10003;' : '' !!}</td>
+            <td class="unicode">{!! (isset($bukti['Tes Tertulis']) && !empty($bukti['Tes Tertulis'])) ? '&#10003;' : '' !!}</td>
+            <td class="unicode">{!! (isset($bukti['Studi Kasus']) && !empty($bukti['Studi Kasus'])) ? '&#10003;' : '' !!}</td>
             <td></td>
         </tr>
     @endforeach

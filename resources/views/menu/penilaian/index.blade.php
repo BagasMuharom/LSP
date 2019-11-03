@@ -72,48 +72,51 @@
             @forelse($data as $uji)
                 <tr>
                     <td>{{ $uji->nim }}</td>
-                    <td>{{ $uji->getMahasiswa(false)->nama }}</t>
-                    <td>{{ $uji->getSkema(false)->nama }}</t>
+                    <td>{{ $uji->getMahasiswa(false)->nama }}</td>
+                    <td>{{ $uji->getSkema(false)->nama }}</td>
                     <td>
-                        <div class="btn-group">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button"
-                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    Penilaian
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @can('penilaian', $uji)
-                                        <a class="dropdown-item"
-                                           href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}">Lakukan
-                                            Penilaian</a>
-                                    @endcan
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                Penilaian
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @can('penilaian', $uji)
+                                    <a class="dropdown-item"
+                                       href="{{ route('penilaian.nilai', ['uji' => encrypt($uji->id)]) }}">Lakukan
+                                        Penilaian</a>
+                                @endcan
 
-                                    @can('penilaianDiri', $uji)
-                                        <a href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}"
-                                           class="dropdown-item">Asesmen Diri</a>
-                                    @endcan
+                                @can('penilaianDiri', $uji)
+                                    <a href="{{ route('uji.asesmendiri.asesor', ['uji' => encrypt($uji->id)]) }}"
+                                       class="dropdown-item">Asesmen Diri</a>
+                                @endcan
 
-                                    @can('isiFRAI02', $uji)
-                                        <a href="{{ route('uji.isi.fr_ai_02', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">
-                                            Isi FR.AI.02
-                                        </a>
-                                    @endcan
+                                @can('isiFRAI02', $uji)
+                                    <a href="{{ route('uji.isi.fr_ai_02', ['uji' => encrypt($uji->id)]) }}"
+                                       class="dropdown-item">
+                                        Isi FR.AI.02
+                                    </a>
+                                @endcan
 
-                                    <a href="{{ route('penilaian.fr-ai-04', ['uji' => encrypt($uji->id)]) }}" class="dropdown-item">FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</a>
-                                </div>
+                                <a href="{{ route('penilaian.fr-ai-04', ['uji' => encrypt($uji->id)]) }}"
+                                   class="dropdown-item">FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</a>
+
+                                <a href="{{ route('penilaian.fr-ai-05', ['uji' => encrypt($uji->id)]) }}"
+                                   class="dropdown-item">FR.AI.05 Formulir bukti pihak ketiga</a>
                             </div>
-
-                            @can('konfirmasiPenilaian', $uji)
-                                <a class="btn btn-success btn-sm text-white"
-                                   onclick="konfirmasi('{{ route('penilaian.konfirmasi', ['uji' => encrypt($uji->id)]) }}')">Konfirmasi
-                                    Penilaian</a>
-                            @endcan
-
-                            <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}"
-                               class="btn btn-warning btn-sm">Detail Uji</a>
                         </div>
-                        </t>
+
+                        @can('konfirmasiPenilaian', $uji)
+                            <a class="btn btn-success btn-sm text-white"
+                               onclick="konfirmasi('{{ route('penilaian.konfirmasi', ['uji' => encrypt($uji->id)]) }}')">Konfirmasi
+                                Penilaian</a>
+                        @endcan
+
+                        <a href="{{ route('uji.detail', ['uji' => encrypt($uji->id)]) }}"
+                           class="btn btn-warning btn-sm">Detail Uji</a>
+                    </td>
                 </tr>
             @empty
                 <tr>

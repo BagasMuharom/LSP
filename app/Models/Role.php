@@ -14,7 +14,7 @@ class Role extends Model
 
     const ASESOR = 'ASESOR';
 
-    const KETUA = 'KETUA';
+    const KETUA = 'KETUA LSP';
 
     const ALL = [
         self::SUPER_ADMIN,
