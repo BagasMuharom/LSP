@@ -74,31 +74,79 @@
                 <th colspan="4">
                     @row
 
-                    @col(['size' => 5])
-                    <form action="{{ route('unit.update') }}" method="post">
-                        @csrf
-                        {{ method_field('patch') }}
-                        <input type="hidden" name="id" value="{{ encrypt($unit->id) }}">
-                        @formgroup
-                        <label>Kode</label>
-                        <input type="text" name="kode" value="{{ $unit->kode }}" class="form-control" required>
-                        @endformgroup
-                        @formgroup
-                        <label>Nama</label>
-                        <input type="text" name="nama" value="{{ $unit->nama }}" class="form-control" required>
-                        @endformgroup
-                        <button class="btn btn-success btn-sm">Simpan</button>
-                    </form>
-                    @endcol
+                        @col(['size' => 5])
+                            <form action="{{ route('unit.update') }}" method="post">
+                                @csrf
+                                {{ method_field('patch') }}
+                                <input type="hidden" name="id" value="{{ encrypt($unit->id) }}">
+                                @formgroup
+                                <label>Kode</label>
+                                <input type="text" name="kode" value="{{ $unit->kode }}" class="form-control" required>
+                                @endformgroup
+                                @formgroup
+                                <label>Nama</label>
+                                <input type="text" name="nama" value="{{ $unit->nama }}" class="form-control" required>
+                                @endformgroup
+                                <button class="btn btn-success btn-sm">Simpan</button>
+                            </form>
+                        @endcol
 
-                    @col(['size' => 7])
-                    Skema
-                    <ul>
-                        @foreach($unit->getSkemaUnit(false) as $skema)
-                            <li>{{ $skema->kode }}, {{ $skema->nama }}</li>
-                        @endforeach
-                    </ul>
-                    @endcol
+                        @col(['size' => 7])
+                            Skema
+                            <ul>
+                                @foreach($unit->getSkemaUnit(false) as $skema)
+                                    <li>{{ $skema->kode }}, {{ $skema->nama }}</li>
+                                @endforeach
+                            </ul>
+                        @endcol
+
+                    @endrow
+
+                    @row
+
+                        @col(['size' => 12])
+                            <h6 style="margin-top: 10px;">Daftar Pertanyaan untuk Uji Observasi</h6>
+
+                            <form action="{{ route('unit.pertanyaan-observasi.tambah', ['unit' => $unit->id]) }}" method="post">
+                                @csrf
+                                @method('PUT')
+
+                                @formgroup()
+                                    <label>Pertanyaan</label>
+                                    <textarea class="form-control" name="daftar_pertanyaan"></textarea>
+                                    <button style="display: block;" class="btn btn-primary" type="submit">
+                                        Tambah Pertanyaan
+                                    </button>
+                                @endformgroup
+                            </form>
+
+                            <table class="table table-border">
+                                <thead>
+                                    <tr>
+                                        <th>Pertanyaan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($unit->getPertanyaanObservasi(false) as $pertanyaan)
+                                        <tr>
+                                            <td>{{ $pertanyaan->pertanyaan }}</td>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="2">
+                                                <p class="alert alert-info">Tidak ada pertanyaan.</p>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        @endcol
 
                     @endrow
                 </th>

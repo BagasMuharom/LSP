@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $unit_kompetensi_id unit kompetensi id
@@ -28,7 +29,9 @@ class PertanyaanObservasi extends Model
     /**
      * Date time columns.
      */
-    protected $dates = [];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    use SoftDeletes;
 
     /**
      * unitKompetensi
