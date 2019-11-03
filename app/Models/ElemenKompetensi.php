@@ -14,7 +14,7 @@ class ElemenKompetensi extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'unit_kompetensi_id', 'nama'
+        'unit_kompetensi_id', 'nama', 'benchmark'
     ];
 
     /**

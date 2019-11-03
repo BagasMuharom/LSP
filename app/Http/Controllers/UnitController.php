@@ -56,12 +56,19 @@ class UnitController extends Controller
         }
     }
 
+    /**
+     * Mengubah elemen pada unit tertentu
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function updateElemen(Request $request)
     {
         try{
             $elemen = ElemenKompetensi::findOrFail(decrypt($request->id));
             $nama = $elemen->nama;
             $elemen->nama = $request->nama;
+            $elemen->benchmark = $request->benchmark;
             $elemen->save();
             return back()->with('success', 'Berhasil memperbarui elemen <b>'.$nama.'</b>'.' menjadi <b>'.$elemen->nama.'</b>');
         }
@@ -82,6 +89,13 @@ class UnitController extends Controller
         }
     }
 
+    /**
+     * Menambahkah elemen baru pada unit tertentu
+     * elemen yang ditambahkan bisa lebih dari satu dengan pemisah enter
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function addElemen(Request $request)
     {
         $this->validate($request, [
@@ -90,10 +104,11 @@ class UnitController extends Controller
         ]);
 
         $counter = 0;
-        foreach (explode(PHP_EOL, $request->namas) as $nama){
+        foreach (explode(PHP_EOL, $request->namas) as $nama) {
             ElemenKompetensi::create([
                 'unit_kompetensi_id' => $request->unit_id,
-                'nama' => $nama
+                'nama' => $nama,
+                'benchmark' => 'SKKNI'
             ]);
             $counter++;
         }
@@ -149,4 +164,31 @@ class UnitController extends Controller
             return back()->with('error', $exception->getMessage());
         }
     }
+
+    /**
+     * Menambahkan pertanyaan observasi pada unit tertentu
+     * pertanyaan yang dimasukkan bisa lebih dari dari dengan dipisah enter
+     *
+     * @param Request $request
+     * @param UnitKompetensi $unit
+     * @return \Illuminate\Http\Response
+     */
+    public function tambahPertanyaanObservasi(Request $request, UnitKompetensi $unit)
+    {
+        $request->validate([
+            'daftar_pertanyaan' => 'required|string'
+        ]);
+        
+        foreach (explode(PHP_EOL , $request->daftar_pertanyaan) as $pertanyaan) {
+            $unit->getPertanyaanObservasi()->insert([
+                'pertanyaan' => $pertanyaan,
+                'unit_kompetensi_id' => $unit->id
+            ]);
+        }
+
+        return back()->with([
+            'success' => 'Berhasil menambahkan pertanyaan observasi untuk unit ' . $unit->judul . ' !'
+        ]);
+    }
+
 }
