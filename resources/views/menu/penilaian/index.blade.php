@@ -195,6 +195,10 @@
                 namaEvent: function () {
                     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
+                    if (this.filter.event.nama == 'Semua Event') {
+                        return 'Semua Event'
+                    }
+
                     return this.filter.event.get_skema.nama + ' (' + this.filter.event.get_dana.nama + ') ' + (new Date(Date.parse(this.filter.event.tgl_uji))).toLocaleDateString('id-ID', options)
                 }
             }
