@@ -107,4 +107,8 @@ html, body {
 .center {
     text-align: center
 }
+
+.middle {
+    vertical-align: middle;
+}
 </style>

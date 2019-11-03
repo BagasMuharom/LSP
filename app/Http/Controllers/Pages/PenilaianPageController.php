@@ -33,10 +33,8 @@ class PenilaianPageController extends Controller
                 $query->orWhereHas('getMahasiswa', function ($query) use ($request) {
                     $query->where('nama', 'ILIKE', "%{$request->q}%");
                 });
-            })->when((int) $request->skema > 0, function ($query) use ($request) {
-                $query->whereHas('getEvent', function ($query) use ($request) {
-                    $query->where('skema_id', (int) $request->skema);
-                });
+            })->when((int) $request->event > 0, function ($query) use ($request) {
+                $query->where('event_id', $request->event);
             })->distinct()->get(['id'])->pluck(['id']);
 
         $data = Uji::whereIn('id', $data)

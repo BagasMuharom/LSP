@@ -73,20 +73,13 @@
     <section>
     <table border="1" class="table-full table-pd-5 table-border">
         <tr>
-            <td rowspan="2" width="25%" style="vertical-align: middle">Unit Kompetensi No. {{ $loop->iteration }}</td>
-            <td width="15%">Kode Unit</td>
-            <td width="1%">:</td>
-            <td>{{ $unit->kode }}</td>
-        </tr>
-        <tr>
-            <td>Judul Unit</td>
-            <td>:</td>
-            <td>{{ $unit->nama }}</td>
+            <td width="25%">Unit Kompetensi</td>
+            <td>
+                {{ $unit->kode }}<br>
+                {{ $unit->nama }}
+            </td>
         </tr>
     </table>
-
-    <br>
-
     <table border="1" class="table-full table-pd-5 table-border" style="margin-top: -2px">
         <tbody>
             <tr>
@@ -99,7 +92,7 @@
             @foreach ($unit->getElemenKompetensi(false) as $elemen)
             <tr>
                 <td colspan="4">
-                    {{ $loop->iteration }}. Elemen : {{ $elemen->nama }}
+                    {{ $loop->iteration }}. Elemen : {{ $elemen->nama }} ?
                 </td>
             </tr>
 
@@ -108,7 +101,7 @@
             $nilai = $uji->getPenilaianDiri()->where('id', $kriteria->id)->first();
             @endphp
             <tr>
-                <td width="60%">{{ $kriteria->unjuk_kerja }}</td>
+                <td width="60%">{{ $kriteria->kalimat_aktif }}</td>
                 <td class="center">
                     <b class="unicode">{!! $nilai->pivot->nilai == \App\Support\Penilaian::KOMPETEN ? '&#10003;' : '' !!}</b>
                 </td>
@@ -135,6 +128,7 @@
                 </td>
                 <td style="width: 33.33%">
                     Tanggal : <br>
+                    {{ formatDate(\Carbon\Carbon::parse($uji->tanggal_uji), false, false) }}<br>
                 </td>
                 <td style="width: 33.33%">
                     Tanda Tangan Asesi : <br>
@@ -169,7 +163,8 @@
                     @foreach ($uji->getAsesorUji(false) as $asesor)
                         @if($asesor->getTTD(false)->count() > 0)
                         <img width="150" src="{{ $asesor->getTTD(false)->random()->ttd }}">
-                        <br><br>
+                        <br>
+                        {{ formatDate(\Carbon\Carbon::parse($uji->tanggal_uji), false, false) }}
                         @endif
                     @endforeach
                 </td>
