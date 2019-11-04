@@ -61,6 +61,7 @@
                             <tr>
                                 <th>Kriteria Unjuk Kerja</th>
                                 <th>Pertanyaan</th>
+                                <th>Kalimat Aktif</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -74,6 +75,10 @@
                                     <th>
                                         <textarea name="pertanyaan[]" class="form-control" rows="4"
                                                   required>{{ $kriteria->pertanyaan }}</textarea>
+                                    </th>
+                                    <th>
+                                        <textarea name="kalimat_aktif[]" class="form-control" rows="4"
+                                                  required>{{ $kriteria->kalimat_aktif }}</textarea>
                                     </th>
                                     <th>
                                         <input type="hidden" name="kriteria_id[]" value="{{ $kriteria->id }}">
@@ -151,6 +156,9 @@
                 '    </th>\n' +
                 '    <th>\n' +
                 '        <textarea name="pertanyaan_baru[]" class="form-control" rows="4" required></textarea>\n' +
+                '    </th>\n' +
+                '    <th>\n' +
+                '        <textarea name="kalimat_aktif_baru[]" class="form-control" rows="4" required></textarea>\n' +
                 '    </th>\n' +
                 '    <th>\n' +
                 '        <button class="btn btn-danger btn-sm" onclick="$(this).parent().parent().remove()">Hapus</button>\n' +

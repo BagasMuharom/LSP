@@ -30,10 +30,11 @@ class UnitController extends Controller
 
                 if (!empty($request->kriteria_id)){
                     $counter = 0;
-                    foreach ($request->kriteria_id as $id){
+                    foreach ($request->kriteria_id as $id) {
                         $kriteria = Kriteria::findOrFail($id);
                         $kriteria->pertanyaan = $request->pertanyaan[$counter];
                         $kriteria->unjuk_kerja = $request->unjuk_kerja[$counter];
+                        $kriteria->kalimat_aktif = $request->kalimat_aktif[$counter];
                         $kriteria->save();
                         $counter++;
                     }
@@ -41,12 +42,16 @@ class UnitController extends Controller
 
                 if (!empty($request->unjuk_kerja_baru)){
                     $counter = 0;
+
                     foreach ($request->unjuk_kerja_baru as $unjuk_kerja){
                         Kriteria::create([
                             'elemen_kompetensi_id' => $elemen->id,
                             'unjuk_kerja' => $unjuk_kerja,
-                            'pertanyaan' => $request->pertanyaan_baru[$counter++]
+                            'pertanyaan' => $request->pertanyaan_baru[$counter],
+                            'kalimat_aktif' => $request->pertanyaan_baru[$counter]
                         ]);
+
+                        $counter++;
                     }
                 }
             }, 5);

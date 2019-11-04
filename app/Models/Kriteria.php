@@ -14,7 +14,7 @@ class Kriteria extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'elemen_kompetensi_id', 'unjuk_kerja', 'pertanyaan'
+        'elemen_kompetensi_id', 'unjuk_kerja', 'pertanyaan', 'kalimat_aktif'
     ];
 
     /**
