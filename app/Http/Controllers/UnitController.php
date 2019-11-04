@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\ElemenKompetensi;
+use App\Models\PertanyaanObservasi;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 
@@ -182,13 +184,62 @@ class UnitController extends Controller
         foreach (explode(PHP_EOL , $request->daftar_pertanyaan) as $pertanyaan) {
             $unit->getPertanyaanObservasi()->insert([
                 'pertanyaan' => $pertanyaan,
-                'unit_kompetensi_id' => $unit->id
+                'unit_kompetensi_id' => $unit->id,
+                'created_at' => Carbon::now()
             ]);
         }
 
         return back()->with([
             'success' => 'Berhasil menambahkan pertanyaan observasi untuk unit ' . $unit->judul . ' !'
         ]);
+    }
+
+    /**
+     * Mengedit pertanyaan observasi
+     *
+     * @param Request $request
+     * @return \Illuminate\http\Response
+     */
+    public function editPertanyaanObservasi(Request $request)
+    {
+        try {
+            $pertanyaan = PertanyaanObservasi::findOrFail($request->id);
+            $pertanyaan->update([
+                'pertanyaan' => $request->pertanyaan
+            ]);
+
+            return back()->with([
+                'success' => 'Berhasil menyimpan pertanyaan !'
+            ]);
+        }
+        catch (ModelNotFoundException $e) {
+            return back()->with([
+                'error' => 'Gagal menyimpan pertanyaan !'
+            ]);
+        }
+    }
+
+    /**
+     * Menghapus pertanyaan observasi
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusPertanyaanObservasi(Request $request)
+    {
+        try {
+            $pertanyaan = PertanyaanObservasi::findOrFail($request->id);
+            $pertanyaan->delete();
+
+            return back()->with([
+                'success' => 'Berhasil menghapus pertanyaan !'
+            ]);
+        }
+        catch (ModelNotFoundException $e) {
+            return back()->with([
+                'error' => 'Gagal menghapus pertanyaan !'
+            ]);
+        }
     }
 
 }

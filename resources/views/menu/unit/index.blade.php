@@ -105,7 +105,10 @@
                     @row
 
                         @col(['size' => 12])
-                            <h6 style="margin-top: 10px;">Daftar Pertanyaan untuk Uji Observasi</h6>
+                            <hr>
+                            <h5 style="margin-top: 10px;">
+                                <b>Daftar Pertanyaan untuk Uji Observasi</b>
+                            </h5>
 
                             <form action="{{ route('unit.pertanyaan-observasi.tambah', ['unit' => $unit->id]) }}" method="post">
                                 @csrf
@@ -114,6 +117,7 @@
                                 @formgroup()
                                     <label>Pertanyaan</label>
                                     <textarea class="form-control" name="daftar_pertanyaan"></textarea>
+                                    <br>
                                     <button style="display: block;" class="btn btn-primary" type="submit">
                                         Tambah Pertanyaan
                                     </button>
@@ -128,12 +132,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($unit->getPertanyaanObservasi(false) as $pertanyaan)
+                                    @forelse($unit->getPertanyaanObservasi()->orderBy('created_at', 'ASC')->get() as $pertanyaan)
                                         <tr>
-                                            <td>{{ $pertanyaan->pertanyaan }}</td>
+                                            <td>
+                                                <input id="pertanyaan-{{ $pertanyaan->id }}" type="text" value="{{ $pertanyaan->pertanyaan }}" class="form-control">
+                                            </td>
                                             <td>
                                                 <div class="btn-group">
-
+                                                    <button class="btn btn-primary btn-sm" onclick="updatePertanyaanObservasi({{ $pertanyaan->id }}, $('#pertanyaan-{{ $pertanyaan->id }}').val())">Simpan</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapusPertanyaanObservasi({{ $pertanyaan->id }})">Hapus</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -162,6 +169,18 @@
         @csrf
         {{ method_field('delete') }}
         <input type="hidden" name="id" id="id-delete">
+    </form>
+
+    <form id="pertanyaan-update" action="{{ route('unit.pertanyaan-observasi.edit') }}" method="post">
+        @csrf
+        <input type="hidden" name="id" class="id">
+        <input type="hidden" name="pertanyaan" class="pertanyaan">
+    </form>
+
+    <form id="pertanyaan-hapus" action="{{ route('unit.pertanyaan-observasi.hapus') }}" method="post">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="id" class="id">
     </form>
 
     {{--<select class="form-control cari"></select>--}}
@@ -211,6 +230,21 @@
                     $('#hapus').submit()
                 }
             })
+        }
+
+        function updatePertanyaanObservasi(id, pertanyaan) {
+            $('#pertanyaan-update .id').val(id)
+            $('#pertanyaan-update .pertanyaan').val(pertanyaan)
+            $('#pertanyaan-update').submit()
+        }
+        
+        function hapusPertanyaanObservasi(id) {
+            if (!confirm('Apa anda yakin ?')) {
+                return
+            }
+
+            $('#pertanyaan-hapus .id').val(id)
+            $('#pertanyaan-hapus').submit()
         }
     </script>
 @endpush

@@ -36,4 +36,5 @@ class ElemenKompetensi extends Model
         $data = $this->hasMany('App\Models\Kriteria', 'elemen_kompetensi_id');
         return $queryReturn ? $data : $data->get();
     }
+    
 }

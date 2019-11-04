@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PertanyaanObservasi extends Model
 {
 
+    public $timestamps = true;
+
     /**
      * Database table name
      */
@@ -24,7 +26,7 @@ class PertanyaanObservasi extends Model
     /**
      * Mass assignable columns
      */
-    protected $fillable = ['unit_kompetensi_id', 'pertanyaan'];
+    protected $fillable = ['unit_kompetensi_id', 'pertanyaan', 'created_at', 'updated_at'];
 
     /**
      * Date time columns.
