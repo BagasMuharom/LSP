@@ -21,7 +21,8 @@
         <thead>
         <tr>
             <th width="4%">No</th>
-            <th width="70%">Nama</th>
+            <th width="55%">Nama</th>
+            <th width="15%">Benchmark</th>
             <th width="18%">Jumlah Kriteria</th>
             <th width="18%">Aksi</th>
         </tr>
@@ -36,13 +37,16 @@
                     <input type="text" class="form-control" value="{{ $elemen->nama }}" id="nama-elemen-{{ $elemen->id }}" required>
                 </td>
                 <td>
+                    <input type="text" class="form-control" value="{{ $elemen->benchmark }}" id="benchmark-elemen-{{ $elemen->id }}" required>
+                </td>
+                <td>
                     {{ $elemen->getKriteria()->count() }}
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button onclick="event.preventDefault(); update('{{ $ei = encrypt($elemen->id) }}', $('#nama-elemen-{{ $elemen->id }}').val())" class="btn btn-success btn-sm">Simpan</button>
+                        <button onclick="event.preventDefault(); update('{{ $ei = encrypt($elemen->id) }}', $('#nama-elemen-{{ $elemen->id }}').val(), $('#benchmark-elemen-{{ $elemen->id }}').val())" class="btn btn-success btn-sm">Simpan</button>
                         <a href="" href="#" id="show_{{ $elemen->id }}" class="btn btn-info btn-sm">Lihat Kriteria</a>
-                        <button onclick="event.preventDefault(); hapus('{{ $ei }}', '{{ $elemen->nama    }}')" class="btn btn-danger btn-sm">Hapus</button>
+                        <button onclick="event.preventDefault(); hapus('{{ $ei }}', '{{ $elemen->nama }}')" class="btn btn-danger btn-sm">Hapus</button>
                     </div>
                 </td>
             </tr>
@@ -57,6 +61,7 @@
                             <tr>
                                 <th>Kriteria Unjuk Kerja</th>
                                 <th>Pertanyaan</th>
+                                <th>Kalimat Aktif</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -70,6 +75,10 @@
                                     <th>
                                         <textarea name="pertanyaan[]" class="form-control" rows="4"
                                                   required>{{ $kriteria->pertanyaan }}</textarea>
+                                    </th>
+                                    <th>
+                                        <textarea name="kalimat_aktif[]" class="form-control" rows="4"
+                                                  required>{{ $kriteria->kalimat_aktif }}</textarea>
                                     </th>
                                     <th>
                                         <input type="hidden" name="kriteria_id[]" value="{{ $kriteria->id }}">
@@ -116,6 +125,7 @@
         {{ method_field('patch') }}
         <input type="hidden" name="id" id="update_id" required>
         <input type="hidden" name="nama" id="update_nama" required>
+        <input type="hidden" name="benchmark" id="update_benchmark" required>
     </form>
 
     <form id="hapus" action="{{ route('unit.elemen.delete') }}" method="post">
@@ -148,15 +158,19 @@
                 '        <textarea name="pertanyaan_baru[]" class="form-control" rows="4" required></textarea>\n' +
                 '    </th>\n' +
                 '    <th>\n' +
+                '        <textarea name="kalimat_aktif_baru[]" class="form-control" rows="4" required></textarea>\n' +
+                '    </th>\n' +
+                '    <th>\n' +
                 '        <button class="btn btn-danger btn-sm" onclick="$(this).parent().parent().remove()">Hapus</button>\n' +
                 '    </th>\n' +
                 '</tr>' +
                 '')
         }
 
-        function update(id, nama) {
+        function update(id, nama, benchmark) {
             $('#update_id').val(id)
             $('#update_nama').val(nama)
+            $('#update_benchmark').val(benchmark)
             $('#update').submit()
         }
 

@@ -50,4 +50,20 @@ Route::group(['prefix' => 'unit'], function (){
         'uses' => 'UnitController@restore',
         'as' => 'unit.restore'
     ]);
+
+    Route::put('pertanyaan-observasi/tambah/{unit}', [
+        'uses' => 'UnitController@tambahPertanyaanObservasi',
+        'as' => 'unit.pertanyaan-observasi.tambah'
+    ]);
+    
+    Route::post('pertanyaan-observasi/edit', [
+        'uses' => 'UnitController@editPertanyaanObservasi',
+        'as' => 'unit.pertanyaan-observasi.edit'
+    ]);
+    
+    Route::delete('pertanyaan-observasi/hapus', [
+        'uses' => 'UnitController@hapusPertanyaanObservasi',
+        'as' => 'unit.pertanyaan-observasi.hapus'
+    ]);
+
 });

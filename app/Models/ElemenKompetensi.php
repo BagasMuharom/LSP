@@ -14,7 +14,7 @@ class ElemenKompetensi extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'unit_kompetensi_id', 'nama'
+        'unit_kompetensi_id', 'nama', 'benchmark'
     ];
 
     /**
@@ -36,4 +36,5 @@ class ElemenKompetensi extends Model
         $data = $this->hasMany('App\Models\Kriteria', 'elemen_kompetensi_id');
         return $queryReturn ? $data : $data->get();
     }
+    
 }

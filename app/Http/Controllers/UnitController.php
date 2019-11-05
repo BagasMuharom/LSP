@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\ElemenKompetensi;
+use App\Models\PertanyaanObservasi;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 
@@ -28,10 +30,11 @@ class UnitController extends Controller
 
                 if (!empty($request->kriteria_id)){
                     $counter = 0;
-                    foreach ($request->kriteria_id as $id){
+                    foreach ($request->kriteria_id as $id) {
                         $kriteria = Kriteria::findOrFail($id);
                         $kriteria->pertanyaan = $request->pertanyaan[$counter];
                         $kriteria->unjuk_kerja = $request->unjuk_kerja[$counter];
+                        $kriteria->kalimat_aktif = $request->kalimat_aktif[$counter];
                         $kriteria->save();
                         $counter++;
                     }
@@ -39,12 +42,16 @@ class UnitController extends Controller
 
                 if (!empty($request->unjuk_kerja_baru)){
                     $counter = 0;
+
                     foreach ($request->unjuk_kerja_baru as $unjuk_kerja){
                         Kriteria::create([
                             'elemen_kompetensi_id' => $elemen->id,
                             'unjuk_kerja' => $unjuk_kerja,
-                            'pertanyaan' => $request->pertanyaan_baru[$counter++]
+                            'pertanyaan' => $request->pertanyaan_baru[$counter],
+                            'kalimat_aktif' => $request->pertanyaan_baru[$counter]
                         ]);
+
+                        $counter++;
                     }
                 }
             }, 5);
@@ -56,12 +63,19 @@ class UnitController extends Controller
         }
     }
 
+    /**
+     * Mengubah elemen pada unit tertentu
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function updateElemen(Request $request)
     {
         try{
             $elemen = ElemenKompetensi::findOrFail(decrypt($request->id));
             $nama = $elemen->nama;
             $elemen->nama = $request->nama;
+            $elemen->benchmark = $request->benchmark;
             $elemen->save();
             return back()->with('success', 'Berhasil memperbarui elemen <b>'.$nama.'</b>'.' menjadi <b>'.$elemen->nama.'</b>');
         }
@@ -82,6 +96,13 @@ class UnitController extends Controller
         }
     }
 
+    /**
+     * Menambahkah elemen baru pada unit tertentu
+     * elemen yang ditambahkan bisa lebih dari satu dengan pemisah enter
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function addElemen(Request $request)
     {
         $this->validate($request, [
@@ -90,10 +111,11 @@ class UnitController extends Controller
         ]);
 
         $counter = 0;
-        foreach (explode(PHP_EOL, $request->namas) as $nama){
+        foreach (explode(PHP_EOL, $request->namas) as $nama) {
             ElemenKompetensi::create([
                 'unit_kompetensi_id' => $request->unit_id,
-                'nama' => $nama
+                'nama' => $nama,
+                'benchmark' => 'SKKNI'
             ]);
             $counter++;
         }
@@ -149,4 +171,80 @@ class UnitController extends Controller
             return back()->with('error', $exception->getMessage());
         }
     }
+
+    /**
+     * Menambahkan pertanyaan observasi pada unit tertentu
+     * pertanyaan yang dimasukkan bisa lebih dari dari dengan dipisah enter
+     *
+     * @param Request $request
+     * @param UnitKompetensi $unit
+     * @return \Illuminate\Http\Response
+     */
+    public function tambahPertanyaanObservasi(Request $request, UnitKompetensi $unit)
+    {
+        $request->validate([
+            'daftar_pertanyaan' => 'required|string'
+        ]);
+        
+        foreach (explode(PHP_EOL , $request->daftar_pertanyaan) as $pertanyaan) {
+            $unit->getPertanyaanObservasi()->insert([
+                'pertanyaan' => $pertanyaan,
+                'unit_kompetensi_id' => $unit->id,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        return back()->with([
+            'success' => 'Berhasil menambahkan pertanyaan observasi untuk unit ' . $unit->judul . ' !'
+        ]);
+    }
+
+    /**
+     * Mengedit pertanyaan observasi
+     *
+     * @param Request $request
+     * @return \Illuminate\http\Response
+     */
+    public function editPertanyaanObservasi(Request $request)
+    {
+        try {
+            $pertanyaan = PertanyaanObservasi::findOrFail($request->id);
+            $pertanyaan->update([
+                'pertanyaan' => $request->pertanyaan
+            ]);
+
+            return back()->with([
+                'success' => 'Berhasil menyimpan pertanyaan !'
+            ]);
+        }
+        catch (ModelNotFoundException $e) {
+            return back()->with([
+                'error' => 'Gagal menyimpan pertanyaan !'
+            ]);
+        }
+    }
+
+    /**
+     * Menghapus pertanyaan observasi
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusPertanyaanObservasi(Request $request)
+    {
+        try {
+            $pertanyaan = PertanyaanObservasi::findOrFail($request->id);
+            $pertanyaan->delete();
+
+            return back()->with([
+                'success' => 'Berhasil menghapus pertanyaan !'
+            ]);
+        }
+        catch (ModelNotFoundException $e) {
+            return back()->with([
+                'error' => 'Gagal menghapus pertanyaan !'
+            ]);
+        }
+    }
+
 }
