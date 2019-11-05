@@ -60,7 +60,10 @@ class SkemaPageController extends Controller
         return view('menu.skema.tambah', [
             'daftarjenis' => Jenis::all(),
             'daftarjurusan' => Jurusan::all(),
-            'menu' => Menu::findByRoute(Menu::SKEMA)
+            'menu' => Menu::findByRoute(Menu::SKEMA),
+            'admintuk' => User::query()->whereHas('getUserRole', function ($query) {
+                return $query->where('nama', 'ADMIN TUK');
+            })->get(),
         ]);
     }
 

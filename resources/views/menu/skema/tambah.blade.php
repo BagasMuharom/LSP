@@ -26,10 +26,10 @@
         <label>Judul</label>
         <input type="text" name="nama" class="form-control" required>
         @endformgroup
-        
+
         @formgroup
         <label>Judul (Bahasa Inggris)</label>
-        <input type="text" name="nama" class="form-control" required>
+        <input type="text" name="nama_english" class="form-control" required>
         @endformgroup
         <hr>
 
@@ -77,13 +77,13 @@
         <label>Kualifikasi</label>
         <input type="text" name="kualifikasi" class="form-control" required>
         @endformgroup
-        
+
         @formgroup
         <label>Kualifikasi (dalam bahasa inggris)</label>
         <input type="text" name="qualification" class="form-control" required>
         @endformgroup
         <hr>
-        
+
         @formgroup
         <label>Bidang</label>
         <input type="text" name="bidang" class="form-control" required>
@@ -110,7 +110,9 @@
         <label>Jurusan</label>
         <select name="jurusan_id" class="form-control select" required>
             @foreach($daftarjurusan as $jurusan)
-                <option value="{{ $jurusan->id }}">{{ $jurusan->nama }} (Fakultas {{ $jurusan->getFakultas(false)->nama }})</option>
+                <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}
+                    (Fakultas {{ $jurusan->getFakultas(false)->nama }})
+                </option>
             @endforeach
         </select>
         @endformgroup
@@ -154,7 +156,18 @@
         <label>Jurusan</label>
         <select name="tempat_uji_jurusan_id" class="form-control select" required>
             @foreach($daftarjurusan as $jurusan)
-                <option value="{{ $jurusan->id }}">{{ $jurusan->nama }} (Fakultas {{ $jurusan->getFakultas(false)->nama }})</option>
+                <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}
+                    (Fakultas {{ $jurusan->getFakultas(false)->nama }})
+                </option>
+            @endforeach
+        </select>
+        <br><br>
+        <label>Admin TUK</label>
+        <br>
+        <select name="tempat_uji_user_id" class="select">
+            <option></option>
+            @foreach($admintuk as $user)
+                <option value="{{ $user->id }}">{{ $user->nama }}</option>
             @endforeach
         </select>
         @endformgroup
@@ -162,18 +175,18 @@
 
         @card(['title' => 'Data unit'])
         @slot('table')
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Kode</th>
-                <th>Judul</th>
-                <th>Aksi</th>
-            </tr>
-            </thead>
-            <tbody id="list-unit">
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-primary" onclick="tambah()">Tambah unit</button>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Judul</th>
+                    <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody id="list-unit">
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" onclick="tambah()">Tambah unit</button>
         @endslot
         @endcard
         @endcol
