@@ -17,10 +17,10 @@ class SertifikatController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:user', 'menu:sertifikat'])->except([
-            'isiKuesioner', 'lihatBerkasSertifikat'
+            'isiKuesioner'
         ]);
 
-        $this->middleware(['auth:mhs'])->only(['isiKuesioner', 'lihatBerkasSertifikat']);
+        $this->middleware(['auth:mhs'])->only(['isiKuesioner']);
     }
 
     /**
