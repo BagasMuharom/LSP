@@ -557,4 +557,26 @@ class UjiPolicy
     {
         return $uji->isFinished();
     }
+
+    /**
+     * Mengecek apakah user bisa melakukan verifikasi persyaratan pada uji tertentu
+     *
+     * @param Authenticatable $user
+     * @param Uji $uji
+     * @return boolean
+     */
+    public function verifikasiPersyaratan(Authenticatable $user, Uji $uji)
+    {
+        if ($user instanceof Mahasiswa)
+            return false;
+
+        if (!$user->hasRole('ADMIN TUK') || !$user->hasRole('SUPER ADMIN'))
+            return false;
+
+        if ($uji->getSkema(false)->getTempatUji(false)->getUser(false)->id != $user->id)
+            return false;
+
+        return true;
+    }
+
 }

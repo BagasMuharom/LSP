@@ -221,49 +221,60 @@
                     @endforeach
                 </div>
 
-                <label><b>Verifikasi Persyaratan</b></label>
-                <table class="table">
-                    <thead>
-                        <th>Nama Persyaratan</th>
-                        <th>Verifikasi</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($daftarSyarat as $syarat)
-                        <tr>
-                            <td>{{ $syarat->nama }}</td>
-                            <td>
-                                <input type="checkbox" class="form-control" name="verifikasi_syarat[{{ $syarat->id }}]">
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <form method="post" action="{{ route('uji.verifikasi.persyaratan', ['uji' => encrypt($uji->id)]) }}">
+                    @csrf
+                    <button class="btn btn-primary" type="submit">Simpan Verifikasi</button>
+                    
+                    @can('verifikasiPersyaratan', $uji)
+                    <label><b>Verifikasi Persyaratan</b></label>
+                    <table class="table">
+                        <thead>
+                            <th>Nama Persyaratan</th>
+                            <th>Verifikasi</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($daftarSyarat as $syarat)
+                            <tr>
+                                <td>{{ $syarat->nama }}</td>
+                                <td>
+                                    <input type="checkbox" class="form-control" name="verifikasi_syarat[{{ $syarat->id }}]">
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endcan
 
-                <label><b>Bukti Kompetensi</b></label>
-                @if($uji->getBuktiKompetensi()->count() > 0)
-                <table class="table">
-                    <thead>
-                        <th>Nama Bukti Kompetensi</th>
-                        <th>Verifikasi</th>
-                        <th>Aksi</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($uji->getBuktiKompetensi() as $file => $bukti)
-                        <tr>
-                            <td>{{ $bukti }}</td>
-                            <td>
-                                <input type="checkbox" class="form-control" name="verifikasi_bukti[{{ $bukti }}]">
-                            </td>
-                            <td>
-                                <a class="btn btn-primary float-right" target="_blank" href="{{ route('uji.lihat.bukti.kompetensi', ['uji' => encrypt($uji->id), 'bukti' => $file]) }}">Lihat Berkas</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                @else
-                <p class="alert alert-info">Tidak ada bukti kompetensi yang diunggah.</p>
-                @endif
+                    <label><b>Bukti Kompetensi</b></label>
+                    @if($uji->getBuktiKompetensi()->count() > 0)
+                    <table class="table">
+                        <thead>
+                            <th>Nama Bukti Kompetensi</th>
+                            @can('verifikasiPersyaratan', $uji)
+                            <th>Verifikasi</th>
+                            @endcan
+                            <th>Aksi</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($uji->getBuktiKompetensi() as $file => $bukti)
+                            <tr>
+                                <td>{{ $bukti }}</td>
+                                @can('verifikasiPersyaratan', $uji)
+                                <td>
+                                    <input type="checkbox" class="form-control" name="verifikasi_bukti[{{ $bukti }}]">
+                                </td>
+                                @endcan
+                                <td>
+                                    <a class="btn btn-primary float-right" target="_blank" href="{{ route('uji.lihat.bukti.kompetensi', ['uji' => encrypt($uji->id), 'bukti' => $file]) }}">Lihat Berkas</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    <p class="alert alert-info">Tidak ada bukti kompetensi yang diunggah.</p>
+                    @endif
+                </form>
                 
                 <label><b>Portofolio</b></label>
                 <ul class="list-group">

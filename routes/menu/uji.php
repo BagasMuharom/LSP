@@ -21,6 +21,11 @@ Route::prefix('uji')->group(function () {
 
     });
 
+    Route::post('verifikasi-persyaratan/{uji}', [
+        'uses' => 'UjiController@verifikasiPersyaratan',
+        'as' => 'uji.verifikasi.persyaratan'
+    ]);
+
     Route::post('edit/{uji}', [
         'uses' => 'UjiController@update',
         'as' => 'uji.edit'

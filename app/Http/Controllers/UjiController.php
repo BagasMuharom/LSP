@@ -497,4 +497,16 @@ class UjiController extends Controller
         ]);
     }
 
+    /**
+     * Melakukan verifikasi persyaratan
+     *
+     * @param Request $request
+     * @param Uji $uji
+     * @return \Illuminate\Http\Response
+     */
+    public function verifikasiPersyaratan(Request $request, Uji $uji)
+    {
+
+    }
+
 }
