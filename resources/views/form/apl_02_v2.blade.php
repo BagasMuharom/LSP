@@ -30,7 +30,7 @@
             <tr>
                 <td colspan="2">TUK</td>
                 <td>:</td>
-                <td>Sewaktu/Tempat Kerja/Mandiri*</td>
+                <td>Sewaktu<span style="text-decoration: line-through;">/Tempat Kerja/Mandiri</span>*</td>
             </tr>
             <tr>
                 <td colspan="2">Nama Asesor</td>
@@ -58,7 +58,7 @@
                     Instruksi:
                     <ul>
                         <li>Baca setiap pertanyaan di kolom sebelah kiri</li>
-                        <li>Beri tanda centang () pada kotak jika Anda yakin dapat melakukan tugas yang dijelaskan.</li>
+                        <li>Beri tanda centang (<b class="unicode">&#10003;</b>) pada kotak jika Anda yakin dapat melakukan tugas yang dijelaskan.</li>
                         <li>Isi kolom di sebelah kanan dengan mendaftar bukti yang Anda miliki untuk menunjukkan bahwa Anda melakukan tugas-tugas ini.</li>
                     </ul>
                 </td>
