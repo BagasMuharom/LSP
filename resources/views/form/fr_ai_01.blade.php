@@ -132,6 +132,8 @@
                 <td>
                     @if($uji->getMahasiswa(false)->getTTD(false)->count() > 0)
                     <img width="200" src="{{ $uji->getMahasiswa(false)->getTTD(false)->random()->ttd }}" class="img-responsive">
+                    <br>
+                    {{ formatDate($uji->tanggal_uji, false, false) }}
                     @endif
                 </td>
             </tr>
@@ -141,6 +143,8 @@
                 <td>
                     @if($asesor->getTTD(false)->count() > 0)
                     <img width="200" src="{{ $asesor->getTTD(false)->random()->ttd }}">
+                    <br>
+                    {{ formatDate($uji->tanggal_uji, false, false) }}
                     @endif
                 </td>
             </tr>

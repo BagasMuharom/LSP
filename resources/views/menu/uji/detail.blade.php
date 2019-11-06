@@ -313,7 +313,7 @@
                             
                             @can('cetakApl02', $uji)
                             <tr>
-                                <td>APL 02</td>
+                                <td>Asesmen Mandiri</td>
                                 <td>
                                     <a class="btn btn-primary" href="{{ route('uji.cetak.apl02', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 1</a>
                                     <a class="btn btn-primary" href="{{ route('uji.cetak.apl02v2', ['uji' => encrypt($uji->id)]) }}" target="_blank"><i class="fa fa-print"></i> Versi 2</a>
@@ -330,14 +330,15 @@
                             </tr>
                             @endcan
                             
-                            @can('cetakMak02', $uji)
                             <tr>
-                                <td>MAK 02</td>
+                                <td>Form Penilaian</td>
                                 <td>
-                                    <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                    @can('cetakMak02', $uji)
+                                    <a href="{{ route('uji.cetak.mak02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> MAK 02</a>
+                                    <a href="{{ route('uji.cetak.frai01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> FR.AI.01</a>
+                                    @endcan
                                 </td>
                             </tr>
-                            @endcan
                             
                             @can('cetakMak04', $uji)
                             <tr>
@@ -359,9 +360,9 @@
 
                             @can('cetakFRAI02', $uji)
                             <tr>
-                                <td>FR AI 02</td>
+                                <td>Penilaian Observasi</td>
                                 <td>
-                                    <a href="{{ route('uji.cetak.frai02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                                    <a href="{{ route('uji.cetak.frai02', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> FR.AI.02</a>
                                 </td>
                             </tr>
                             @endcan
@@ -374,13 +375,6 @@
                                 </td>
                             </tr>
                             @endcan
-
-                            <tr>
-                                <td>FR AI 01</td>
-                                <td>
-                                    <a href="{{ route('uji.cetak.frai01', ['uji' => encrypt($uji->id)]) }}" class="btn btn-primary" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
-                                </td>
-                            </tr>
                             
                             @can('cetakFRAC01', $uji)
                                 <tr>
