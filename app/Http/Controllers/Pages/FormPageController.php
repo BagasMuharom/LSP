@@ -243,6 +243,8 @@ class FormPageController extends Controller
         //     'skema' => $uji->getSkema(false),
         //     'mahasiswa' => $uji->getMahasiswa(false)
         // ]);
+
+        return $pdf->stream();
     }
 
     public function cetakFRAC01(Uji $uji)
