@@ -825,6 +825,17 @@ class Uji extends Model
     }
 
     /**
+     * mendapatkan data pada helper dengan key tertentu
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getHelper($key)
+    {
+        return collect($this->helper[$key]);
+    }
+
+    /**
      * evaluasi portofolio FR.AI.04
      *
      * @return \Illuminate\Support\Collection
