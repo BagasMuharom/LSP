@@ -506,7 +506,33 @@ class UjiController extends Controller
      */
     public function verifikasiPersyaratan(Request $request, Uji $uji)
     {
+        $verifikasi_bukti = $request->input('verifikasi_bukti');
+        $verifikasi_syarat = $request->input('verifikasi_syarat');
+        $helper = $uji->helper;
 
+        // verifikasi syarat
+        $arr_verifikasi_syarat = [];
+
+        foreach ($verifikasi_syarat as $item) {
+
+        }
+        
+        // verifikasi bukti
+        $arr_verifikasi_bukti = [];
+
+        foreach ($verifikasi_bukti as $item) {
+
+        }
+
+        $helper['verifikasi_syarat'] = $arr_verifikasi_syarat;
+        $helper['verifikasi_bukti'] = $arr_verifikasi_bukti;
+
+        $uji->helper = $helper;
+        $uji->save();
+
+        return back()->with([
+            'success' => 'Berhasil menyimpan verifikasi persyaratan !'
+        ]);
     }
 
 }
