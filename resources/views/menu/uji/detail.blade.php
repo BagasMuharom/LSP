@@ -223,9 +223,9 @@
 
                 <form method="post" action="{{ route('uji.verifikasi.persyaratan', ['uji' => encrypt($uji->id)]) }}">
                     @csrf
-                    <button class="btn btn-primary" type="submit">Simpan Verifikasi</button>
-                    
                     @can('verifikasiPersyaratan', $uji)
+                    <button class="btn btn-primary" type="submit">Simpan Verifikasi</button>
+                    <br><br>
                     <label><b>Verifikasi Persyaratan</b></label>
                     <table class="table">
                         <thead>
@@ -237,7 +237,7 @@
                             <tr>
                                 <td>{{ $syarat->nama }}</td>
                                 <td>
-                                    <input type="checkbox" class="form-control" name="verifikasi_syarat[{{ $syarat->id }}]">
+                                    <input type="checkbox" class="form-control" name="verifikasi_syarat[{{ $syarat->id }}]" {{ !is_null($uji->getHelper('verifikasi_syarat')) && $uji->getHelper('verifikasi_syarat')->contains($syarat->id) ? 'checked' : ''}}>
                                 </td>
                             </tr>
                             @endforeach
@@ -261,7 +261,7 @@
                                 <td>{{ $bukti }}</td>
                                 @can('verifikasiPersyaratan', $uji)
                                 <td>
-                                    <input type="checkbox" class="form-control" name="verifikasi_bukti[{{ $bukti }}]">
+                                    <input type="checkbox" class="form-control" name="verifikasi_bukti[{{ $bukti }}]" {{ !is_null($uji->getHelper('verifikasi_bukti')) && $uji->getHelper('verifikasi_bukti')->contains($bukti) ? 'checked' : ''}}>
                                 </td>
                                 @endcan
                                 <td>

@@ -238,9 +238,17 @@
             <tr>
                 <td>{{ $loop->iteration + 2 }}</td>
                 <td>{{ $syarat->nama }}</td>
+                <td style="text-align: center;">
+                    <b class="unicode">
+                        {!! !is_null($uji->getHelper('verifikasi_syarat')) && $uji->getHelper('verifikasi_syarat')->contains($syarat->id) ? '&#10003;' : ''!!}
+                    </b>
+                </td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td style="text-align: center;">
+                    <b class="unicode">
+                        {!! !is_null($uji->getHelper('verifikasi_syarat')) && !$uji->getHelper('verifikasi_syarat')->contains($syarat->id) ? '&#10003;' : ''!!}
+                    </b>
+                </td>
             </tr>
             @endforeach
 
@@ -284,7 +292,11 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $bukti }}</td>
-                    <td></td>
+                    <td style="text-align: center;">
+                        <b class="unicode">
+                            {!! !is_null($uji->getHelper('verifikasi_bukti')) && $uji->getHelper('verifikasi_bukti')->contains($bukti) ? '&#10003;' : ''!!}
+                        </b>
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -335,16 +347,21 @@
             </tr>
             <tr>
                 <td>Nama</td>
-                <td></td>
+                <td>{{ $admin->nama }}</td>
             </tr>
             <tr>
                 <td>NIK LSP</td>
-                <td></td>
+                <td>
+                    {{ $admin->nip }}
+                </td>
             </tr>
             <tr>
                 <td>Tanda tangan/Tanggal</td>
-                <td>
-                    <br><br><br><br><br>
+                <td style="text-align: center;">
+                    @if($admin->getTTD(false)->count() > 0)
+                    <img width="200" src="{{ $admin->getTTD(false)->random()->ttd }}">
+                    @endif
+                    {{ formatDate($uji->created_at, false, false) }}
                 </td>
             </tr>
         </tbody>

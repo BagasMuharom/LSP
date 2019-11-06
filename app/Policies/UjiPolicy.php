@@ -573,6 +573,9 @@ class UjiPolicy
         if (!$user->hasRole('ADMIN TUK') || !$user->hasRole('SUPER ADMIN'))
             return false;
 
+        if (is_null($uji->getSkema(false)->getTempatUji(false)->getUser(false)))
+            return false;
+            
         if ($uji->getSkema(false)->getTempatUji(false)->getUser(false)->id != $user->id)
             return false;
 

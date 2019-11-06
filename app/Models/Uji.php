@@ -832,7 +832,15 @@ class Uji extends Model
      */
     public function getHelper($key)
     {
-        return collect($this->helper[$key]);
+        if (!is_array($this->helper)) {
+            return null;
+        }
+
+        if (array_key_exists($key, $this->helper)) {
+            return collect($this->helper[$key]);
+        }
+
+        return null;
     }
 
     /**

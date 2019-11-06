@@ -510,8 +510,8 @@ class UjiController extends Controller
         $verifikasi_syarat = $request->input('verifikasi_syarat');
         $helper = $uji->helper;
 
-        $helper['verifikasi_syarat'] = $verifikasi_syarat;
-        $helper['verifikasi_bukti'] = $verifikasi_bukti;
+        $helper['verifikasi_syarat'] = array_keys($verifikasi_syarat);
+        $helper['verifikasi_bukti'] = array_keys($verifikasi_bukti);
 
         $uji->helper = $helper;
         $uji->save();

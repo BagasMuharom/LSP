@@ -7,6 +7,7 @@ use PDF;
 use App\Models\Uji;
 use App\Http\Controllers\Controller;
 use App\Models\KomponenMak4;
+use App\Models\Role;
 use App\Support\Facades\GlobalAuth;
 use function Matrix\trace;
 
@@ -50,19 +51,22 @@ class FormPageController extends Controller
     public function cetakApl01(Uji $uji)
     {
         $persyaratan = $uji->getSkema(false)->getSyarat(false);
+        $admin = Role::where('nama', Role::ADMIN)->first()->getUserRole(false)->random(1)[0];
 
         $pdf = PDF::loadView('form.apl_01', [
             'uji' => $uji,
             'mahasiswa' => $uji->getMahasiswa(false),
             'skema' => $uji->getSkema(false),
-            'persyaratan' => $persyaratan
+            'persyaratan' => $persyaratan,
+            'admin' => $admin
         ]);
 
         // return view('form.apl_01', [
         //     'uji' => $uji,
         //     'mahasiswa' => $uji->getMahasiswa(false),
         //     'skema' => $uji->getSkema(false),
-        //     'persyaratan' => $persyaratan
+        //     'persyaratan' => $persyaratan,
+        //     'admin' => $admin
         // ]);
 
         return $pdf->stream();
