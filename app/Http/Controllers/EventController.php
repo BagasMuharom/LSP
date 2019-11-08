@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Dana, Event, Role, Skema};
+use App\Models\{Dana, Event, Role, Skema, User};
 use CzProject\PdfRotate\PdfRotate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;

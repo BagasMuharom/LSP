@@ -21,7 +21,8 @@
         "phpoffice/phpword": "v0.14.*",
         "rfookune/lara-pdf-merger-php-7-2": "dev-master",
         "teamtnt/laravel-scout-tntsearch-driver": "^3.0",
-        "usmanhalalit/laracsv": "1.*@dev"
+        "usmanhalalit/laracsv": "1.*@dev",
+      "ext-intl": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
