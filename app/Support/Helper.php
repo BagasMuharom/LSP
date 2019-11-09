@@ -132,9 +132,44 @@ if (!function_exists('numberToRoman')) {
     }
 }
 
+if (!function_exists('denominator')){
+    function denominator($nilai) {
+        $nilai = abs($nilai);
+        $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        $temp = "";
+        if ($nilai < 12) {
+            $temp = " ". $huruf[$nilai];
+        } else if ($nilai <20) {
+            $temp = denominator($nilai - 10). " belas";
+        } else if ($nilai < 100) {
+            $temp = denominator($nilai/10)." puluh". denominator($nilai % 10);
+        } else if ($nilai < 200) {
+            $temp = " seratus" . denominator($nilai - 100);
+        } else if ($nilai < 1000) {
+            $temp = denominator($nilai/100) . " ratus" . denominator($nilai % 100);
+        } else if ($nilai < 2000) {
+            $temp = " seribu" . denominator($nilai - 1000);
+        } else if ($nilai < 1000000) {
+            $temp = denominator($nilai/1000) . " ribu" . denominator($nilai % 1000);
+        } else if ($nilai < 1000000000) {
+            $temp = denominator($nilai/1000000) . " juta" . denominator($nilai % 1000000);
+        } else if ($nilai < 1000000000000) {
+            $temp = denominator($nilai/1000000000) . " milyar" . denominator(fmod($nilai,1000000000));
+        } else if ($nilai < 1000000000000000) {
+            $temp = denominator($nilai/1000000000000) . " trilyun" . denominator(fmod($nilai,1000000000000));
+        }
+        return $temp;
+    }
+}
+
 if (!function_exists('numberToWord')){
     function numberToWord($number){
-        return terbilang($number);
+        if($number<0) {
+            $hasil = "minus ". trim(denominator($number));
+        } else {
+            $hasil = trim(denominator($number));
+        }
+        return $hasil;
     }
 }
 
