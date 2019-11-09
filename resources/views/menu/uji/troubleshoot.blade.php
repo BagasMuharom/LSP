@@ -282,7 +282,7 @@
                 @endformgroup
             @endcard
 
-            @card(['id' => 'lainnya'])
+            {{-- @card(['id' => 'lainnya'])
                 @slot('title', 'Lainnya')
 
                 @formgroup(['row' => true, 'class' => 'mb-0'])
@@ -299,7 +299,7 @@
                     <a href="{{ route('uji.isi.mak4', ['uji' => encrypt($uji->id)]) }}" class="btn btn-block btn-warning">Isi Kembali Form MAK 04</a>
                 </div>
                 @endformgroup
-            @endcard
+            @endcard --}}
 
             @card
                 @slot('title', 'Status Kelulusan')
