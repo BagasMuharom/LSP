@@ -134,7 +134,7 @@ if (!function_exists('numberToRoman')) {
 
 if (!function_exists('numberToWord')){
     function numberToWord($number){
-        return (new NumberFormatter("id", NumberFormatter::SPELLOUT))->format($number);
+        return terbilang($number);
     }
 }
 

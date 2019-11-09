@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa39115ded87540b559c6a2346f15e5b",
+    "content-hash": "f1caaa4e711feb985db564f0aaf32caa",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1467,6 +1467,53 @@
                 "psr-3"
             ],
             "time": "2018-11-05T09:00:11+00:00"
+        },
+        {
+            "name": "nasution/terbilang",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mul14/terbilang-php.git",
+                "reference": "9f156ed15d63df5115904944073adca4a06fda66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mul14/terbilang-php/zipball/9f156ed15d63df5115904944073adca4a06fda66",
+                "reference": "9f156ed15d63df5115904944073adca4a06fda66",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.3.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nasution\\": "src/Nasution"
+                },
+                "files": [
+                    "src/terbilang.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Mulia Arifandi Nasution",
+                    "email": "mul14.net@gmail.com"
+                }
+            ],
+            "description": "Convert numbers into words in Indonesian language",
+            "homepage": "https://github.com/mul14/terbilang-php",
+            "keywords": [
+                "indonesia",
+                "terbilang"
+            ],
+            "time": "2019-10-03T09:23:27+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -5847,7 +5894,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "ext-intl": "*"
     },
     "platform-dev": []
 }
