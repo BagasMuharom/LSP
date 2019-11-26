@@ -162,7 +162,7 @@
     <tr>
         <td>Hari/Tanggal</td>
         <td>:</td>
-        <td>{{ formatDate($event->tgl_uji, true, false, ' / ') }}</td>
+        <td>{{ formatDate($uji[0]->tanggal_uji, true, false, ' / ') }}</td>
     </tr>
     <tr>
         <td>Tempat</td>

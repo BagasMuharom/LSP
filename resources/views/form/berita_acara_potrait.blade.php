@@ -151,7 +151,7 @@
 </table>
 
 <p class="text-justify">
-    Pada hari ini, Hari/Tanggal : {{ formatDate($event->tgl_uji, true, false, '/') }} Waktu
+    Pada hari ini, Hari/Tanggal : {{ formatDate($uji[0]->tanggal_uji, true, false, '/') }} Waktu
     : {{ $event->tgl_uji->toTimeString() }}-16:00 bertempat di: TUK {{ $event->getTempatUji(false)->nama }} Fakultas {{ $event->getSkema(false)->getJurusan(false)->getFakultas(false)->nama }} UNESA, telah dilaksanakan proses asesmen <b>terhadap peserta asesmen</b> sebagai berikut:
 </p>
 
