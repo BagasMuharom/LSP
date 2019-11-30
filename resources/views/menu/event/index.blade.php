@@ -192,15 +192,17 @@
                                         <th>NIM</th>
                                         <th>Nama</th>
                                         <th>Prodi</th>
+                                        <th>Tgl. Uji</th>
                                         <th><button type="button" class="btn btn-success btn-sm" onclick="checkAll($(this))">Check/Uncheck</button></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($event->getUji()->orderBy('nim')->get() as $uji)
+                                    @foreach($event->getUji()->orderBy('tanggal_uji')->get() as $uji)
                                         <tr>
                                             <td>{{ $uji->nim }}</td>
                                             <td>{{ $uji->getMahasiswa(false)->nama }}</td>
                                             <td>{{ $uji->getMahasiswa(false)->getProdi(false)->nama }}</td>
+                                            <td>{{ (empty($uji->tanggal_uji)) ? 'Tanggal uji belum diatur' : formatDate($uji->tanggal_uji, true, false) }}</td>
                                             <td><input name="mahasiswa[]" value="{{ $uji->nim }}" type="checkbox"></td>
                                         </tr>
                                     @endforeach
