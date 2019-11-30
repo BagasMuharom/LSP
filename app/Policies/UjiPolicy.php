@@ -570,10 +570,10 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        if (!$user->hasRole('ADMIN TUK') || !$user->hasRole('SUPER ADMIN'))
+        if (!$user->hasRole('ADMIN TUK') && !$user->hasRole(Role::SUPER_ADMIN))
             return false;
 
-        if ($user->hasRole('SUPER ADMIN'))
+        if ($user->hasRole(Role::SUPER_ADMIN))
             return true;
 
         if (is_null($uji->getSkema(false)->getTempatUji(false)->getUser(false)))
