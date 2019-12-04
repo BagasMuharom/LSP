@@ -98,12 +98,16 @@
                                         Isi Uji Observasi
                                     </a>
                                 @endcan
-
+                                
+                                @can('penilaian', $uji)
                                 <a href="{{ route('penilaian.fr-ai-04', ['uji' => encrypt($uji->id)]) }}"
                                    class="dropdown-item">FR.AI.04 CEKLIS EVALUASI PORTOFOLIO</a>
-
+                                @endcan
+                                
+                                @can('penilaian', $uji)
                                 <a href="{{ route('penilaian.fr-ai-05', ['uji' => encrypt($uji->id)]) }}"
                                    class="dropdown-item">FR.AI.05 Formulir bukti pihak ketiga</a>
+                                @endcan
                             </div>
                         </div>
 

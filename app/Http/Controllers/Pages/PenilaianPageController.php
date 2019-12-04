@@ -71,7 +71,7 @@ class PenilaianPageController extends Controller
                     $query->filterByStatus(Uji::TIDAK_LULUS_ASESMEN_DIRI)
                         ->where('konfirmasi_asesmen_diri', false);
                 });
-            });
+            })->where('tidak_melanjutkan_asesmen', false);
         } else if ($request->status == 1) {
             // Lulus Sertifikasi maupun hingga memiliki sertifikat
             $data->where(function ($query) {

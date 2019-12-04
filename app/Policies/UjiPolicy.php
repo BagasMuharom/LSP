@@ -465,10 +465,17 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        if ($user->hasRole(Role::SUPER_ADMIN))
-            return true;
+        if ($uji->getStatus()['code'] == Uji::LULUS_ASESMEN_DIRI || $uji->getStatus()['code'] == Uji::PROSES_PENILAIAN) {
+            if ($user->hasRole(Role::SUPER_ADMIN)) {
+               return true;
+            }
 
-        return (($uji->getStatus()['code'] == Uji::LULUS_ASESMEN_DIRI || $uji->getStatus()['code'] == Uji::PROSES_PENILAIAN) && $uji->konfirmasi_penilaian_asesor == false);
+            if (!$uji->konfirmasi_penilaian_asesor) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -538,7 +545,7 @@ class UjiPolicy
         if ($user instanceof Mahasiswa)
             return false;
 
-        return true;
+        return $this->penilaian($user, $uji);
     }
 
     /**
