@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Menu;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -146,6 +147,18 @@ class User extends Authenticatable
         $relasi = $this->hasMany(TTDUser::class, 'user_id');
 
         return $queryreturn ? $relasi : $relasi->get();
+    }
+
+    public function getDaftarSuratTugas()
+    {
+        $files = collect([]);
+        $daftar = Storage::files('data/surat_tugas/' . $this->id);
+
+        foreach ($daftar as $file) {
+            $files->put(pathinfo($file, PATHINFO_BASENAME), pathinfo($file, PATHINFO_FILENAME));
+        }
+
+        return $files;
     }
 
 }

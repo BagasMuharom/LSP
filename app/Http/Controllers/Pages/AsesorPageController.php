@@ -40,17 +40,6 @@ class AsesorPageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -58,9 +47,12 @@ class AsesorPageController extends Controller
      */
     public function edit(User $asesor)
     {
+        $daftarSuratTugas = $asesor->getDaftarSuratTugas();
+
         return view('menu.asesor.edit', [
             'asesor' => $asesor,
-            'daftarAsesorSkema' => $asesor->getAsesorSkema(false)
+            'daftarAsesorSkema' => $asesor->getAsesorSkema(false),
+            'daftarSuratTugas' => $daftarSuratTugas
         ]);
     }
 

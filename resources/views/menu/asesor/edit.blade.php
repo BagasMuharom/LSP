@@ -19,6 +19,29 @@
 
                 <a class="btn btn-primary" href="{{ route('asesor.daftar.uji', ['uji' => encrypt($asesor->id)]) }}">Lihat daftar uji dari asesor ini</a>
         @endcard
+
+        @card
+            @slot('title', 'Unggah Surat Tugas')
+            <form action="{{ route('asesor.surat_tugas.unggah', ['asesor' => encrypt($asesor->id)]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <label>Judul Berkas</label>
+                <input type="text" name="judul" class="form-control">
+
+                <label>Berkas</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-primary btn-pilih-berkas" type="button">Pilih Berkas</button>
+                    </div>
+                    <div class="custom-file">
+                        <input class="custom-file-input" type="file" name="berkas">
+                        <label class="custom-file-label">Pilih Berkas ...</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Unggah</button>
+            </form>
+        @endcard
     @endcol
 
     @col(['size' => 8])
@@ -65,12 +88,56 @@
                 </div>
             @endslot
         @endcard
+
+        @card
+            @slot('title', 'Daftar Surat Tugas')
+            
+            @slot('list')
+            <div class="list-group list-group-flush">
+                @forelse($daftarSuratTugas as $dir => $judul)
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                {{ $judul }}
+                            </div>
+                            <div>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('asesor.surat_tugas.lihat', [
+                                        'asesor' => encrypt($asesor->id),
+                                        'dir' => encrypt($dir)
+                                    ]) }}" class="btn btn-primary">Lihat</a>
+                                    <button class="btn btn-danger" onclick="hapusSuratTugas({{ $asesor->id }}, '{{ $dir }}')">Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    @empty
+                @endforelse
+            </div>
+            @endslot
+        @endcard
     @endcol
 @endrow
 @endsection
 
+<form action="{{ route('asesor.surat_tugas.hapus', ['asesor' => encrypt($asesor->id)]) }}" method="post" id="form-hapus-surattugas">
+    @csrf
+    @method('DELETE')
+    <input type="hidden" name="asesor" id="asesor-surat-tugas">
+    <input type="hidden" name="dir" id="dir-surat-tugas">
+</form>
+
 @push('js')
 <script>
+    function hapusSuratTugas(asesor, dir) {
+        if (confirm('Apakah anda yakin ?')) {
+            $('#asesor-surat-tugas').val(asesor)
+            $('#dir-surat-tugas').val(dir)
+
+            $('#form-hapus-surattugas').submit()
+        }
+    }
+
     new Vue({
         el: '#root',
         data: {

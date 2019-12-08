@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
 use App\Models\Skema;
+use Illuminate\Support\Facades\Storage;
 
 class AsesorController extends Controller
 {
@@ -44,6 +45,73 @@ class AsesorController extends Controller
             'success' => true,
             'message' => 'Berhasil mengedit daftar skema !'
         ]);
+    }
+
+    /**
+     * Mengunggah surat tugas
+     *
+     * @param Request $request
+     * @param User $asesor
+     * @return \Illuminate\Http\Response
+     */
+    public function unggahSuratTugas(Request $request, User $asesor)
+    {
+        $request->validate([
+            'judul' => 'required|string',
+            'berkas' => 'required|file'
+        ]);
+
+        $request->file('berkas')->storeAs(
+            'data/surat_tugas/' . $asesor->id . '/',  
+            $request->judul . '.' . $request->file('berkas')->getClientOriginalExtension()
+        );
+
+        return back()->with([
+            'success' => 'Berhasil mengunggah surat tugas !'
+        ]);
+    }
+
+    /**
+     * Menghapus surat tugas
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusSuratTugas(Request $request)
+    {
+        try {
+            $asesor = User::findOrFail($request->asesor);
+            $dir = $request->dir;
+
+            Storage::delete('data/surat_tugas/' . $asesor->id . '/' . $dir);
+
+            return back()->with([
+                'success' => 'Berhasil menghapus surat tugas !'
+            ]);
+        }
+        catch (ModelNotFoundException $err) {
+            abort(404);
+        }
+    }
+
+    /**
+     * Melihat surat tugas
+     *
+     * @param Request $request
+     * @param User $asesor
+     * @param string $dir
+     * @return \Illuminate\Http\Response
+     */
+    public function lihatSuratTugas(Request $request, User $asesor, $dir)
+    {
+        $filename = decrypt($dir);
+        $filename = 'data/surat_tugas/' . $asesor->id . '/' . $filename;
+
+        $file = Storage::get($filename);
+
+        return response($file, 200)
+            ->header('Content-Type', Storage::mimeType($filename))
+            ->header('Content-Length', strlen($file));
     }
 
 }
