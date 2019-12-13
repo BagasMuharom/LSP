@@ -149,10 +149,10 @@ class User extends Authenticatable
         return $queryreturn ? $relasi : $relasi->get();
     }
 
-    public function getDaftarSuratTugas()
+    public function getDaftarBerkas()
     {
         $files = collect([]);
-        $daftar = Storage::files('data/surat_tugas/' . $this->id);
+        $daftar = Storage::files('data/berkas/' . $this->id);
 
         foreach ($daftar as $file) {
             $files->put(pathinfo($file, PATHINFO_BASENAME), pathinfo($file, PATHINFO_FILENAME));

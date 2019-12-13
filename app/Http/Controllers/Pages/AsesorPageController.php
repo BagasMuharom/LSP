@@ -47,12 +47,12 @@ class AsesorPageController extends Controller
      */
     public function edit(User $asesor)
     {
-        $daftarSuratTugas = $asesor->getDaftarSuratTugas();
+        $daftarBerkas = $asesor->getDaftarBerkas();
 
         return view('menu.asesor.edit', [
             'asesor' => $asesor,
             'daftarAsesorSkema' => $asesor->getAsesorSkema(false),
-            'daftarSuratTugas' => $daftarSuratTugas
+            'daftarBerkas' => $daftarBerkas
         ]);
     }
 

@@ -26,21 +26,21 @@ Route::prefix('asesor')->group(function () {
         'as' => 'asesor.edit'
     ]);
 
-    Route::prefix('surat-tugas')->group(function () {
+    Route::prefix('berkas')->group(function () {
 
         Route::get('lihat/{asesor}/{dir}', [
-            'uses' => 'AsesorController@lihatSuratTugas',
-            'as' => 'asesor.surat_tugas.lihat'
+            'uses' => 'AsesorController@lihatBerkas',
+            'as' => 'asesor.berkas.lihat'
         ]);
 
         Route::post('unggah/{asesor}', [
-            'uses' => 'AsesorController@unggahSuratTugas',
-            'as' => 'asesor.surat_tugas.unggah'
+            'uses' => 'AsesorController@unggahBerkas',
+            'as' => 'asesor.berkas.unggah'
         ]);
 
         Route::delete('hapus', [
-            'uses' => 'AsesorController@hapusSuratTugas',
-            'as' => 'asesor.surat_tugas.hapus'
+            'uses' => 'AsesorController@hapusBerkas',
+            'as' => 'asesor.berkas.hapus'
         ]);
 
     });

@@ -33,4 +33,6 @@
             </p>
         @endcol
     @endrow
+
+    @includeWhen(GlobalAuth::user()->hasRole(App\Models\Role::ASESOR), 'dashboard.berkas_asesor')
 @endsection

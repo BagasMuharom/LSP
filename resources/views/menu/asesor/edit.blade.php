@@ -21,8 +21,8 @@
         @endcard
 
         @card
-            @slot('title', 'Unggah Surat Tugas')
-            <form action="{{ route('asesor.surat_tugas.unggah', ['asesor' => encrypt($asesor->id)]) }}" method="POST" enctype="multipart/form-data">
+            @slot('title', 'Unggah Berkas')
+            <form action="{{ route('asesor.berkas.unggah', ['asesor' => encrypt($asesor->id)]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <label>Judul Berkas</label>
@@ -90,11 +90,11 @@
         @endcard
 
         @card
-            @slot('title', 'Daftar Surat Tugas')
+            @slot('title', 'Daftar Berkas')
             
             @slot('list')
             <div class="list-group list-group-flush">
-                @forelse($daftarSuratTugas as $dir => $judul)
+                @forelse($daftarBerkas as $dir => $judul)
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -102,7 +102,7 @@
                             </div>
                             <div>
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('asesor.surat_tugas.lihat', [
+                                    <a href="{{ route('asesor.berkas.lihat', [
                                         'asesor' => encrypt($asesor->id),
                                         'dir' => encrypt($dir)
                                     ]) }}" class="btn btn-primary">Lihat</a>
@@ -112,6 +112,9 @@
                         </div>
                     </li>
                     @empty
+                    <p class="alert alert-info mr-3 ml-3 mb-3">
+                        Tidak ada berkas.
+                    </p>
                 @endforelse
             </div>
             @endslot
@@ -120,21 +123,21 @@
 @endrow
 @endsection
 
-<form action="{{ route('asesor.surat_tugas.hapus', ['asesor' => encrypt($asesor->id)]) }}" method="post" id="form-hapus-surattugas">
+<form action="{{ route('asesor.berkas.hapus', ['asesor' => encrypt($asesor->id)]) }}" method="post" id="form-hapus-berkas">
     @csrf
     @method('DELETE')
-    <input type="hidden" name="asesor" id="asesor-surat-tugas">
-    <input type="hidden" name="dir" id="dir-surat-tugas">
+    <input type="hidden" name="asesor" id="asesor-berkas">
+    <input type="hidden" name="dir" id="dir-berkas">
 </form>
 
 @push('js')
 <script>
     function hapusSuratTugas(asesor, dir) {
         if (confirm('Apakah anda yakin ?')) {
-            $('#asesor-surat-tugas').val(asesor)
-            $('#dir-surat-tugas').val(dir)
+            $('#asesor-berkas').val(asesor)
+            $('#dir-berkas').val(dir)
 
-            $('#form-hapus-surattugas').submit()
+            $('#form-hapus-berkas').submit()
         }
     }
 

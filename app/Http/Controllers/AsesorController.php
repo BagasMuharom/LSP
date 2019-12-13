@@ -54,7 +54,7 @@ class AsesorController extends Controller
      * @param User $asesor
      * @return \Illuminate\Http\Response
      */
-    public function unggahSuratTugas(Request $request, User $asesor)
+    public function unggahBerkas(Request $request, User $asesor)
     {
         $request->validate([
             'judul' => 'required|string',
@@ -62,12 +62,12 @@ class AsesorController extends Controller
         ]);
 
         $request->file('berkas')->storeAs(
-            'data/surat_tugas/' . $asesor->id . '/',  
+            'data/berkas/' . $asesor->id . '/',  
             $request->judul . '.' . $request->file('berkas')->getClientOriginalExtension()
         );
 
         return back()->with([
-            'success' => 'Berhasil mengunggah surat tugas !'
+            'success' => 'Berhasil mengunggah berkas !'
         ]);
     }
 
@@ -77,16 +77,16 @@ class AsesorController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function hapusSuratTugas(Request $request)
+    public function hapusBerkas(Request $request)
     {
         try {
             $asesor = User::findOrFail($request->asesor);
             $dir = $request->dir;
 
-            Storage::delete('data/surat_tugas/' . $asesor->id . '/' . $dir);
+            Storage::delete('data/berkas/' . $asesor->id . '/' . $dir);
 
             return back()->with([
-                'success' => 'Berhasil menghapus surat tugas !'
+                'success' => 'Berhasil menghapus berkas !'
             ]);
         }
         catch (ModelNotFoundException $err) {
@@ -102,10 +102,10 @@ class AsesorController extends Controller
      * @param string $dir
      * @return \Illuminate\Http\Response
      */
-    public function lihatSuratTugas(Request $request, User $asesor, $dir)
+    public function lihatBerkas(User $asesor, $dir)
     {
         $filename = decrypt($dir);
-        $filename = 'data/surat_tugas/' . $asesor->id . '/' . $filename;
+        $filename = 'data/berkas/' . $asesor->id . '/' . $filename;
 
         $file = Storage::get($filename);
 
