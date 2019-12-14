@@ -32,9 +32,15 @@ class UnitController extends Controller
                     $counter = 0;
                     foreach ($request->kriteria_id as $id) {
                         $kriteria = Kriteria::findOrFail($id);
-                        $kriteria->pertanyaan = $request->pertanyaan[$counter];
                         $kriteria->unjuk_kerja = $request->unjuk_kerja[$counter];
                         $kriteria->kalimat_aktif = $request->kalimat_aktif[$counter];
+                        $pertanyaan = $request->kalimat_aktif[$counter];
+
+                        if (strpos($pertanyaan, '.') == strlen($pertanyaan) - 1) {
+                            $pertanyaan = substr($pertanyaan, 0, strlen($pertanyaan) - 1);
+                        }
+
+                        $kriteria->pertanyaan = 'Apakah anda dapat ' . $pertanyaan . '?';
                         $kriteria->save();
                         $counter++;
                     }
