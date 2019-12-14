@@ -212,7 +212,7 @@
 @php
     $ketua = true;
     $no = 0;
-    $asesors = $event->getSkema(false)->getAsesorSkema(false);
+    $asesors = $uji->first()->getAsesorAsUji(false);
 @endphp
 
 <table class="full">
