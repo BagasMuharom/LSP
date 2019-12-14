@@ -217,7 +217,7 @@
 
 <table class="full">
     <tr>
-        <td>Asesor Kompetensi :</td>
+        <td>Asesor Kompetensi : {{ $asesors->count() }}</td>
         <td></td>
         <td>Penanggungjawab kegiatan :</td>
     </tr>
