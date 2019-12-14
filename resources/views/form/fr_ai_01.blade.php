@@ -6,6 +6,10 @@
         .bg-green {
             background-color: rgb(197, 224, 179);
         }
+
+        .bg-gray {
+            background-color: rgb(210, 210, 210);
+        }
     </style>
 </head>
 <body>
@@ -66,11 +70,11 @@
                 <td>Penilaian Lanjut</td>
             </tr>
         @foreach($unit->getElemenKompetensi(false) as $elemen)
-            <tr>
-                <td rowspan="{{ $elemen->getKriteria()->count() }}">{{ $loop->iteration }}</td>
-                <td rowspan="{{ $elemen->getKriteria()->count() }}">{{ $elemen->nama }}</td>
+            <tr class="{{ $loop->iteration % 2 == 0 ? 'bg-gray' : '' }}">
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $elemen->nama }}</td>
                 <td>{{ $elemen->getKriteria()->first()->kalimat_aktif }}</td>
-                <td rowspan="{{ $elemen->getKriteria()->count() }}">{{ $elemen->benchmark }}</td>
+                <td>{{ $elemen->benchmark }}</td>
                 <td>
                     @if ($uji->getPenilaian()->where('id', $elemen->getKriteria()->first()->id)->first()->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                         <b class="unicode">&#10003;</b>
@@ -85,8 +89,11 @@
             </tr>
 
             @foreach ($elemen->getKriteria()->afterFirst(false) as $kriteria)
-            <tr>
+            <tr {{ $loop->iteration % 2 == 0 ? 'bg-gray' : '' }}>
+                <td></td>
+                <td></td>
                 <td>{{ $kriteria->kalimat_aktif }}</td>
+                <td></td>
                 <td>
                     @if ($uji->getPenilaian()->where('id', $elemen->getKriteria()->first()->id)->first()->pivot->nilai == App\Support\Penilaian::KOMPETEN)
                         <b class="unicode">&#10003;</b>
