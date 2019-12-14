@@ -47,7 +47,7 @@ class AsesorPageController extends Controller
      */
     public function edit(User $asesor)
     {
-        $daftarBerkas = $asesor->getDaftarBerkas();
+        $daftarBerkas = paginate($asesor->getDaftarBerkas(), 10);
 
         return view('menu.asesor.edit', [
             'asesor' => $asesor,

@@ -16,7 +16,7 @@ $daftarBerkas = GlobalAuth::user()->getDaftarBerkas();
                     <div>
                         <div class="btn-group btn-group-sm">
                             <a href="{{ route('asesor.berkas.lihat', [
-                                'asesor' => encrypt($asesor->id),
+                                'asesor' => encrypt(GlobalAuth::user()->id),
                                 'dir' => encrypt($dir)
                             ]) }}" class="btn btn-primary">Lihat</a>
                         </div>

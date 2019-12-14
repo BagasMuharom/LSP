@@ -6,6 +6,13 @@
 
 @section('content')
     @include('layouts.include.alert')
+    @php
+    $kompeten = GlobalAuth::user()->getUjiAsAsesor()->filterByStatus(9)->count();
+    $belum_kompeten = GlobalAuth::user()->getUjiAsAsesor()->filterByStatus(10)->count();
+    $total = $kompeten + $belum_kompeten;
+    $persen_kompeten = number_format($kompeten / $total * 100, 2);
+    $persen_belum_kompeten = number_format($belum_kompeten / $total * 100, 2);
+    @endphp
 
     @row
     @col(['size' => 3])
@@ -42,7 +49,7 @@
         <div class="card p-3">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
-                    <span class="h4 d-block font-weight-normal mb-2">{{ GlobalAuth::user()->getUjiAsAsesor()->filterByStatus(9)->count() }}</span>
+                    <span class="h4 d-block font-weight-normal mb-2">{{ $kompeten }} ({{ $persen_kompeten }} %)</span>
                     <span class="font-weight-light">Jumlah Lulus Uji</span>
                 </div>
 
@@ -57,7 +64,7 @@
         <div class="card p-3">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
-                    <span class="h4 d-block font-weight-normal mb-2">{{ GlobalAuth::user()->getUjiAsAsesor()->filterByStatus(10)->count() }}</span>
+                    <span class="h4 d-block font-weight-normal mb-2">{{ $belum_kompeten }} ({{ $persen_belum_kompeten }} %)</span>
                     <span class="font-weight-light">Jumlah Tidak Lulus Uji</span>
                 </div>
 
