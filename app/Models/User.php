@@ -161,4 +161,11 @@ class User extends Authenticatable
         return $files;
     }
 
+    public function getJumlahHariUji()
+    {
+        $uji = $this->getUjiAsAsesor()->distinct('tanggal_uji');
+
+        return $uji->count('tanggal_uji');
+    }
+
 }

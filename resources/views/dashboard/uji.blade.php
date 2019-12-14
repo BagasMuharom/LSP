@@ -7,7 +7,7 @@
             </div>
 
             <div class="h2 text-muted">
-                <i class="icon icon-people"></i>
+                <i class="icon icon-check"></i>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="h2 text-muted">
-                <i class="icon icon-people"></i>
+                <i class="icon icon-graph"></i>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="h2 text-muted">
-                <i class="icon icon-people"></i>
+                <i class="icon icon-graph"></i>
             </div>
         </div>
     </div>

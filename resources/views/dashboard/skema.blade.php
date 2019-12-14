@@ -7,7 +7,7 @@
             </div>
 
             <div class="h2 text-muted">
-                <i class="icon icon-people"></i>
+                <i class="icon icon-list"></i>
             </div>
         </div>
     </div>
