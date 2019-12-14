@@ -40,7 +40,7 @@ class UnitController extends Controller
                             $pertanyaan = substr($pertanyaan, 0, strlen($pertanyaan) - 1);
                         }
 
-                        $kriteria->pertanyaan = 'Apakah anda dapat ' . $pertanyaan . '?';
+                        $kriteria->pertanyaan = 'Apakah anda dapat ' . lcfirst($pertanyaan) . '?';
                         $kriteria->save();
                         $counter++;
                     }
