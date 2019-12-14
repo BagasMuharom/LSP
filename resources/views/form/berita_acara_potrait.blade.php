@@ -221,7 +221,7 @@
         <td></td>
         <td>Penanggungjawab kegiatan :</td>
     </tr>
-    @for($c = 0; $c < ceil((int)($asesors->count() / 2)); $c++)
+    @for($c = 0; $c < (int) ceil($asesors->count() / 2); $c++)
         <tr>
             <td>
                 @if(!empty($asesors[$no]))
