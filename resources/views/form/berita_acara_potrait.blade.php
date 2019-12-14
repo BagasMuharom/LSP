@@ -212,7 +212,7 @@
 @php
     $ketua = true;
     $no = 0;
-    $asesors = $uji->first()->getAsesorAsUji(false);
+    $asesors = $uji->first()->getAsesorUji(false);
 @endphp
 
 <table class="full">
