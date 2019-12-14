@@ -74,7 +74,7 @@
                                     </th>
                                     <th>
                                         <textarea name="pertanyaan[]" class="form-control" rows="4"
-                                                  required>{{ $kriteria->pertanyaan }}</textarea>
+                                                  readonly>{{ $kriteria->pertanyaan }}</textarea>
                                     </th>
                                     <th>
                                         <textarea name="kalimat_aktif[]" class="form-control" rows="4"
