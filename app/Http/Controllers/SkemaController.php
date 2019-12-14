@@ -43,6 +43,8 @@ class SkemaController extends Controller
             'bidang' => 'required'
         ]);
 
+        // return $request->all();
+
         try {
             $tipe = 'success';
             $pesan = 'Berhasil memperbarui data';
@@ -72,20 +74,23 @@ class SkemaController extends Controller
                 'bidang' => $request->bidang
             ]);
 
-            try{
-                $tu = TempatUji::query()->findOrFail($request->tempat_uji_id);
+            if (TempatUji::check($request->tempat_uji_kode)) {
+                $tu = TempatUji::findByKode($request->tempat_uji_kode);
+                $skema->tempat_uji_id = $tu->id;
                 $tu->kode = $request->tempat_uji_kode;
                 $tu->nama = $request->tempat_uji_nama;
+                $tu->user_id = $request->tempat_uji_user_id;
                 $tu->save();
-            } catch (ModelNotFoundException $exception){
+            } else {
                 $tu = TempatUji::create([
                     'kode' => strtoupper($request->tempat_uji_kode),
                     'nama' => $request->tempat_uji_nama,
                     'jurusan_id' => $request->tempat_uji_jurusan_id
                 ]);
+                $tu->user_id = $request->tempat_uji_user_id;
+                $tu->save();
+                $skema->tempat_uji_id = $tu->id;
             }
-            $tu->user_id = $request->tempat_uji_user_id;
-            $tu->save();
 
             $skema->tempat_uji_id = $tu->id;
             $skema->save();
