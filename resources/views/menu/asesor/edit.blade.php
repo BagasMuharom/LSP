@@ -118,6 +118,8 @@
                 @endforelse
             </div>
             @endslot
+
+            {{ $daftarBerkas->links() }}
         @endcard
     @endcol
 @endrow
