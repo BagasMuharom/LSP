@@ -155,7 +155,7 @@
                 '        <textarea name="unjuk_kerja_baru[]" class="form-control" rows="4" required></textarea>\n' +
                 '    </th>\n' +
                 '    <th>\n' +
-                '        <textarea name="pertanyaan_baru[]" class="form-control" rows="4" required></textarea>\n' +
+                '        <textarea name="pertanyaan_baru[]" class="form-control" rows="4" readonly></textarea>\n' +
                 '    </th>\n' +
                 '    <th>\n' +
                 '        <textarea name="kalimat_aktif_baru[]" class="form-control" rows="4" required></textarea>\n' +

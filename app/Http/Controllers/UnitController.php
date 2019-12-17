@@ -49,12 +49,20 @@ class UnitController extends Controller
                 if (!empty($request->unjuk_kerja_baru)){
                     $counter = 0;
 
-                    foreach ($request->unjuk_kerja_baru as $unjuk_kerja){
+                    foreach ($request->unjuk_kerja_baru as $unjuk_kerja) {
+                        $pertanyaan = $request->kalimat_aktif_baru[$counter];
+
+                        if (strpos($pertanyaan, '.') == strlen($pertanyaan) - 1) {
+                            $pertanyaan = substr($pertanyaan, 0, strlen($pertanyaan) - 1);
+                        }
+
+                        $pertanyaan = 'Apakah anda dapat ' . lcfirst($pertanyaan) . '?';
+
                         Kriteria::create([
                             'elemen_kompetensi_id' => $elemen->id,
                             'unjuk_kerja' => $unjuk_kerja,
-                            'pertanyaan' => $request->pertanyaan_baru[$counter],
-                            'kalimat_aktif' => $request->pertanyaan_baru[$counter]
+                            'pertanyaan' => $pertanyaan,
+                            'kalimat_aktif' => $request->kalimat_aktif_baru[$counter]
                         ]);
 
                         $counter++;
