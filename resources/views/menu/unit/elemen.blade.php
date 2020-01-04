@@ -46,7 +46,7 @@
                     <div class="btn-group">
                         <button onclick="event.preventDefault(); update('{{ $ei = encrypt($elemen->id) }}', $('#nama-elemen-{{ $elemen->id }}').val(), $('#benchmark-elemen-{{ $elemen->id }}').val())" class="btn btn-success btn-sm">Simpan</button>
                         <a href="" href="#" id="show_{{ $elemen->id }}" class="btn btn-info btn-sm">Lihat Kriteria</a>
-                        <button onclick="event.preventDefault(); hapus('{{ $ei }}', '{{ $elemen->nama }}')" class="btn btn-danger btn-sm">Hapus</button>
+                        <button onclick="event.preventDefault(); hapus('{{ $ei }}')" class="btn btn-danger btn-sm">Hapus</button>
                     </div>
                 </td>
             </tr>
@@ -174,9 +174,9 @@
             $('#update').submit()
         }
 
-        function hapus(id, nama) {
+        function hapus(id) {
             swal({
-                title: "Anda yakin ingin menghapus " + nama + "?",
+                title: "Anda yakin ingin menghapus elemen tersebut ?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
