@@ -135,15 +135,21 @@ class EventController extends Controller
         return redirect(route('event', $eventParams))->with('success', 'Event berhasil dibuat');
     }
 
+    /**
+     * Menghapus event
+     *
+     * @param Event $event
+     * @return \Illuminate\Http\Response
+     */
     public function delete(Event $event)
     {
-        if ($event->isAkanDatang()){
-            $event->delete();
+        // menghapus uji dulu, karena restrict
+        $event->getUji()->delete();
 
-            return back()->with('success', 'Berhasil menghapus event');
-        }
+        // menghapus event
+        $event->delete();
 
-        return back()->with('error', 'Anda hanya dapat menghapus event yang akan datang');
+        return back()->with('success', 'Berhasil menghapus event');
     }
 
     public function print(Request $request, Event $event)

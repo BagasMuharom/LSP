@@ -154,11 +154,9 @@
                                     <i class="icon icon-printer"></i>
                                 </button>
                             @endif
-                            @if($event->isAkanDatang())
-                                <button class="btn btn-danger btn-sm" title="Hapus" onclick="hapus('{{ route('event.delete', ['event' => encrypt($event->id)]) }}')">
-                                    <i class="icon icon-trash"></i>
-                                </button>
-                            @endif
+                            <button class="btn btn-danger btn-sm" title="Hapus" onclick="hapus('{{ route('event.delete', ['event' => encrypt($event->id)]) }}')">
+                                <i class="icon icon-trash"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>
